@@ -32,27 +32,13 @@
     box-sizing: border-box;
   }
   
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --navy: #FFFFFF;
-      --light-pink: #2A1922;
-      --line: #442935;
-      --muted: #AAAAAA;
-      --bg: #121212;
-      --card: #1E1E1E;
-      --warnbg: #301822;
-      --warnfg: #FF6699;
-      --warnline: #552B3C;
-      color-scheme: dark;
-    }
-  }
-  
   * { box-sizing: border-box; }
   html { scroll-padding-top: env(safe-area-inset-top, 0px); }
   body { 
     margin: 0; 
     padding: 0 16px 48px; 
     background: var(--bg); 
+    background-attachment: fixed; /* ล็อคพื้นหลังไม่ให้เลื่อนตามเนื้อหา */
     min-height: 100vh;
     color: var(--navy);
     font-family: 'Prompt', 'Poppins', sans-serif; 
@@ -118,6 +104,7 @@
   /* Gallery เครื่องสำอาง */
   .gallery {
     display: flex;
+    justify-content: center; /* จัดรูปภาพให้อยู่ตรงกลาง */
     gap: 12px;
     overflow-x: auto;
     padding-bottom: 12px;
@@ -209,7 +196,7 @@
   .row { display: flex; gap: 10px; margin-top: 20px; }
   input { 
     flex: 1; padding: 14px 20px; font-family: inherit; font-size: 14.5px;
-    border: 2px solid var(--line); border-radius: 30px; background: var(--bg); color: var(--navy);
+    border: 2px solid var(--line); border-radius: 30px; background: #FFFFFF; color: var(--navy);
     transition: all 0.3s ease;
   }
   input:focus { outline: none; border-color: var(--pink); box-shadow: 0 0 0 4px rgba(255, 0, 122, 0.1); }
