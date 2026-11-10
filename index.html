@@ -314,9 +314,13 @@ const boot = (t) => { $("boot").textContent = t; };
 async function callAPI(path, body, tries = 4){
   let wait = 4000;
   for (let i = 1; i <= tries; i++) {
-    const res = await fetch(`${API}/${path}?key=${encodeURIComponent(KEY)}`, {
+    // ลบ ?key= ออกจาก URL และย้ายไปส่งผ่าน Header 
+    const res = await fetch(`${API}/${path}`, {
       method: body ? "POST" : "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "x-goog-api-key": KEY  
+      },
       body: body ? JSON.stringify(body) : undefined,
     });
     if (res.ok) return res.json();
