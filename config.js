@@ -12,7 +12,7 @@ window.CONFIG = {
 
   // ---------- กุญแจจาก Google AI Studio ----------
   // ขอได้ที่  aistudio.google.com/apikey
-  KEY: "AQ.Ab8RN6JRcCQbWN84OKqbSfrll88DQyfI7wPWP7LntMBh5ezqUg",
+  KEY: "AQ.Ab8RN6KPqNGup_DAjYGvTNs-sqq-MYpBOJ9sSKuKWXm5frY66A",
 
   // ---------- ที่อยู่ของเอกสาร ----------
   // เก็บไว้ใน repo เดียวกัน      ใช้  "docs"
@@ -21,14 +21,16 @@ window.CONFIG = {
 
   // ---------- รายชื่อไฟล์เอกสาร ----------
   FILES: [
-    "01-leave.txt",
-    "02-registration.txt",
-    "03-withdraw.txt",
-    "04-scholarship.txt",
-    "05-internship.txt",
-    "06-documents.txt",
-    "07-faq.txt",
-    "08-contact.txt",
+    "01-skincare.txt",
+    "02-makeup.txt",
+    "03-bodycare-fragrance.txt",
+    "04-haircare.txt",
+    "05-nailcare.txt",
+    "06-promotion-and-faq.txt",
+    "07-lipcare.txt",
+    "08-ingredients-safety.txt",
+    "09-beauty-routine-tips.txt",
+    "10-member-rewards.txt"
   ],
 
 };
