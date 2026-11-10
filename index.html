@@ -3,114 +3,213 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AjGolf AI · ผู้ช่วยตอบคำถาม</title>
+<title>Aura Beauty · AI Consultant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --blue:#1531a4; --blue2:#2867cc; --navy:#12224f; --pink:#cd0e5d; --teal:#0e8c8c;
-    --line:#d6ddee; --tint:#f2f6fd; --muted:#5c6478;
-    --bg:#f6f8fc; --card:#fff; --code:#f4f6fb;
-    --warnbg:#fff3e2; --warnfg:#9a4b0f; --warnline:#f0cfa8;
+  :root {
+    /* โทนสีเรียบหรู: โรสโกลด์, ทอง, ครีม, เทาเข้ม */
+    --gold: #c6a87c;
+    --gold-hover: #b08d5b;
+    --navy: #2c3338;
+    --rose-light: #fdfbfb;
+    --rose-tint: #f6efef;
+    --line: #eaddd7;
+    --muted: #8b837e;
+    --bg: #faf7f5;
+    --card: #ffffff;
+    --warnbg: #fffbf5;
+    --warnfg: #a38245;
+    --warnline: #ebd6b7;
+    
     color-scheme: light;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
     box-sizing: border-box;
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --blue:#89a7f2; --blue2:#6f98e8; --navy:#e8edf8; --pink:#f0749f; --teal:#4fc4bd;
-      --line:#2c3652; --tint:#1a2238; --muted:#9aa6c0;
-      --bg:#0f1525; --card:#171f33; --code:#1b2439;
-      --warnbg:#33250f; --warnfg:#f3b574; --warnline:#5a4220;
+  
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --gold: #d4b581;
+      --gold-hover: #e5c999;
+      --navy: #fdfbfb;
+      --rose-light: #231f20;
+      --rose-tint: #2a2524;
+      --line: #4a413d;
+      --muted: #a8a09b;
+      --bg: #1a1716;
+      --card: #231f20;
+      --warnbg: #332a18;
+      --warnfg: #e5c999;
+      --warnline: #5a4b31;
       color-scheme: dark;
     }
   }
-  *{box-sizing:border-box}
-  html{scroll-padding-top: env(safe-area-inset-top, 0px)}
-  body{margin:0; padding:0 16px 48px; background:var(--bg); color:var(--navy);
-       font-family:'Prompt',system-ui,sans-serif; line-height:1.7}
-  .wrap{max-width:900px; margin:0 auto}
+  
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body { 
+    margin: 0; 
+    padding: 0 16px 48px; 
+    background: var(--bg); 
+    color: var(--navy);
+    font-family: 'Prompt', system-ui, sans-serif; 
+    line-height: 1.7;
+  }
+  
+  .wrap { max-width: 800px; margin: 0 auto; }
 
-  header{padding:34px 0 4px}
-  .logo{display:inline-flex; align-items:center; gap:11px; font-size:29px; font-weight:600; color:var(--blue)}
-  .logo .dot{width:37px; height:37px; border-radius:11px;
-    background:linear-gradient(135deg,#1531a4,#cd0e5d);
-    display:grid; place-items:center; color:#fff; font-size:15px; font-weight:600}
-  .tagline{margin:8px 0 0; color:var(--muted); font-size:15px}
+  /* ส่วน Header ร้านค้า */
+  header { padding: 40px 0 20px; text-align: center; }
+  .logo { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 36px; 
+    font-weight: 600; 
+    color: var(--gold);
+    letter-spacing: 1.5px;
+  }
+  .tagline { margin: 5px 0 0; color: var(--muted); font-size: 14px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; }
 
-  .card{background:var(--card); border:1px solid var(--line); border-radius:14px;
-        padding:18px 20px; margin-top:16px}
-  h2{margin:0 0 9px; font-size:18px; font-weight:600}
+  /* ส่วนแบนเนอร์จำลองสินค้า */
+  .store-hero {
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?q=80&w=1000&auto=format&fit=crop') center/cover;
+    height: 180px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  .store-hero h1 { font-family: 'Playfair Display', serif; font-size: 28px; margin: 0; font-style: italic; }
 
-  .banner{display:flex; gap:11px; align-items:flex-start; background:var(--tint);
-    border:1px solid var(--line); border-radius:12px; padding:14px 16px;
-    margin-top:18px; font-size:14.5px}
-  .banner b{color:var(--blue)}
-  a{color:var(--blue2)}
+  /* กรอบแชทบอท */
+  .card {
+    background: var(--card); 
+    border: 1px solid var(--line); 
+    border-radius: 16px;
+    padding: 24px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .card-header h2 { margin: 0; font-size: 18px; font-weight: 500; font-family: 'Playfair Display', serif; letter-spacing: 0.5px; }
+  .status-dot { width: 8px; height: 8px; background: #4caf50; border-radius: 50%; box-shadow: 0 0 8px #4caf50; }
 
-  #boot{margin:0; font-size:14px; color:var(--muted); white-space:pre-wrap}
+  .banner {
+    display: flex; gap: 12px; align-items: flex-start; background: var(--warnbg);
+    border: 1px solid var(--warnline); border-radius: 12px; padding: 14px 16px;
+    margin-bottom: 20px; font-size: 13.5px; color: var(--navy);
+  }
+  .banner b { color: var(--warnfg); }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
 
-  .chat{height:340px; overflow-y:auto; padding:4px 2px 8px}
-  .msg{max-width:82%; padding:11px 15px; border-radius:14px; margin:9px 0;
-       font-size:15px; white-space:pre-wrap}
-  .me{margin-left:auto; background:var(--blue); color:#fff; border-bottom-right-radius:5px}
-  .bot{background:var(--tint); border:1px solid var(--line); border-bottom-left-radius:5px}
-  .bot .ref{display:block; margin-top:8px; font-size:12.5px; color:var(--muted)}
+  #boot { margin: 0 0 10px; font-size: 13px; color: var(--muted); white-space: pre-wrap; text-align: center; }
 
-  .row{display:flex; gap:10px; margin-top:12px}
-  input{flex:1; padding:11px 14px; font-family:inherit; font-size:15px;
-    border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--navy)}
-  input:focus{outline:2px solid var(--blue2); outline-offset:1px}
-  button{padding:11px 22px; font-family:inherit; font-size:15px; font-weight:500;
-    border:0; border-radius:10px; background:var(--blue); color:#fff; cursor:pointer}
-  button:disabled{opacity:.45; cursor:default}
+  .chat { height: 380px; overflow-y: auto; padding: 10px 4px; display: flex; flex-direction: column; }
+  .chat::-webkit-scrollbar { width: 6px; }
+  .chat::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; }
 
-  .chips{margin-top:11px; display:flex; flex-wrap:wrap; gap:8px}
-  .chips span{font-size:13px; padding:6px 12px; border:1px solid var(--line);
-    border-radius:999px; cursor:pointer; color:var(--muted); background:var(--card)}
-  .chips span:hover{border-color:var(--blue2); color:var(--blue2)}
+  .msg { 
+    max-width: 85%; padding: 12px 16px; border-radius: 16px; margin: 8px 0;
+    font-size: 14.5px; white-space: pre-wrap; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  }
+  .me { 
+    align-self: flex-end; background: var(--navy); color: #fff; 
+    border-bottom-right-radius: 4px; 
+  }
+  .bot { 
+    align-self: flex-start; background: var(--rose-tint); color: var(--navy);
+    border: 1px solid var(--line); border-bottom-left-radius: 4px; 
+  }
+  .bot .ref { display: block; margin-top: 10px; font-size: 12px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 8px; }
 
-  footer{margin-top:28px; padding-top:16px; border-top:1px solid var(--line);
-    font-size:13px; color:var(--muted); text-align:center}
+  .row { display: flex; gap: 10px; margin-top: 16px; }
+  input { 
+    flex: 1; padding: 14px 18px; font-family: inherit; font-size: 14.5px;
+    border: 1px solid var(--line); border-radius: 25px; background: var(--rose-light); color: var(--navy);
+    transition: all 0.3s ease;
+  }
+  input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(198, 168, 124, 0.1); }
+  
+  button { 
+    padding: 0 24px; font-family: inherit; font-size: 15px; font-weight: 500;
+    border: 0; border-radius: 25px; background: var(--gold); color: #fff; cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  button:hover:not(:disabled) { background: var(--gold-hover); }
+  button:disabled { opacity: 0.5; cursor: default; }
+
+  .chips { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips span { 
+    font-size: 13px; padding: 6px 14px; border: 1px solid var(--line);
+    border-radius: 999px; cursor: pointer; color: var(--muted); background: var(--rose-light);
+    transition: all 0.2s ease;
+  }
+  .chips span:hover { border-color: var(--gold); color: var(--gold); background: transparent; }
+
+  footer { 
+    margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-size: 13px; color: var(--muted); text-align: center; font-family: 'Playfair Display', serif; 
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <div class="logo"><span class="dot">AI</span> AjGolf AI</div>
-    <p class="tagline">ผู้ช่วยตอบคำถามจากเอกสารของคณะ</p>
+    <div class="logo">Aura Beauty</div>
+    <p class="tagline">Premium Cosmetics & Skincare</p>
   </header>
 
-  <div class="banner">
-    <span style="font-size:19px">⚠️</span>
-    <div>
-      <b>นี่คือผู้ช่วยอัตโนมัติ ไม่ใช่เจ้าหน้าที่</b><br>
-      คำตอบอาจคลาดเคลื่อน กรุณาตรวจสอบกับเอกสารต้นฉบับก่อนใช้อ้างอิง<br>
-      ทุกคำตอบจะบอกด้วยว่ามาจากไฟล์ไหน เพื่อให้ตรวจสอบย้อนกลับได้<br>
-      ต้องการคุยกับเจ้าหน้าที่จริง ติดต่อ <a href="tel:020000002">ฝ่ายวิชาการ 0-2000-0002</a>
-    </div>
+  <div class="store-hero">
+    <h1>Discover Your True Glow</h1>
   </div>
 
   <div class="card">
-    <h2>ถามคำถาม</h2>
-    <p id="boot">กำลังเตรียมระบบ...</p>
-    <div class="chat" id="chat"></div>
-    <div class="row">
-      <input id="q" type="text" placeholder="พิมพ์คำถามแล้วกด Enter" disabled>
-      <button id="send" disabled>ถาม</button>
+    <div class="card-header">
+      <div class="status-dot"></div>
+      <h2>AI Beauty Consultant</h2>
     </div>
+
+    <div class="banner">
+      <span style="font-size:18px">✨</span>
+      <div>
+        <b>ผู้ช่วยความงามส่วนตัวของคุณ (AI)</b><br>
+        ให้คำแนะนำเรื่องเฉดสีเครื่องสำอาง สกินแคร์ และโปรโมชั่นต่างๆ<br>
+        อ้างอิงจากข้อมูลสินค้าของแบรนด์ หากต้องการปรึกษาปัญหาผิวเชิงลึก แนะนำให้พบแพทย์ผิวหนังนะคะ<br>
+        สอบถามแอดมินโดยตรง <a href="tel:020000002">โทร 0-2000-0002</a>
+      </div>
+    </div>
+
+    <p id="boot">กำลังจัดเตรียมข้อมูลความงาม...</p>
+    
+    <div class="chat" id="chat"></div>
+    
     <div class="chips">
-      <span>ลาป่วยกี่วันต้องมีใบรับรองแพทย์</span>
-      <span>ลาพักการศึกษาได้กี่ภาค</span>
-      <span>ถอนรายวิชาแล้วติด W ไหม</span>
-      <span>หอพักค่าเช่าเท่าไร</span>
+      <span>ลิปสติกสีไหนเหมาะกับผิวสองสี?</span>
+      <span>แนะนำสกินแคร์สำหรับผิวแพ้ง่าย</span>
+      <span>ส่วนผสมหลักของเซรั่มตัวใหม่มีอะไรบ้าง</span>
+      <span>มีโปรโมชั่นอะไรบ้างเดือนนี้</span>
+    </div>
+
+    <div class="row">
+      <input id="q" type="text" placeholder="พิมพ์เพื่อปรึกษาเรื่องความงาม..." disabled>
+      <button id="send" disabled>ส่ง</button>
     </div>
   </div>
 
-  <footer>AjGolf AI · รายวิชาปัญญาประดิษฐ์และการเรียนรู้ของเครื่อง · สัปดาห์ที่ 8</footer>
+  <footer>© 2026 Aura Beauty. All rights reserved.</footer>
 </div>
 
 <script src="config.js"></script>
@@ -142,7 +241,7 @@ async function callAPI(path, body, tries = 4){
     if (res.ok) return res.json();
     const text = await res.text();
     if (res.status === 429 && i < tries) {
-      boot(`โดนจำกัดจำนวนครั้ง  รอ ${wait / 1000} วินาทีแล้วลองใหม่`);
+      boot(`ระบบกำลังประมวลผล รอ ${wait / 1000} วินาที...`);
       await new Promise(r => setTimeout(r, wait));
       wait *= 2;
       continue;
@@ -236,19 +335,22 @@ async function search(question){
 /* ขั้นที่ 4  ประกอบคำสั่ง */
 function makePrompt(question, found){
   const docs = found.map((f, i) =>
-    `[ชิ้นที่ ${i + 1}  จากไฟล์ ${f.source}]\n${f.text}`).join("\n\n");
-  return `คุณคือผู้ช่วยตอบคำถามของคณะบริหารธุรกิจ
-ให้ตอบโดยใช้เฉพาะข้อมูลในเอกสารด้านล่างเท่านั้น
+    `[ข้อมูลที่ ${i + 1} จากไฟล์ ${f.source}]\n${f.text}`).join("\n\n");
+  
+  // ปรับ Prompt ให้สวมบทบาทเป็น Beauty Consultant
+  return `คุณคือ "Aura" ผู้ช่วยแนะนำความงาม (AI Beauty Consultant) ของร้านเครื่องสำอาง Aura Beauty
+ลักษณะนิสัย: สุภาพ อ่อนหวาน เป็นกันเอง และมีความรู้เรื่องสกินแคร์และเมคอัพเป็นอย่างดี 
+ให้ตอบคำถามโดยอ้างอิงจากข้อมูลด้านล่างนี้เท่านั้น
 
-ถ้าเอกสารไม่มีคำตอบ ให้ตอบว่า "ไม่พบข้อมูลนี้ในเอกสารของคณะ"
-แล้วแนะนำให้ติดต่อฝ่ายวิชาการ  ห้ามเดา ห้ามเติมข้อมูลจากความรู้ทั่วไป
+ถ้าข้อมูลในเอกสารไม่มีคำตอบ ให้ตอบอย่างสุภาพว่า "ขออภัยด้วยนะคะ ไม่พบข้อมูลสินค้านี้ในระบบค่ะ" 
+แล้วแนะนำให้ลูกค้าติดต่อแอดมิน ห้ามเดาหรือแต่งเติมข้อมูลสินค้าเองเด็ดขาด
 
-ตอบเป็นภาษาไทย สั้น กระชับ
+ตอบเป็นภาษาไทย สั้น กระชับ แต่อ่านแล้วรู้สึกถึงความเอาใจใส่
 
-เอกสารที่ค้นเจอ
+ข้อมูลอ้างอิงสินค้า:
 ${docs}
 
-คำถามจากผู้ใช้
+คำถามจากลูกค้า:
 ${question}`;
 }
 
@@ -267,23 +369,24 @@ ${question}`;
     return;
   }
   try {
-    boot("กำลังเลือกรุ่นโมเดล...");
+    boot("กำลังเลือกรุ่นประมวลผล...");
     await pickModels();
-    boot("กำลังอ่านเอกสาร...");
+    boot("กำลังโหลดแคตตาล็อกสินค้า...");
     CHUNKS = await buildChunks();
-    boot(`กำลังแปลงเอกสาร ${CHUNKS.length} ชิ้นเป็นเวกเตอร์...`);
+    boot(`กำลังวิเคราะห์ข้อมูล ${CHUNKS.length} รายการ...`);
     INDEX = await buildIndex(CHUNKS);
 
     const files = new Set(CHUNKS.map(c => c.source)).size;
-    boot(`พร้อมใช้งาน   เอกสาร ${files} ไฟล์  ${CHUNKS.length} ชิ้น   `
-       + `รุ่น ${CHAT_MODEL.replace("models/","")}`);
+    
+    // ซ่อนข้อความ boot เมื่อโหลดเสร็จ
+    $("boot").style.display = "none";
 
     $("q").disabled = false;
     $("send").disabled = false;
-    add("สวัสดีครับ ถามคำถามเกี่ยวกับระเบียบของคณะได้เลย", "bot");
+    add("สวัสดีค่ะ 💖 ยินดีต้อนรับสู่ Aura Beauty วันนี้มีอะไรให้ Aura ช่วยแนะนำไหมคะ?", "bot");
   } catch (e) {
-    boot("เริ่มไม่สำเร็จ\n\n" + e.message +
-      "\n\nตรวจสอบ\n1 กุญแจในไฟล์ถูกต้องไหม\n2 โฟลเดอร์เอกสารอยู่ถูกที่ไหม\n3 ถ้าขึ้น 429 ให้รอสักครู่แล้วรีเฟรช");
+    boot("ระบบมีปัญหาเล็กน้อย\n\n" + e.message +
+      "\n\nรบกวนตรวจสอบ\n1 กุญแจถูกต้องไหม\n2 โฟลเดอร์เอกสารอยู่ถูกที่ไหม");
   }
 })();
 
@@ -307,21 +410,21 @@ async function ask(){
   if (!text || !INDEX.length) return;
   $("q").value = "";
   add(text, "me");
-  const holder = add("กำลังค้นเอกสารและเรียบเรียงคำตอบ...", "bot");
+  const holder = add("กำลังค้นหาข้อมูลสินค้าที่เหมาะกับคุณ...", "bot");
   try {
     const found = await search(text);
     const data = await callAPI(`${CHAT_MODEL}:generateContent`,
       { contents: [{ parts: [{ text: makePrompt(text, found) }] }] });
-    holder.textContent = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "ไม่ได้รับคำตอบกลับมา";
+    holder.textContent = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "ขออภัยค่ะ ระบบไม่สามารถตอบได้ในขณะนี้";
     const s = document.createElement("span");
     s.className = "ref";
-    s.textContent = "อ้างอิงจาก  " +
-      found.map(f => `${f.source} ส่วนที่ ${f.part} (${f.score})`).join("   ");
+    s.textContent = "อ้างอิงจากคลังข้อมูล: " +
+      found.map(f => `${f.source}`).filter((v, i, a) => a.indexOf(v) === i).join(", ");
     holder.appendChild(s);
   } catch (e) {
     holder.textContent = String(e).includes("429")
-      ? "ตอนนี้เรียกใช้บริการบ่อยเกินกำหนด  กรุณารอสักครู่แล้วถามใหม่"
-      : "เกิดข้อผิดพลาด\n\n" + e.message;
+      ? "ตอนนี้มีลูกค้าสอบถามเข้ามาเยอะมาก รบกวนรอสักครู่แล้วถามใหม่นะคะ 💖"
+      : "เกิดข้อผิดพลาดค่ะ\n\n" + e.message;
   }
   $("chat").scrollTop = $("chat").scrollHeight;
 }
