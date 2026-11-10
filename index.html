@@ -19,7 +19,7 @@
     --light-pink: #FFF0F5;
     --line: #FFE0E9;
     --muted: #888888;
-    --bg: #FAFAFA;
+    --bg: linear-gradient(to bottom, #FCE4EC 0%, #FFFFFF 100%);
     --card: #FFFFFF;
     
     --warnbg: #FFF4F8;
@@ -53,6 +53,7 @@
     margin: 0; 
     padding: 0 16px 48px; 
     background: var(--bg); 
+    min-height: 100vh;
     color: var(--navy);
     font-family: 'Prompt', 'Poppins', sans-serif; 
     line-height: 1.7;
@@ -255,7 +256,7 @@
     <div class="hero-overlay"></div>
     <div class="hero-glass">
       <h1>Unlock Your Glow</h1>
-      <p>ค้นพบความงามในแบบที่เป็นคุณ ✨</p>
+      <p>ค้นพบความงามในแบบที่เป็นคุณ</p>
     </div>
   </div>
 
@@ -265,6 +266,7 @@
     <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?q=80&w=500&auto=format&fit=crop" alt="Lipstick">
     <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=500&auto=format&fit=crop" alt="Skincare">
     <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?q=80&w=500&auto=format&fit=crop" alt="Cosmetics Collection">
+    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=500&auto=format&fit=crop" alt="Eyeshadow Palette">
   </div>
 
   <div class="card">
@@ -288,10 +290,11 @@
     <div class="chat" id="chat"></div>
     
     <div class="chips">
+      <span>แนะนำสินค้าสำหรับผิวแพ้ง่าย 💕</span>
       <span>ทาปากสีไหนให้หน้าสว่าง? 💋</span>
       <span>ผิวแห้งแต่งหน้าไม่ติด ทำไงดี? ✨</span>
       <span>มีเซรั่มตัวไหนลดรอยดำบ้าง 💧</span>
-      <span>อัปเดตโปรโมชั่นเดือนนี้ 🎁</span>
+      <span>ลิปบำรุงปากให้ฉ่ำวาว 💄</span>
     </div>
 
     <div class="row">
@@ -300,7 +303,7 @@
     </div>
   </div>
 
-  <footer>© 2026 Aura Beauty Cosmetics. Designed with 💕</footer>
+  <footer>© 2026 Aura Beauty Cosmetics.</footer>
 </div>
 
 <script src="config.js"></script>
