@@ -26,11 +26,11 @@ window.CONFIG = {
     "03-bodycare-fragrance.txt",
     "04-haircare.txt",
     "05-nailcare.txt",
-    "06-promotion-and-faq.txt",
-    "07-lipcare.txt",
-    "08-ingredients-safety.txt",
-    "09-beauty-routine-tips.txt",
-    "10-member-rewards.txt"
+    "06-lipcare.txt",
+    "07-ingredients-safety.txt",
+    "08-beauty-routine-tips.txt",
+    "09-member-rewards.txt",
+    "10-promotion-and-faq.txt"
   ],
 
 };
