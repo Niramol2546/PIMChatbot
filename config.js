@@ -12,7 +12,7 @@ window.CONFIG = {
 
   // แก้ตรงนี้  ที่อยู่ Worker ของคุณ  ห้ามใส่ทับปิดท้าย
   // หน้าตาแบบนี้  https://ชื่อworker.ชื่อบัญชี.workers.dev
-  WORKER_URL: "ใส่ที่อยู่ Worker ตรงนี้",
+  WORKER_URL: "https://aura-beauty-bot.namebam0123.workers.dev",
 
   // ไม่ต้องใส่  เว้นว่างไว้  เพราะกุญแจอยู่ที่ Worker แล้ว
   KEY: "",
@@ -33,7 +33,7 @@ window.CONFIG = {
 
   // แก้ตรงนี้  ชื่อรุ่นจริงจากหน้า Models ของ OpenRouter
   // หาชื่อจริงได้ที่  https://openrouter.ai/api/v1/models
-  MODEL: "google/gemma-4-26b-a4b-it:free",
+  MODEL: "google/gemini-1.5-flash:free",
 
 
   /* ===== เอกสาร ===== */
@@ -42,14 +42,16 @@ window.CONFIG = {
   DOCS_BASE: "docs",
 
   FILES: [
-    "01-leave.txt",
-    "02-registration.txt",
-    "03-withdraw.txt",
-    "04-scholarship.txt",
-    "05-internship.txt",
-    "06-documents.txt",
-    "07-faq.txt",
-    "08-contact.txt",
+    "01-skincare.txt",
+    "02-makeup.txt",
+    "03-bodycare-fragrance.txt",
+    "04-haircare.txt",
+    "05-nailcare.txt",
+    "06-lipcare.txt",
+    "07-ingredients-safety.txt",
+    "08-beauty-routine-tips.txt",
+    "09-member-rewards.txt",
+    "10-promotion-and-faq.txt"
   ],
 
 
