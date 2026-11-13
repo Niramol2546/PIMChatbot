@@ -33,7 +33,7 @@ window.CONFIG = {
 
   // แก้ตรงนี้  ชื่อรุ่นจริงจากหน้า Models ของ OpenRouter
   // หาชื่อจริงได้ที่  https://openrouter.ai/api/v1/models
-  MODEL: "google/gemini-1.5-flash:free",
+  MODEL: "meta-llama/llama-3.1-8b-instruct:free",
 
 
   /* ===== เอกสาร ===== */
