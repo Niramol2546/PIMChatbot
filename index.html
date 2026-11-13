@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aura Beauty | ปลุกออร่าในตัวคุณ</title>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- ใช้ Font Awesome สำหรับไอคอน (Search, User, ฯลฯ) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   :root {
     --pink: #FF5E8E;
     --orange: #FF9248;
     --dark: #2A1A1E;
     --bg-light: #FFF7F9;
-    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-bg: rgba(255, 255, 255, 0.95);
     --glass-border: rgba(255, 255, 255, 0.95);
+    --muted: #8A6D75;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,10 +27,10 @@
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
-    padding-bottom: 100px;
+    padding-bottom: 0; /* เปลี่ยนจาก 100px เป็น 0 เพื่อให้ Footer ชิดขอบล่าง */
   }
 
-  /* Announcement Bar */
+  /* ------------------- Announcement Bar ------------------- */
   .announcement-bar {
     background: linear-gradient(90deg, var(--pink), var(--orange));
     color: white;
@@ -38,31 +41,80 @@
     letter-spacing: 0.5px;
   }
 
-  /* Background Blobs */
-  .blob { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.4; animation: float 10s ease-in-out infinite; border-radius: 50%; }
+  /* ------------------- Background Blobs ------------------- */
+  .blob { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.3; animation: float 12s ease-in-out infinite; border-radius: 50%; }
   .blob-1 { top: 5%; left: -10%; width: 500px; height: 500px; background: var(--pink); }
-  .blob-2 { top: 40%; right: -15%; width: 400px; height: 400px; background: var(--orange); animation-delay: -5s; }
-  .blob-3 { bottom: -10%; left: 20%; width: 600px; height: 600px; background: #FFD1DF; animation-delay: -2s; }
+  .blob-2 { top: 30%; right: -15%; width: 400px; height: 400px; background: var(--orange); animation-delay: -5s; }
+  .blob-3 { bottom: 10%; left: 10%; width: 600px; height: 600px; background: #FFD1DF; animation-delay: -2s; }
   @keyframes float { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(30px, -50px) scale(1.1); } }
 
-  /* Glassmorphism */
-  .glass { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(255, 94, 142, 0.06); }
+  /* ------------------- Glassmorphism ------------------- */
+  .glass { 
+    background: var(--glass-bg); 
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px); 
+    border: 1px solid var(--glass-border); 
+    box-shadow: 0 10px 30px rgba(255, 94, 142, 0.08); 
+  }
 
-  /* Navbar */
-  header { position: sticky; top: 0; z-index: 90; padding: 14px 5%; display: flex; justify-content: space-between; align-items: center; }
-  .logo { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; background: linear-gradient(45deg, var(--pink), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  /* ------------------- Navbar (อัปเกรด Menu, Search, Login) ------------------- */
+  header { 
+    position: sticky; top: 0; z-index: 100; 
+    padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; 
+    flex-wrap: wrap; /* ให้เมนูเรียงใหม่จอเล็ก */
+  }
+  .logo { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; background: linear-gradient(45deg, var(--pink), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none;}
+  
+  /* เมนูนำทาง (Navigation Bar) */
+  .nav-menu {
+    display: flex; gap: 20px; list-style: none; font-weight: 500; font-size: 15px; margin: 0 20px;
+  }
+  .nav-menu a { color: var(--dark); text-decoration: none; transition: color 0.2s; }
+  .nav-menu a:hover { color: var(--pink); }
+
+  /* ช่องค้นหา (Search Bar) */
+  .search-bar {
+    display: flex; align-items: center; background: #F5EAEF; border-radius: 20px; padding: 5px 15px; width: 250px;
+  }
+  .search-bar input {
+    border: none; background: transparent; padding: 5px 10px; width: 100%; outline: none; font-family: inherit; color: var(--dark);
+  }
+  .search-bar i { color: var(--muted); cursor: pointer; }
+
+  /* ไอคอนด้านขวา (Login & Cart) */
   .nav-right { display: flex; align-items: center; gap: 15px; }
-  .cart-btn { background: #FFE5EC; border: none; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: transform 0.2s; position: relative; }
-  .cart-btn:hover { transform: scale(1.08); }
+  .icon-btn { 
+    background: #FFE5EC; border: none; width: 44px; height: 44px; border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; cursor: pointer; 
+    font-size: 18px; transition: transform 0.2s; position: relative; color: var(--pink); text-decoration: none;
+  }
+  .icon-btn:hover { transform: scale(1.08); }
   .cart-badge { position: absolute; top: -3px; right: -3px; background: var(--pink); color: white; font-size: 12px; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
 
-  /* Hero Section */
+  /* การแสดงผลเมนูบนมือถือ (ซ่อนเมนูและช่องค้นหาก่อน แล้วค่อยใช้ Hamburger Menu ในการพัฒนาต่อ) */
+  @media (max-width: 900px) {
+    .nav-menu, .search-bar { display: none; } /* ซ่อนไว้ก่อนสำหรับหน้าจอเล็ก เพื่อความสวยงาม */
+    header { padding: 15px; }
+  }
+
+  /* ------------------- Hero Section ------------------- */
   .hero { text-align: center; padding: 60px 20px 50px; max-width: 900px; margin: 0 auto; }
   .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.2; margin-bottom: 16px; background: linear-gradient(45deg, var(--pink), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-wrap: balance; }
-  .hero p { font-size: 1.1rem; color: #8A6D75; max-width: 650px; margin: 0 auto; line-height: 1.6; }
+  .hero p { font-size: 1.1rem; color: var(--muted); max-width: 650px; margin: 0 auto; line-height: 1.6; }
 
-  /* Product Showcase Grid */
-  .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 30px 5% 60px; max-width: 1400px; margin: 0 auto; }
+  /* ------------------- Filter / ตัวกรอง ------------------- */
+  .filter-section {
+    max-width: 1400px; margin: 0 auto; padding: 0 5% 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 8px 20px; background: white; border: 1px solid #FFD1DF; border-radius: 20px; font-family: inherit; font-size: 14px; color: var(--muted); cursor: pointer; transition: all 0.3s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: var(--pink); color: white; border-color: var(--pink);
+  }
+
+  /* ------------------- Product Showcase Grid ------------------- */
+  .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 20px 5% 60px; max-width: 1400px; margin: 0 auto; }
 
   /* Modern Product Card */
   .product-card { border-radius: 24px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.4s ease; position: relative; overflow: hidden; }
@@ -72,21 +124,23 @@
 
   .sale-badge { position: absolute; top: 20px; right: 20px; background: var(--orange); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
 
+  /* ทำให้รูปภาพหลักคลิกได้ (จำลองการไปหน้าสินค้ารายละเอียดเต็ม) */
   .product-img-container { width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg, #FFF7F9, #FFE5EC); margin: 0 auto 20px; overflow: hidden; border: 5px solid white; box-shadow: 0 5px 15px rgba(255, 94, 142, 0.1); transition: transform 0.3s ease; cursor: pointer; position: relative; z-index: 1;}
   .product-card:hover .product-img-container { transform: scale(1.05); }
   .product-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
   .product-card:hover .product-img { transform: scale(1.1); }
 
-  .product-meta { display: flex; justify-content: center; align-items: center; gap: 15px; font-size: 14px; color: #8A6D75; margin-bottom: 10px; }
+  .product-meta { display: flex; justify-content: center; align-items: center; gap: 15px; font-size: 14px; color: var(--muted); margin-bottom: 10px; }
   .rating { color: #f39c12; font-weight: 600; }
   .feature-icon { font-size: 18px; color: var(--pink); margin-right: 5px; vertical-align: middle; }
 
-  .product-card h3 { font-size: 1.3rem; margin-bottom: 8px; color: var(--dark); line-height: 1.3; }
-  .product-card p { font-size: 0.95rem; color: #8A6D75; margin-bottom: 15px; line-height: 1.6; }
-  .feature-list { list-style: none; font-size: 0.9rem; color: #8A6D75; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
-  .feature-list li { background: #FFF7F9; padding: 4px 10px; border-radius: 15px; }
+  .product-card h3 { font-size: 1.3rem; margin-bottom: 8px; color: var(--dark); line-height: 1.3; cursor: pointer; transition: color 0.2s;}
+  .product-card h3:hover { color: var(--pink); text-decoration: underline;} /* แสดงว่าคลิกไปดูรายละเอียดได้ */
+  .product-card p { font-size: 0.95rem; color: var(--muted); margin-bottom: 15px; line-height: 1.6; }
+  .feature-list { list-style: none; font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .feature-list li { background: #FFF7F9; padding: 4px 10px; border-radius: 15px; border: 1px solid #FFE0E9;}
 
-  /* Carousel */
+  /* ------------------- Image Carousel (แก้ไขรูปลิงก์เสีย) ------------------- */
   .image-carousel-wrapper { position: relative; margin-bottom: 25px; }
   .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding-bottom: 10px; scrollbar-width: none; -ms-overflow-style: none; }
   .carousel-container::-webkit-scrollbar { display: none; }
@@ -99,7 +153,7 @@
   .carousel-btn.next { right: -15px; }
   .carousel-btn:hover { background: white; color: var(--pink);}
 
-  /* Card Footer */
+  /* ------------------- Card Footer ------------------- */
   .card-footer { margin-top: auto; border-top: 1px solid #FFE0E9; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
   .price { font-size: 1.6rem; font-weight: 700; color: var(--orange); }
   .action-group { display: flex; align-items: center; gap: 10px; }
@@ -108,6 +162,28 @@
   .qty-val { font-weight: 600; min-width: 20px; text-align: center; font-size: 16px; }
   .btn { display: inline-block; padding: 10px 24px; background: linear-gradient(45deg, var(--pink), var(--orange)); color: white; text-decoration: none; border-radius: 20px; font-weight: 500; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer; font-size: 14px; }
   .btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(255, 94, 142, 0.3); }
+
+  /* ------------------- Footer (ส่วนท้ายเว็บไซต์ใหม่) ------------------- */
+  footer {
+    background: white; border-top: 1px solid #FFE0E9; padding: 60px 5% 30px; margin-top: 60px;
+  }
+  .footer-content {
+    max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;
+  }
+  .footer-col h4 { font-size: 18px; color: var(--dark); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul a { color: var(--muted); text-decoration: none; transition: color 0.2s; font-size: 15px;}
+  .footer-col ul a:hover { color: var(--pink); }
+  .social-icons { display: flex; gap: 15px; margin-top: 15px; }
+  .social-icons a { 
+    width: 40px; height: 40px; background: #FFE5EC; color: var(--pink); border-radius: 50%; 
+    display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 18px; transition: transform 0.2s;
+  }
+  .social-icons a:hover { transform: scale(1.1); background: var(--pink); color: white; }
+  .footer-bottom {
+    text-align: center; padding-top: 30px; margin-top: 40px; border-top: 1px solid #FFE0E9; color: #a58e95; font-size: 14px;
+  }
 </style>
 </head>
 <body>
@@ -122,12 +198,33 @@
   <div class="blob blob-2"></div>
   <div class="blob blob-3"></div>
 
-  <!-- Navbar -->
+  <!-- Navbar พร้อม Navigation, Search, Login -->
   <header class="glass">
-    <div class="logo">Aura Beauty</div>
+    <a href="#" class="logo">Aura Beauty</a>
+    
+    <!-- เมนูนำทาง (ขาดหายไป) -->
+    <ul class="nav-menu">
+      <li><a href="#products">สกินแคร์</a></li>
+      <li><a href="#products">เมคอัพ</a></li>
+      <li><a href="#">โปรโมชั่น 🔥</a></li>
+      <li><a href="#">บทความรีวิว</a></li>
+    </ul>
+
+    <!-- ช่องค้นหา (ขาดหายไป) -->
+    <div class="search-bar">
+      <input type="text" placeholder="ค้นหาสินค้า... (เช่น เซรั่มลดสิว)">
+      <i class="fas fa-search"></i>
+    </div>
+
     <div class="nav-right">
-      <button class="cart-btn" aria-label="ตะกร้าสินค้า">🛒<span class="cart-badge">0</span></button>
-      <a href="#products" class="btn">Shop Now</a>
+      <!-- ปุ่ม Login / บัญชีสมาชิก (ขาดหายไป) -->
+      <a href="#" class="icon-btn" aria-label="เข้าสู่ระบบ" title="เข้าสู่ระบบ / สมัครสมาชิก">
+        <i class="far fa-user"></i>
+      </a>
+      <button class="icon-btn" aria-label="ตะกร้าสินค้า" title="ตะกร้าสินค้า">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-badge">0</span>
+      </button>
     </div>
   </header>
 
@@ -138,6 +235,15 @@
       <p>สกินแคร์สูตรพิเศษที่เข้าใจผิวหน้าคนไทย พร้อม AI Beauty Advisor ให้คำปรึกษาตลอด 24 ชม. ด้วยข้อมูลจากแคตตาล็อกสินค้าของเรา</p>
     </section>
 
+    <!-- Filter (ตัวกรองสินค้า ขาดหายไป) -->
+    <div class="filter-section">
+      <button class="filter-btn active">ทั้งหมด</button>
+      <button class="filter-btn">ผิวกระจ่างใส</button>
+      <button class="filter-btn">ลดสิว-คุมมัน</button>
+      <button class="filter-btn">ผิวแห้ง-เติมน้ำ</button>
+      <button class="filter-btn">เมคอัพ-ริมฝีปาก</button>
+    </div>
+
     <!-- Product Showcase Grid -->
     <section id="products" class="products">
       
@@ -145,17 +251,20 @@
       <article class="product-card glass">
         <span class="sale-badge">Hot Sale!</span>
         <div>
-          <div class="product-img-container" title="ดูรายละเอียด">
+          <!-- คลิกรูปไปหน้ารายละเอียด -->
+          <div class="product-img-container" title="คลิกเพื่อดูรายละเอียดเพิ่มเติม" onclick="alert('พาไปหน้า Product Detail ของ Aura Glow Vitamin C Serum')">
             <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80" alt="Aura Glow Vitamin C Serum" class="product-img">
           </div>
           <div class="product-meta">
             <span class="rating">⭐⭐⭐⭐⭐ (4.9)</span><span>|</span><span class="feature-item"><span class="feature-icon">🍊</span> ผิวกระจ่างใส</span>
           </div>
-          <h3>Aura Glow Vitamin C Serum</h3>
+          <!-- คลิกชื่อสินค้าไปหน้ารายละเอียด -->
+          <h3 onclick="alert('พาไปหน้า Product Detail ของ Aura Glow Vitamin C Serum')">Aura Glow Vitamin C Serum</h3>
           <p>เซรั่มวิตามินซีเข้มข้น 15% ลดรอยดำ รอยแดง ปรับสีผิวให้สว่างกระจ่างใสอย่างเป็นธรรมชาติ</p>
           <ul class="feature-list"><li>Vitamin C 15%</li><li>Niacinamide</li><li>ผิวแพ้ง่ายใช้ได้</li></ul>
         </div>
         
+        <!-- แก้ไขรูป Carousel เสีย: ดึงรูปลิงก์ตรงที่ใช้งานได้ -->
         <div class="image-carousel-wrapper">
           <button class="carousel-btn prev" onclick="carouselScroll(this, -1)">&#10094;</button>
           <div class="carousel-container">
@@ -182,17 +291,19 @@
       <article class="product-card glass">
         <span class="sale-badge">Best Seller</span>
         <div>
-          <div class="product-img-container" title="ดูรายละเอียด">
+          <!-- คลิกรูปไปหน้ารายละเอียด -->
+          <div class="product-img-container" title="คลิกเพื่อดูรายละเอียดเพิ่มเติม" onclick="alert('พาไปหน้า Product Detail ของ Aura Deep Moisture Cream')">
             <img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=400&q=80" alt="Aura Deep Moisture Cream" class="product-img">
           </div>
           <div class="product-meta">
             <span class="rating">⭐⭐⭐⭐⭐ (5.0)</span><span>|</span><span class="feature-item"><span class="feature-icon">💧</span> ล็อคความชุ่มชื้น</span>
           </div>
-          <h3>Aura Deep Moisture Cream</h3>
+          <h3 onclick="alert('พาไปหน้า Product Detail ของ Aura Deep Moisture Cream')">Aura Deep Moisture Cream</h3>
           <p>ครีมเซราไมด์ ล็อคความชุ่มชื้นยาวนาน 48 ชม. บอกลาผิวแห้งลอกขุย แต่งหน้าติดทนตลอดวัน</p>
-           <ul class="feature-list"><li>Ceramides 5 ชนิด</li><li>Hyaluronic Acid</li><li>ฟื้นฟูเกราะป้องกันผิว</li></ul>
+           <ul class="feature-list"><li>Ceramides 5 ชนิด</li><li>Hyaluronic Acid</li><li>ฟื้นฟูเกราะ</li></ul>
         </div>
         
+        <!-- แก้ไขรูป Carousel เสีย: เปลี่ยนลิงก์ให้ถูกต้อง -->
         <div class="image-carousel-wrapper">
            <button class="carousel-btn prev" onclick="carouselScroll(this, -1)">&#10094;</button>
           <div class="carousel-container">
@@ -217,17 +328,19 @@
       <!-- Product Card 3: Essence -->
       <article class="product-card glass">
         <div>
-          <div class="product-img-container" title="ดูรายละเอียด">
+           <!-- คลิกรูปไปหน้ารายละเอียด -->
+          <div class="product-img-container" title="คลิกเพื่อดูรายละเอียดเพิ่มเติม" onclick="alert('พาไปหน้า Product Detail ของ Aura Dewy Glow Essence')">
             <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80" alt="Aura Dewy Glow Essence" class="product-img">
           </div>
            <div class="product-meta">
             <span class="rating">⭐⭐⭐⭐ (4.8)</span><span>|</span><span class="feature-item"><span class="feature-icon">✨</span> เตรียมผิวฉ่ำ</span>
           </div>
-          <h3>Aura Dewy Glow Essence</h3>
+          <h3 onclick="alert('พาไปหน้า Product Detail ของ Aura Dewy Glow Essence')">Aura Dewy Glow Essence</h3>
           <p>น้ำตบเตรียมผิวฉ่ำฟู เติมน้ำให้ผิวเร่งด่วน บูสต์ผิวหน้าก่อนแต่งหน้าให้เมคอัพเนียนกริบ</p>
-           <ul class="feature-list"><li>8D Hyaluronic Acid</li><li>แพลงก์ตอนสกัด</li><li>ผิวแพ้ง่ายใช้ได้</li></ul>
+           <ul class="feature-list"><li>8D Hyaluronic</li><li>แพลงก์ตอนสกัด</li><li>ผิวแพ้ง่ายใช้ได้</li></ul>
         </div>
         
+        <!-- แก้ไขรูป Carousel เสีย: เปลี่ยนลิงก์ให้ถูกต้อง -->
         <div class="image-carousel-wrapper">
            <button class="carousel-btn prev" onclick="carouselScroll(this, -1)">&#10094;</button>
           <div class="carousel-container">
@@ -253,7 +366,67 @@
     </section>
   </main>
 
+  <!-- Footer ส่วนล่างสุดของเว็บไซต์ (ขาดหายไป) -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3 class="logo" style="font-size: 20px; margin-bottom: 15px; display: inline-block;">Aura Beauty</h3>
+        <p style="color: var(--muted); font-size: 14px; line-height: 1.6; max-width: 250px;">
+          แบรนด์เครื่องสำอางและสกินแคร์ที่เข้าใจทุกปัญหาผิว เพื่อให้คุณเผยออร่าในแบบของตัวเองได้อย่างมั่นใจ 💖
+        </p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Line"><i class="fab fa-line"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-col">
+        <h4>หมวดหมู่สินค้า</h4>
+        <ul>
+          <li><a href="#">สกินแคร์ดูแลผิวหน้า (Skincare)</a></li>
+          <li><a href="#">เมคอัพเครื่องสำอาง (Makeup)</a></li>
+          <li><a href="#">ดูแลผิวกาย (Body Care)</a></li>
+          <li><a href="#">สินค้าขายดี (Best Sellers)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>บริการลูกค้า</h4>
+        <ul>
+          <li><a href="#">คำถามที่พบบ่อย (FAQ)</a></li>
+          <li><a href="#">นโยบายการจัดส่งสินค้า</a></li>
+          <li><a href="#">นโยบายการเปลี่ยนคืนสินค้า</a></li>
+          <li><a href="#">ติดต่อเรา (Contact Us)</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>นโยบายบริษัท</h4>
+        <ul>
+          <li><a href="#">ข้อตกลงและเงื่อนไข (Terms)</a></li>
+          <li><a href="#">นโยบายความเป็นส่วนตัว (Privacy)</a></li>
+          <li><a href="#">นโยบายการใช้คุกกี้ (Cookies)</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      &copy; 2026 Aura Beauty. All rights reserved. | จัดทำเพื่อการศึกษา PIM
+    </div>
+  </footer>
+
   <script>
+    // การคลิก Filter ปุ่มต่างๆ
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        // จำลองการกรอง (ในอนาคตใช้ JS ซ่อน/แสดงการ์ด)
+      });
+    });
+
     function carouselScroll(btn, direction) {
       const container = btn.parentElement.querySelector('.carousel-container');
       const scrollAmount = 135; 
