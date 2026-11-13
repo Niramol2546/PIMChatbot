@@ -1,51 +1,20 @@
 /* ==================================================================
-   chat-widget.js  ·  แชตบอตสำหรับแปะลงหน้าเว็บใด ๆ
-
-   วิธีใช้  เพิ่มบรรทัดเดียวก่อนปิด </body> ของหน้าเว็บ
-
-       <script src="chat-widget.js"></script>
-
-   ไฟล์ที่ต้องมีในโฟลเดอร์เดียวกัน
-       config.js        ไฟล์ตั้งค่า
-       docs/            เอกสารที่แชตบอตจะตอบจาก
-       vectors.json     ถ้าใช้โหมด vector
-
-   กุญแจไม่ได้อยู่ในไฟล์นี้  อยู่บน Cloudflare Worker
+   chat-widget.js  ·  แชตบอตสำหรับ Aura Beauty (ดีไซน์ใหม่)
    ================================================================== */
 
 (function(){
-  // โหลด config.js แบบกันเบราว์เซอร์จำไฟล์เก่า
   const s = document.createElement("script");
   s.src = "config.js?t=" + Date.now();
-  s.onerror = () => console.error("ไม่พบไฟล์ config.js  วางไว้โฟลเดอร์เดียวกับหน้าเว็บ");
+  s.onerror = () => console.error("ไม่พบไฟล์ config.js");
   s.onload = () => window.__startApp && window.__startApp();
   document.head.appendChild(s);
 })();
 
-
-
-/* ==================================================================
-   AjGolf AI  รุ่นที่สาม
-
-   ค้นหามีสองโหมด  สลับได้ที่ SEARCH_MODE ใน config.js
-     "vector"  ใช้เวกเตอร์จาก OpenRouter  ค้นด้วยความหมาย  ตรงกับที่สอนในสไลด์
-     "local"   เทียบตัวอักษรในเบราว์เซอร์  ไม่ต้องมีกุญแจ ไม่มีวันล่ม
-
-   โหมด vector ใช้ไฟล์ vectors.json ที่สร้างไว้ล่วงหน้า
-   จึงเรียก API แค่ครั้งเดียวต่อคำถาม ไม่ใช่ทุกชิ้นเอกสาร
-
-   ถ้า PROVIDER เป็น "worker"  หน้าเว็บนี้ไม่มีกุญแจอยู่เลย
-   ทุกคำขอส่งผ่าน Cloudflare Worker ซึ่งเติมกุญแจให้บนเซิร์ฟเวอร์
-
-   ถ้าโหมด vector มีปัญหา จะถอยไปใช้ local ให้อัตโนมัติ
-   ================================================================== */
-
 const PROVIDERS = {
-  // ส่งผ่าน Cloudflare Worker  กุญแจอยู่บนเซิร์ฟเวอร์ ไม่มีในหน้าเว็บ
   worker: {
     name: "Worker",
-    url: null,                                  // ประกอบจาก WORKER_URL
-    auth: () => ({}),                           // ไม่ต้องส่งกุญแจ
+    url: null,
+    auth: () => ({}),
     style: "openai",
   },
   openrouter: {
@@ -54,21 +23,9 @@ const PROVIDERS = {
     auth: (k) => ({ "Authorization": "Bearer " + k }),
     style: "openai",
   },
-  groq: {
-    name: "Groq",
-    url: "https://api.groq.com/openai/v1/chat/completions",
-    auth: (k) => ({ "Authorization": "Bearer " + k }),
-    style: "openai",
-  },
-  openai: {
-    name: "OpenAI",
-    url: "https://api.openai.com/v1/chat/completions",
-    auth: (k) => ({ "Authorization": "Bearer " + k }),
-    style: "openai",
-  },
   gemini: {
     name: "Google Gemini",
-    url: null,                                  // ประกอบจากชื่อรุ่นทีหลัง
+    url: null,
     auth: (k) => ({ "x-goog-api-key": k }),
     style: "gemini",
   },
@@ -78,20 +35,18 @@ let CFG = {}, CHUNKS = [], INDEX = [];
 let READY = false;
 let onReady = () => {};
 
-/* ประกอบที่อยู่ของ Worker  ตัดทับปิดท้ายออกให้เอง */
 function workerURL(path){
   const base = (CFG.WORKER_URL || "").replace(/\/+$/, "");
   if (!base) throw new Error("ยังไม่ได้ใส่ WORKER_URL ใน config.js");
   return base + path;
 }
-let VEC = null;            // ข้อมูลจาก vectors.json
-let MODE = "local";        // โหมดที่ใช้งานจริง
-let FELL_BACK = false;     // เคยถอยจาก vector มา local หรือยัง
+let VEC = null;
+let MODE = "local";
+let FELL_BACK = false;
 const $ = (id) => document.getElementById(id);
 let onStatus = () => {};
 const boot = (t) => onStatus(t);
 
-/* ---------- ขั้นที่ 1  หั่นเอกสาร ---------- */
 async function buildChunks(){
   const out = [];
   const base = (CFG.DOCS_BASE || "").replace(/\/+$/, "");
@@ -103,7 +58,7 @@ async function buildChunks(){
       if (!r.ok) throw new Error(r.status);
       text = (await r.text()).trim();
     } catch {
-      throw new Error(`อ่านไฟล์ ${url} ไม่ได้\nตรวจว่าไฟล์อยู่ที่เดียวกับ index.html และชื่อสะกดตรงกับรายการ FILES`);
+      throw new Error(`อ่านไฟล์ ${url} ไม่ได้`);
     }
     let start = 0, part = 1;
     while (start < text.length) {
@@ -115,9 +70,6 @@ async function buildChunks(){
   return out;
 }
 
-/* ---------- ขั้นที่ 2  ทำดัชนีไว้ค้น  ทำในเบราว์เซอร์ ไม่เรียก API ----------
-   ใช้วิธีนับชุดตัวอักษรสามตัวติดกัน
-   เหมาะกับภาษาไทยเพราะไม่ต้องตัดคำก่อน                                  */
 function grams(s, n = 3){
   const t = s.replace(/\s+/g, "");
   const m = new Map();
@@ -140,7 +92,6 @@ function similarity(a, b){
   return num / (a.norm * b.norm);
 }
 
-/* ---------- ขั้นที่ 3  ค้นหา ---------- */
 function search(question){
   const q = grams(question);
   return INDEX
@@ -150,22 +101,17 @@ function search(question){
     .map(({ i, score }) => ({ ...CHUNKS[i], score: Math.round(score * 1000) / 1000 }));
 }
 
-/* ---------- โหมดเวกเตอร์  โหลดไฟล์ที่สร้างไว้ล่วงหน้า ---------- */
 async function loadVectors(){
   const r = await fetch((CFG.VECTORS_FILE || "vectors.json") + "?t=" + Date.now());
-  if (!r.ok) throw new Error(`อ่านไฟล์ ${CFG.VECTORS_FILE || "vectors.json"} ไม่ได้  รหัส ${r.status}`);
+  if (!r.ok) throw new Error(`อ่านไฟล์เวกเตอร์ไม่ได้`);
   const d = await r.json();
   if (!d.chunks || !d.chunks.length) throw new Error("ไฟล์เวกเตอร์ว่างเปล่า");
   return d;
 }
 
-/* แปลงคำถามเป็นเวกเตอร์  เรียกหนึ่งครั้งต่อคำถาม
-   ใช้กุญแจตัวเดียวกับตอนตอบคำถาม และต้องใช้รุ่นเดียวกับตอนสร้าง vectors.json */
 async function embedQuestion(q){
   const viaWorker = CFG.PROVIDER === "worker";
-  const url = viaWorker
-    ? workerURL("/api/v1/embeddings")
-    : "https://openrouter.ai/api/v1/embeddings";
+  const url = viaWorker ? workerURL("/api/v1/embeddings") : "https://openrouter.ai/api/v1/embeddings";
   const auth = viaWorker ? {} : { "Authorization": "Bearer " + CFG.KEY };
 
   const res = await fetch(url, {
@@ -176,7 +122,7 @@ async function embedQuestion(q){
       input: [q],
     }),
   });
-  if (!res.ok) throw new Error(`แปลงคำถามไม่สำเร็จ ${res.status}  ${(await res.text()).slice(0, 180)}`);
+  if (!res.ok) throw new Error(`แปลงคำถามไม่สำเร็จ`);
   const d = await res.json();
   const v = d.data?.[0]?.embedding;
   if (!v) throw new Error("ไม่ได้รับเวกเตอร์กลับมา");
@@ -195,7 +141,6 @@ function searchVector(qv){
     }));
 }
 
-/* เลือกวิธีค้นตามโหมด  ถ้าโหมดเวกเตอร์พัง ให้ถอยไป local */
 async function findChunks(question){
   if (MODE === "vector") {
     try {
@@ -204,17 +149,16 @@ async function findChunks(question){
     } catch (e) {
       MODE = "local";
       FELL_BACK = true;
-      console.warn("โหมดเวกเตอร์มีปัญหา ถอยไปใช้การเทียบตัวอักษร :", e.message);
-      boot(bootLine() + "   (โหมดเวกเตอร์ใช้ไม่ได้ จึงสลับมาเทียบตัวอักษร)");
+      boot(bootLine() + " (ใช้ไม่ได้ สลับมาเทียบตัวอักษร)");
     }
   }
   return { found: search(question), how: "เทียบตัวอักษร" };
 }
 
-/* ---------- ขั้นที่ 4  ประกอบคำสั่งแล้วส่งให้ LLM ---------- */
+/* --- Prompt ของ Aura Beauty --- */
 function makePrompt(question, found){
   const docs = found.map((f, i) =>
-    `[ชิ้นที่ ${i + 1}  จากไฟล์ ${f.source}]\n${f.text}`).join("\n\n");
+    `[อ้างอิง ${i + 1} จากไฟล์ ${f.source}]\n${f.text}`).join("\n\n");
   return `คุณคือ "Aura" ผู้ช่วยแนะนำความงามที่เชี่ยวชาญ สดใส ทันสมัย ของแบรนด์ Aura Beauty
 ให้ตอบคำถามโดยอ้างอิงจากข้อมูลด้านล่างนี้เท่านั้น 
 
@@ -230,16 +174,12 @@ ${question}`;
 
 async function askLLM(prompt){
   const p = PROVIDERS[CFG.PROVIDER];
-  if (!p) throw new Error(`ไม่รู้จักผู้ให้บริการชื่อ ${CFG.PROVIDER}\nเลือกได้จาก ${Object.keys(PROVIDERS).join("  ")}`);
-
   let url, body;
   if (p.style === "gemini") {
     url = `https://generativelanguage.googleapis.com/v1beta/models/${CFG.MODEL}:generateContent`;
     body = { contents: [{ parts: [{ text: prompt }] }] };
   } else {
-    url = CFG.PROVIDER === "worker"
-      ? workerURL("/api/v1/chat/completions")
-      : p.url;
+    url = CFG.PROVIDER === "worker" ? workerURL("/api/v1/chat/completions") : p.url;
     body = { model: CFG.MODEL, messages: [{ role: "user", content: prompt }] };
   }
 
@@ -249,227 +189,181 @@ async function askLLM(prompt){
     body: JSON.stringify(body),
   });
 
-  if (!res.ok) {
-    const t = await res.text();
-    throw new Error(`${res.status}  ${t.slice(0, 250)}`);
-  }
+  if (!res.ok) throw new Error(`ไม่สามารถติดต่อ AI ได้ (${res.status})`);
   const d = await res.json();
   return p.style === "gemini"
-    ? (d.candidates?.[0]?.content?.parts?.[0]?.text ?? "ไม่ได้รับคำตอบกลับมา")
-    : (d.choices?.[0]?.message?.content ?? "ไม่ได้รับคำตอบกลับมา");
+    ? (d.candidates?.[0]?.content?.parts?.[0]?.text ?? "ไม่ได้รับคำตอบ")
+    : (d.choices?.[0]?.message?.content ?? "ไม่ได้รับคำตอบ");
 }
 
 function bootLine(){
   const files = new Set(CHUNKS.map(c => c.source)).size;
-  const pv = PROVIDERS[CFG.PROVIDER]?.name ?? CFG.PROVIDER;
-  const m = MODE === "vector" ? "เวกเตอร์" : "เทียบตัวอักษร";
-  return `พร้อมใช้งาน   เอกสาร ${files} ไฟล์  ${CHUNKS.length} ชิ้น   `
-       + `ค้นแบบ ${m}   ตอบด้วย ${pv}`;
+  const m = MODE === "vector" ? "เวกเตอร์" : "ตัวอักษร";
+  return `พร้อมใช้งาน 💖 เอกสาร ${files} ไฟล์ (${m})`;
 }
 
-/* ---------- เริ่มระบบ ---------- */
 window.__startApp = async () => {
   CFG = window.CONFIG || {};
   CFG.KEY = (CFG.KEY || "").trim();
-
-  const needKey = CFG.PROVIDER !== "worker";
-  if (needKey && (!CFG.KEY || CFG.KEY.startsWith("ใส่กุญแจ"))) {
-    boot("ยังไม่ได้ใส่กุญแจ  หรือเบราว์เซอร์ยังใช้ไฟล์เก่า\n\n"
-       + "1 เปิด config.js ตรง ๆ ในแท็บใหม่ ดูว่ามีกุญแจจริงไหม\n"
-       + "2 ถ้ามี ให้กด Ctrl และ Shift และ R\n"
-       + "3 ถ้าไม่มี แปลว่ายังไม่ได้ Commit");
-    return;
-  }
-  if (CFG.PROVIDER === "worker" && !CFG.WORKER_URL) {
-    boot("ยังไม่ได้ใส่ที่อยู่ Worker\n\nแก้บรรทัด WORKER_URL ใน config.js ให้เป็นที่อยู่ของ Worker ที่สร้างไว้");
-    return;
-  }
-  if (!CFG.FILES || !CFG.FILES.length) {
-    boot("ไม่มีรายชื่อไฟล์เอกสาร\n\nตรวจรายการ FILES ในไฟล์ config.js");
-    return;
-  }
-
   try {
-    boot("กำลังอ่านเอกสาร...");
+    boot("กำลังอ่านข้อมูลความสวย...");
     CHUNKS = await buildChunks();
-    INDEX = CHUNKS.map(c => grams(c.text));     // เตรียมโหมดสำรองไว้เสมอ
-
+    INDEX = CHUNKS.map(c => grams(c.text));
     MODE = "local";
     if ((CFG.SEARCH_MODE || "local") === "vector") {
-      try {
-        boot("กำลังโหลดไฟล์เวกเตอร์...");
-        VEC = await loadVectors();
-        MODE = "vector";
-      } catch (e) {
-        console.warn("โหลดไฟล์เวกเตอร์ไม่ได้ จึงใช้โหมด local :", e.message);
-      }
+      try { boot("กำลังโหลดเวกเตอร์..."); VEC = await loadVectors(); MODE = "vector"; } catch (e) {}
     }
-
     boot(bootLine());
-
     READY = true;
     onReady();
-  } catch (e) {
-    boot("เริ่มไม่สำเร็จ\n\n" + e.message);
-  }
+  } catch (e) { boot("เริ่มไม่สำเร็จ: " + e.message); }
 };
 
-
-/* ==================================================================
-   ฟังก์ชันสาธารณะ  หน้าไหนก็เรียกได้
-   คืนค่าเป็น { answer, refs }
-   ================================================================== */
 async function askBot(question){
   if (!READY) throw new Error("ระบบยังไม่พร้อม");
   const { found, how } = await findChunks(question);
   const answer = await askLLM(makePrompt(question, found));
-  const refs = `ค้นแบบ${how}   ` +
-    found.map(f => `${f.source} ส่วนที่ ${f.part} (${f.score})`).join("   ");
+  const refs = `ค้นแบบ${how} ` + found.map(f => `[${f.source}]`).join(" ");
   return { answer, refs };
 }
 
-
 /* ==================================================================
-   ส่วนหน้าตาของกล่องแชต  สร้างขึ้นเองทั้งหมดด้วย JavaScript
-   จึงไม่ต้องไปแก้ HTML ของหน้าเว็บเลย
+   หน้าตาของกล่องแชต (UI ดีไซน์ใหม่ล่าสุด)
    ================================================================== */
 (function(){
-
-  /* ---------- สีให้เข้ากับเว็บ PIM  แก้ได้ที่นี่ ---------- */
   const C = {
-    main:  "#FF5E8E",   // สีชมพูหลักของแบรนด์
-    accent:"#FF9248",   // สีส้ม (ปุ่มส่งข้อความ)
-    ink:   "#14211D",
-    soft:  "#D5E3DB",
-    line:  "#C3D1C8",
-    bg:    "#EEF3EE",
+    main:  "#FF5E8E",   
+    accent:"#FF9248",   
+    ink:   "#2A1A1E",
+    soft:  "#FFE5EC",
+    line:  "#FFD1DF",
+    bg:    "rgba(255, 255, 255, 0.7)", /* แบบกระจกใส */
     card:  "#FFFFFF",
-    muted: "#3F514A",
+    muted: "#8A6D75",
   };
 
-  /* ---------- สไตล์ ---------- */
   const css = `
-#pimbot-btn{
+@keyframes float-bot { 0% {transform: translateY(0px);} 50% {transform: translateY(-8px);} 100% {transform: translateY(0px);} }
+@keyframes pop-in { 0% {opacity: 0; transform: scale(0.9) translateY(10px);} 100% {opacity: 1; transform: scale(1) translateY(0);} }
+
+#pimbot-btn {
   position:fixed; right:24px; bottom:24px; z-index:9999;
-  width:60px; height:60px; border-radius:50%; border:0; cursor:pointer;
-  background:${C.main}; color:#fff;
-  box-shadow:0 6px 24px rgba(0,0,0,.25);
+  width:65px; height:65px; border-radius:50%; border:0; cursor:pointer;
+  background: linear-gradient(135deg, ${C.main}, ${C.accent}); color:#fff;
+  box-shadow:0 8px 25px rgba(255, 94, 142, 0.4);
   display:grid; place-items:center;
-  font-family:'Anuphan',system-ui,sans-serif;
-  transition:transform .15s;
-  margin-bottom: env(safe-area-inset-bottom, 0px);
+  font-family:'Prompt',system-ui,sans-serif;
+  transition:transform .25s, box-shadow .25s;
+  animation: float-bot 4s ease-in-out infinite;
 }
-#pimbot-btn:hover{transform:scale(1.06)}
-#pimbot-btn svg{width:27px; height:27px}
-#pimbot-dot{
-  position:absolute; top:4px; right:4px; width:13px; height:13px;
-  border-radius:50%; background:#2bb673; border:2px solid #fff;
+#pimbot-btn:hover { transform:scale(1.1); box-shadow:0 12px 30px rgba(255, 94, 142, 0.6); animation: none; }
+#pimbot-btn svg { width:30px; height:30px; fill: white;}
+
+#pimbot-panel {
+  position:fixed; right:24px; bottom:100px; z-index:9999;
+  width:min(400px, calc(100vw - 32px));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 24px; overflow:hidden; display:none;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  font-family:'Prompt',system-ui,sans-serif;
+  font-size:15px; line-height:1.6; color:${C.ink};
+  transform-origin: bottom right;
 }
-#pimbot-panel{
-  position:fixed; right:24px; bottom:96px; z-index:9999;
-  width:min(390px, calc(100vw - 32px));
-  background:${C.card}; border:1px solid ${C.line}; border-radius:14px;
-  overflow:hidden; display:none;
-  box-shadow:0 16px 48px rgba(0,0,0,.22);
-  font-family:'Anuphan','Noto Sans Thai',system-ui,sans-serif;
-  font-size:16px; line-height:1.65; color:${C.ink};
-  margin-bottom: env(safe-area-inset-bottom, 0px);
+#pimbot-panel.pimbot-open { display:block; animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+#pimbot-head {
+  background: linear-gradient(135deg, ${C.main}, ${C.accent});
+  color:#fff; padding:20px; position:relative; text-align: center;
 }
-#pimbot-panel.pimbot-open{display:block}
-#pimbot-head{background:${C.main}; color:#fff; padding:14px 17px; position:relative}
-#pimbot-head b{font-size:16px; font-weight:600}
-#pimbot-head small{display:block; font-size:12px; color:${C.soft}; margin-top:2px}
-#pimbot-close{
-  position:absolute; top:10px; right:12px;
-  background:none; border:0; color:#fff; font-size:22px; line-height:1;
-  cursor:pointer; width:32px; height:32px;
+#pimbot-head b { font-size:18px; font-weight:600; display:block; letter-spacing: 0.5px;}
+#pimbot-head small { display:block; font-size:12px; color: rgba(255,255,255,0.85); margin-top:4px; }
+#pimbot-close {
+  position:absolute; top:15px; right:15px; background:rgba(255,255,255,0.2); 
+  border:0; color:#fff; font-size:20px; line-height:1; cursor:pointer; 
+  width:32px; height:32px; border-radius:50%; transition: background 0.2s;
 }
-#pimbot-warn{
-  background:${C.bg}; border-bottom:1px solid ${C.line};
-  padding:10px 17px; font-size:12px; line-height:1.6; color:${C.muted};
+#pimbot-close:hover { background: rgba(255,255,255,0.4); }
+
+#pimbot-warn {
+  background: ${C.soft}; border-bottom:1px solid ${C.line};
+  padding:12px 18px; font-size:12px; line-height:1.6; color:${C.muted}; text-align:center;
 }
-#pimbot-warn b{color:${C.main}}
-#pimbot-log{height:290px; overflow-y:auto; padding:14px 16px; background:${C.bg}}
-.pimbot-m{
-  max-width:85%; padding:10px 14px; border-radius:12px; margin:8px 0;
-  font-size:14.5px; white-space:pre-wrap; line-height:1.65;
+#pimbot-warn b { color:${C.main}; font-size: 13px;}
+
+#pimbot-log { height:320px; overflow-y:auto; padding:20px; background:${C.bg}; scrollbar-width: thin; scrollbar-color: ${C.line} transparent; }
+#pimbot-log::-webkit-scrollbar { width: 6px; }
+#pimbot-log::-webkit-scrollbar-thumb { background-color: ${C.line}; border-radius: 10px; }
+
+.pimbot-m { max-width:85%; padding:12px 16px; border-radius:18px; margin:10px 0; font-size:14px; white-space:pre-wrap; line-height:1.6; animation: pop-in 0.3s ease forwards; box-shadow: 0 2px 10px rgba(0,0,0,0.03);}
+.pimbot-me { margin-left:auto; background: linear-gradient(135deg, ${C.main}, ${C.accent}); color:#fff; border-bottom-right-radius:4px; }
+.pimbot-bot { background:${C.card}; border:1px solid ${C.line}; border-bottom-left-radius:4px; position: relative; margin-left: 10px;}
+.pimbot-src { display:block; margin-top:8px; font-size:11px; color:${C.muted}; border-top: 1px dashed ${C.line}; padding-top: 6px;}
+
+#pimbot-chips { padding:10px 20px 15px; display:flex; flex-wrap:wrap; gap:8px; background:${C.bg}; }
+#pimbot-chips span {
+  font-size:12px; padding:6px 14px; border:1px solid ${C.main}; color: ${C.main};
+  border-radius:20px; cursor:pointer; background:${C.card}; transition: all 0.2s; font-weight: 500;
 }
-.pimbot-me{margin-left:auto; background:${C.main}; color:#fff; border-bottom-right-radius:4px}
-.pimbot-bot{background:${C.card}; border:1px solid ${C.line}; border-bottom-left-radius:4px}
-.pimbot-src{display:block; margin-top:7px; font-size:11px; color:${C.muted}}
-#pimbot-chips{padding:0 16px 10px; display:flex; flex-wrap:wrap; gap:6px; background:${C.bg}}
-#pimbot-chips span{
-  font-size:12px; padding:5px 11px; border:1px solid ${C.line};
-  border-radius:999px; cursor:pointer; color:${C.muted}; background:${C.card};
+#pimbot-chips span:hover { background:${C.main}; color:white; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(255, 94, 142, 0.2);}
+
+#pimbot-row { display:flex; gap:10px; padding:15px; border-top:1px solid ${C.line}; background: ${C.card}; }
+#pimbot-q {
+  flex:1; padding:12px 16px; font-family:inherit; font-size:14px;
+  border:1px solid ${C.line}; border-radius:20px; background:${C.bg}; color:${C.ink}; outline: none; transition: border-color 0.2s;
 }
-#pimbot-chips span:hover{border-color:${C.main}; color:${C.main}}
-#pimbot-row{display:flex; gap:8px; padding:12px 14px; border-top:1px solid ${C.line}}
-#pimbot-q{
-  flex:1; padding:10px 14px; font-family:inherit; font-size:14.5px;
-  border:1px solid ${C.line}; border-radius:9px; background:${C.card}; color:${C.ink};
+#pimbot-q:focus { border-color: ${C.main}; }
+#pimbot-send {
+  padding:0 20px; border:0; border-radius:20px;
+  background: linear-gradient(45deg, ${C.main}, ${C.accent}); color:white;
+  font-family:inherit; font-size:14px; font-weight:600; cursor:pointer; transition: transform 0.2s; box-shadow: 0 4px 12px rgba(255, 94, 142, 0.3);
 }
-#pimbot-q:focus{outline:2px solid ${C.main}; outline-offset:1px}
-#pimbot-send{
-  padding:10px 20px; border:0; border-radius:9px;
-  background:${C.accent}; color:${C.ink};
-  font-family:inherit; font-size:14.5px; font-weight:600; cursor:pointer;
-}
-#pimbot-send:disabled{opacity:.45; cursor:default}
+#pimbot-send:hover { transform: scale(1.05); }
+#pimbot-send:disabled { opacity:.5; cursor:not-allowed; box-shadow:none; transform: none;}
 `;
 
-  const style = document.createElement("style");
-  style.textContent = css;
-  document.head.appendChild(style);
+  const style = document.createElement("style"); style.textContent = css; document.head.appendChild(style);
 
-  /* ---------- โครงหน้าตา ---------- */
   const wrap = document.createElement("div");
   wrap.innerHTML = `
-<button id="pimbot-btn" aria-label="เปิดกล่องสอบถาม">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.7-.8L3 21l1.9-5A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"></path>
+<button id="pimbot-btn" aria-label="เปิดกล่องแชท">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/>
+    <path d="M7 9h10v2H7zm0-3h10v2H7z"/>
   </svg>
-  <span id="pimbot-dot"></span>
 </button>
 
-<div id="pimbot-panel" role="dialog" aria-label="กล่องสอบถาม">
+<div id="pimbot-panel">
   <div id="pimbot-head">
     <button id="pimbot-close" aria-label="ปิด">×</button>
-    <b>Aura Beauty Advisor ✨</b>
-    <small id="pimbot-status">กำลังเตรียมความสวย...</small>
+    <b>Aura Beauty ✨</b>
+    <small id="pimbot-status">ระบบกำลังเตรียมความสวย...</small>
   </div>
-
   <div id="pimbot-warn">
-    <b>ยินดีให้คำปรึกษาตลอด 24 ชม. 💋</b><br>
-    ถามเรื่องเฉดสี แนะนำสกินแคร์ หรือเช็คโปรโมชั่นได้เลยค่ะ<br>
-    <i>(ข้อมูลอ้างอิงจากแคตตาล็อกสินค้าของแบรนด์ Aura)</i><br>
-    ติดต่อสอบถามพนักงาน โทร 0-2000-0002
+    <b>AI Beauty Advisor ยินดีให้บริการ 💋</b><br>
+    ถามเรื่องสกินแคร์ เมคอัพ หรือโปรโมชั่นได้เลยค่ะ<br>
+    <span style="font-size: 11px;">(ติดต่อพนักงาน โทร 0-2000-0002)</span>
   </div>
-
   <div id="pimbot-log"></div>
-
   <div id="pimbot-chips">
-    <span>ผิวแห้งแต่งหน้าไม่ติด ทำไงดี?</span>
-    <span>เซรั่มวิตามินซีช่วยเรื่องอะไร</span>
-    <span>เจลล้างหน้าสำหรับคนเป็นสิว</span>
+    <span>ผิวแห้งแต่งหน้าไม่ติด 💧</span>
+    <span>เซรั่มวิตามินซีช่วยอะไร? 🍊</span>
+    <span>มีโปรโมชั่นอะไรบ้าง 🎁</span>
   </div>
-
   <div id="pimbot-row">
-    <input id="pimbot-q" type="text" placeholder="พิมพ์คำถาม" disabled>
+    <input id="pimbot-q" type="text" placeholder="พิมพ์ข้อความที่นี่..." disabled>
     <button id="pimbot-send" disabled>ส่ง</button>
   </div>
 </div>`;
   document.body.appendChild(wrap);
 
-  const $ = (id) => document.getElementById(id);
-
-  /* ---------- ต่อเข้ากับสมอง ---------- */
   onStatus = (t) => { $("pimbot-status").textContent = String(t).split("\n")[0]; };
 
   onReady = () => {
     $("pimbot-q").disabled = false;
     $("pimbot-send").disabled = false;
-    say("สวัสดีค่าา 💖 Aura ยินดีให้คำปรึกษาค่ะ วันนี้อยากให้ช่วยดูแลเรื่องผิวหรือแนะนำไอเทมเด็ดตัวไหนดีคะ?", "bot");
+    say("สวัสดีค่าา 💖 Aura ยินดีให้คำปรึกษาค่ะ วันนี้อยากให้ช่วยดูแลเรื่องผิว หรือแนะนำไอเทมเด็ดตัวไหนดีคะ?", "bot");
   };
 
   function say(text, who, src){
@@ -478,9 +372,7 @@ async function askBot(question){
     d.textContent = text;
     if (src) {
       const s = document.createElement("span");
-      s.className = "pimbot-src";
-      s.textContent = src;
-      d.appendChild(s);
+      s.className = "pimbot-src"; s.textContent = src; d.appendChild(s);
     }
     $("pimbot-log").appendChild(d);
     $("pimbot-log").scrollTop = $("pimbot-log").scrollHeight;
@@ -492,32 +384,27 @@ async function askBot(question){
     if (!t) return;
     $("pimbot-q").value = "";
     say(t, "me");
-    const holder = say("กำลังค้นข้อมูล...", "bot");
+    const holder = say("Aura กำลังค้นข้อมูลให้แป๊บนึงนะคะ...", "bot");
     try {
       const { answer, refs } = await askBot(t);
       holder.textContent = answer;
-      const s = document.createElement("span");
-      s.className = "pimbot-src";
-      s.textContent = refs;
-      holder.appendChild(s);
+      const s = document.createElement("span"); s.className = "pimbot-src"; s.textContent = refs; holder.appendChild(s);
     } catch (e) {
       const m = e.message || String(e);
-      holder.textContent =
-          m.includes("429") ? "ตอนนี้มีผู้ใช้งานมาก กรุณารอสักครู่แล้วถามใหม่"
-        : m.includes("401") || m.includes("403") ? "ระบบยังตั้งค่าไม่ครบ กรุณาแจ้งผู้ดูแล"
-        : "เกิดข้อผิดพลาด\n\n" + m;
+      holder.textContent = m.includes("429") ? "ตอนนี้สาวๆ ทักมาเยอะมาก คิวเต็มนิดนึงน้า รอแป๊บแล้วส่งใหม่นะคะ 💖"
+        : m.includes("401") || m.includes("403") ? "ระบบยังเชื่อมต่อไม่สมบูรณ์ แจ้งแอดมินให้หน่อยน้า"
+        : "เกิดข้อผิดพลาดจ้า\n\n" + m;
     }
+    $("pimbot-log").scrollTop = $("pimbot-log").scrollHeight;
   }
 
   $("pimbot-btn").addEventListener("click", () => {
     const open = $("pimbot-panel").classList.toggle("pimbot-open");
     if (open) $("pimbot-q").focus();
   });
-  $("pimbot-close").addEventListener("click", () =>
-    $("pimbot-panel").classList.remove("pimbot-open"));
+  $("pimbot-close").addEventListener("click", () => $("pimbot-panel").classList.remove("pimbot-open"));
   $("pimbot-send").addEventListener("click", send);
   $("pimbot-q").addEventListener("keydown", e => { if (e.key === "Enter") send(); });
   document.querySelectorAll("#pimbot-chips span").forEach(el =>
     el.addEventListener("click", () => { $("pimbot-q").value = el.textContent; send(); }));
-
 })();
