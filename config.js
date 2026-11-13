@@ -33,7 +33,7 @@ window.CONFIG = {
 
   // แก้ตรงนี้  ชื่อรุ่นจริงจากหน้า Models ของ OpenRouter
   // หาชื่อจริงได้ที่  https://openrouter.ai/api/v1/models
-  MODEL: "meta-llama/llama-3.1-8b-instruct:free",
+  MODEL: "nvidia/nemotron-3.5-super-vl:free",
 
 
   /* ===== เอกสาร ===== */
