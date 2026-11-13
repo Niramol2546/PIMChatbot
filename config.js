@@ -24,7 +24,7 @@ window.CONFIG = {
   SEARCH_MODE: "local",
 
   // รุ่นที่ใช้แปลงเวกเตอร์  ต้องตรงกับตอนสร้าง vectors.json
-  EMBED_MODEL: "jinaai/jina-embeddings-v2-base-en:free",
+  EMBED_MODEL: "sentence-transformers/all-minilm-l6-v2:free",
 
   VECTORS_FILE: "vectors.json",
 
