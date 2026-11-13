@@ -39,34 +39,20 @@
   }
 
   /* Background Blobs */
-  .blob {
-    position: absolute;
-    filter: blur(80px);
-    z-index: -1;
-    opacity: 0.4;
-    animation: float 10s ease-in-out infinite;
-    border-radius: 50%;
-  }
+  .blob { position: absolute; filter: blur(80px); z-index: -1; opacity: 0.4; animation: float 10s ease-in-out infinite; border-radius: 50%; }
   .blob-1 { top: 5%; left: -10%; width: 500px; height: 500px; background: var(--pink); }
   .blob-2 { top: 40%; right: -15%; width: 400px; height: 400px; background: var(--orange); animation-delay: -5s; }
   .blob-3 { bottom: -10%; left: 20%; width: 600px; height: 600px; background: #FFD1DF; animation-delay: -2s; }
-
   @keyframes float { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(30px, -50px) scale(1.1); } }
 
   /* Glassmorphism */
-  .glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 10px 30px rgba(255, 94, 142, 0.06);
-  }
+  .glass { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(255, 94, 142, 0.06); }
 
   /* Navbar */
-  header { position: sticky; top: 0; z-index: 100; padding: 14px 5%; display: flex; justify-content: space-between; align-items: center; }
+  header { position: sticky; top: 0; z-index: 90; padding: 14px 5%; display: flex; justify-content: space-between; align-items: center; }
   .logo { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; background: linear-gradient(45deg, var(--pink), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .nav-right { display: flex; align-items: center; gap: 15px; }
-  .cart-btn { background: #FFE5EC; border: none; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: transform 0.2s; position: relative; color: var(--pink); }
+  .cart-btn { background: #FFE5EC; border: none; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; transition: transform 0.2s; position: relative; }
   .cart-btn:hover { transform: scale(1.08); }
   .cart-badge { position: absolute; top: -3px; right: -3px; background: var(--pink); color: white; font-size: 12px; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
 
@@ -79,70 +65,49 @@
   .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 30px 5% 60px; max-width: 1400px; margin: 0 auto; }
 
   /* Modern Product Card */
-  .product-card {
-    border-radius: 24px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 25px rgba(255, 94, 142, 0.04);
-  }
+  .product-card { border-radius: 24px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.4s ease; position: relative; overflow: hidden; }
   .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 45px rgba(255, 94, 142, 0.12); }
   .product-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--pink), var(--orange)); transform: scaleX(0); transition: transform 0.4s ease; }
   .product-card:hover::before { transform: scaleX(1); }
 
-  /* Sale Badge */
-  .sale-badge { position: absolute; top: 20px; right: 20px; background: var(--orange); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .sale-badge { position: absolute; top: 20px; right: 20px; background: var(--orange); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; z-index: 2; }
 
-  /* Interactive Image Circle */
-  .product-img-container { width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg, #FFF7F9, #FFE5EC); margin: 0 auto 20px; overflow: hidden; border: 5px solid white; box-shadow: 0 5px 15px rgba(255, 94, 142, 0.1); transition: transform 0.3s ease; cursor: pointer; }
+  .product-img-container { width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg, #FFF7F9, #FFE5EC); margin: 0 auto 20px; overflow: hidden; border: 5px solid white; box-shadow: 0 5px 15px rgba(255, 94, 142, 0.1); transition: transform 0.3s ease; cursor: pointer; position: relative; z-index: 1;}
   .product-card:hover .product-img-container { transform: scale(1.05); }
   .product-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
   .product-card:hover .product-img { transform: scale(1.1); }
 
-  /* Rating & Features */
   .product-meta { display: flex; justify-content: center; align-items: center; gap: 15px; font-size: 14px; color: #8A6D75; margin-bottom: 10px; }
   .rating { color: #f39c12; font-weight: 600; }
   .feature-icon { font-size: 18px; color: var(--pink); margin-right: 5px; vertical-align: middle; }
 
   .product-card h3 { font-size: 1.3rem; margin-bottom: 8px; color: var(--dark); line-height: 1.3; }
   .product-card p { font-size: 0.95rem; color: #8A6D75; margin-bottom: 15px; line-height: 1.6; }
-
-  /* Feature Highlights */
   .feature-list { list-style: none; font-size: 0.9rem; color: #8A6D75; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
   .feature-list li { background: #FFF7F9; padding: 4px 10px; border-radius: 15px; }
 
-  /* Modern Image Carousel (Gimmick) */
+  /* Carousel */
   .image-carousel-wrapper { position: relative; margin-bottom: 25px; }
   .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 15px; padding-bottom: 10px; scrollbar-width: none; -ms-overflow-style: none; }
   .carousel-container::-webkit-scrollbar { display: none; }
-  .carousel-item { flex: 0 0 120px; height: 120px; border-radius: 12px; overflow: hidden; scroll-snap-align: start; cursor: pointer; }
+  .carousel-item { flex: 0 0 120px; height: 120px; border-radius: 12px; overflow: hidden; scroll-snap-align: start; cursor: pointer; border: 1px solid #FFE0E9;}
   .carousel-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s; }
   .carousel-item img:hover { transform: scale(1.1); }
-  /* ปุ่มเลื่อนซ้าย-ขวา (สำหรับ Desktop) */
-  .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.8); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1); font-size: 18px; color: var(--dark); transition: opacity 0.3s; opacity: 0; display: flex; align-items: center; justify-content: center; }
+  .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.9); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.1); font-size: 18px; color: var(--dark); transition: opacity 0.3s; opacity: 0; display: flex; align-items: center; justify-content: center; z-index: 2;}
   .image-carousel-wrapper:hover .carousel-btn { opacity: 1; }
   .carousel-btn.prev { left: -15px; }
   .carousel-btn.next { right: -15px; }
-  .carousel-btn:hover { background: white; }
+  .carousel-btn:hover { background: white; color: var(--pink);}
 
-  /* Card Footer (Price & Action) */
+  /* Card Footer */
   .card-footer { margin-top: auto; border-top: 1px solid #FFE0E9; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; }
   .price { font-size: 1.6rem; font-weight: 700; color: var(--orange); }
-  
-  /* Modern Quantity + Action */
   .action-group { display: flex; align-items: center; gap: 10px; }
   .qty-selector { display: flex; align-items: center; border: 1px solid #FFD1DF; border-radius: 20px; height: 42px; background: white; }
   .qty-btn { background: none; border: none; width: 36px; cursor: pointer; font-size: 18px; color: var(--pink); display: flex; align-items: center; justify-content: center; }
   .qty-val { font-weight: 600; min-width: 20px; text-align: center; font-size: 16px; }
-  
   .btn { display: inline-block; padding: 10px 24px; background: linear-gradient(45deg, var(--pink), var(--orange)); color: white; text-decoration: none; border-radius: 20px; font-weight: 500; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer; font-size: 14px; }
-  .btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(255, 94, 142, 0.25); }
+  .btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(255, 94, 142, 0.3); }
 </style>
 </head>
 <body>
@@ -161,10 +126,7 @@
   <header class="glass">
     <div class="logo">Aura Beauty</div>
     <div class="nav-right">
-      <button class="cart-btn" aria-label="ตะกร้าสินค้า">
-        🛒
-        <span class="cart-badge">0</span>
-      </button>
+      <button class="cart-btn" aria-label="ตะกร้าสินค้า">🛒<span class="cart-badge">0</span></button>
       <a href="#products" class="btn">Shop Now</a>
     </div>
   </header>
@@ -184,30 +146,23 @@
         <span class="sale-badge">Hot Sale!</span>
         <div>
           <div class="product-img-container" title="ดูรายละเอียด">
-            <img src="https://i.pinimg.com/564x/0a/95/e9/0a95e9d988b30a9187f5902580c37e37.jpg" alt="Aura Glow Vitamin C Serum" class="product-img">
+            <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80" alt="Aura Glow Vitamin C Serum" class="product-img">
           </div>
           <div class="product-meta">
-            <span class="rating">⭐⭐⭐⭐⭐ (4.9)</span>
-            <span>|</span>
-            <span class="feature-item"><span class="feature-icon">🍊</span> ผิวกระจ่างใส</span>
+            <span class="rating">⭐⭐⭐⭐⭐ (4.9)</span><span>|</span><span class="feature-item"><span class="feature-icon">🍊</span> ผิวกระจ่างใส</span>
           </div>
           <h3>Aura Glow Vitamin C Serum</h3>
           <p>เซรั่มวิตามินซีเข้มข้น 15% ลดรอยดำ รอยแดง ปรับสีผิวให้สว่างกระจ่างใสอย่างเป็นธรรมชาติ</p>
-          <ul class="feature-list">
-            <li>Vitamin C 15%</li>
-            <li>Niacinamide</li>
-            <li>ผิวแพ้ง่ายใช้ได้</li>
-          </ul>
+          <ul class="feature-list"><li>Vitamin C 15%</li><li>Niacinamide</li><li>ผิวแพ้ง่ายใช้ได้</li></ul>
         </div>
         
-        <!-- Image Carousel Gimmick -->
         <div class="image-carousel-wrapper">
           <button class="carousel-btn prev" onclick="carouselScroll(this, -1)">&#10094;</button>
           <div class="carousel-container">
-            <div class="carousel-item"><img src="https://i.pinimg.com/564x/0a/95/e9/0a95e9d988b30a9187f5902580c37e37.jpg" alt="Product detail 1"></div>
-            <div class="carousel-item"><img src="https://i.pinimg.com/564x/b6/d4/a6/b6d4a6028d0e1810a49aa254045d0698.jpg" alt="Product detail 2"></div>
-            <div class="carousel-item"><img src="https://i.pinimg.com/564x/30/b9/44/30b944425d0a91c3576e7583d08c7bd6.jpg" alt="Product detail 3"></div>
-            <div class="carousel-item"><img src="https://i.pinimg.com/564x/1a/b2/6f/1ab26f337a2b823f454a45d773507a1b.jpg" alt="Product detail 4"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80" alt="detail 1"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=400&q=80" alt="detail 2"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1611078712760-496662402131?auto=format&fit=crop&w=400&q=80" alt="detail 3"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=400&q=80" alt="detail 4"></div>
           </div>
           <button class="carousel-btn next" onclick="carouselScroll(this, 1)">&#10095;</button>
         </div>
@@ -216,11 +171,9 @@
           <div class="price">฿890</div>
           <div class="action-group">
             <div class="qty-selector">
-              <button class="qty-btn minus" onclick="changeQty(this, -1)">−</button>
-              <span class="qty-val">1</span>
-              <button class="qty-btn plus" onclick="changeQty(this, 1)">+</button>
+              <button class="qty-btn minus" onclick="changeQty(this, -1)">−</button><span class="qty-val">1</span><button class="qty-btn plus" onclick="changeQty(this, 1)">+</button>
             </div>
-            <button class="btn">หยิบใส่ตะกร้า</button>
+            <button class="btn add-cart-btn">หยิบใส่ตะกร้า</button>
           </div>
         </footer>
       </article>
@@ -230,29 +183,22 @@
         <span class="sale-badge">Best Seller</span>
         <div>
           <div class="product-img-container" title="ดูรายละเอียด">
-            <img src="https://i.pinimg.com/736x/f9/9a/96/f99a96d6104b8495b6aa09618f1e395a.jpg" alt="Aura Deep Moisture Cream" class="product-img">
+            <img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=400&q=80" alt="Aura Deep Moisture Cream" class="product-img">
           </div>
           <div class="product-meta">
-            <span class="rating">⭐⭐⭐⭐⭐ (5.0)</span>
-            <span>|</span>
-            <span class="feature-item"><span class="feature-icon">💧</span> ล็อคความชุ่มชื้น</span>
+            <span class="rating">⭐⭐⭐⭐⭐ (5.0)</span><span>|</span><span class="feature-item"><span class="feature-icon">💧</span> ล็อคความชุ่มชื้น</span>
           </div>
           <h3>Aura Deep Moisture Cream</h3>
           <p>ครีมเซราไมด์ ล็อคความชุ่มชื้นยาวนาน 48 ชม. บอกลาผิวแห้งลอกขุย แต่งหน้าติดทนตลอดวัน</p>
-           <ul class="feature-list">
-            <li>Ceramides 5 ชนิด</li>
-            <li>Hyaluronic Acid</li>
-            <li>ฟื้นฟูเกราะป้องกันผิว</li>
-          </ul>
+           <ul class="feature-list"><li>Ceramides 5 ชนิด</li><li>Hyaluronic Acid</li><li>ฟื้นฟูเกราะป้องกันผิว</li></ul>
         </div>
         
-        <!-- Image Carousel Gimmick -->
         <div class="image-carousel-wrapper">
            <button class="carousel-btn prev" onclick="carouselScroll(this, -1)">&#10094;</button>
           <div class="carousel-container">
-            <div class="carousel-item"><img src="https://i.pinimg.com/736x/f9/9a/96/f99a96d6104b8495b6aa09618f1e395a.jpg" alt="Product detail 1"></div>
-            <div class="carousel-item"><img src="https://i.pinimg.com/736x/0c/c6/6b/0cc66b7b4550f4fb36043a886b809eb9.jpg" alt="Product detail 2"></div>
-            <div class="carousel-item"><img src="https://i.pinimg.com/736x/05/e0/21/05e0217f46bbd9aa32f8063f5ebf74d6.jpg" alt="Product detail 3"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=400&q=80" alt="detail 1"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1615397322901-44ff64052061?auto=format&fit=crop&w=400&q=80" alt="detail 2"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1580870059858-a53d6118d044?auto=format&fit=crop&w=400&q=80" alt="detail 3"></div>
           </div>
           <button class="carousel-btn next" onclick="carouselScroll(this, 1)">&#10095;</button>
         </div>
@@ -261,11 +207,9 @@
           <div class="price">฿1,250</div>
           <div class="action-group">
             <div class="qty-selector">
-              <button class="qty-btn minus" onclick="changeQty(this, -1)">−</button>
-              <span class="qty-val">1</span>
-              <button class="qty-btn plus" onclick="changeQty(this, 1)">+</button>
+              <button class="qty-btn minus" onclick="changeQty(this, -1)">−</button><span class="qty-val">1</span><button class="qty-btn plus" onclick="changeQty(this, 1)">+</button>
             </div>
-            <button class="btn">หยิบใส่ตะกร้า</button>
+            <button class="btn add-cart-btn">หยิบใส่ตะกร้า</button>
           </div>
         </footer>
       </article>
@@ -274,30 +218,23 @@
       <article class="product-card glass">
         <div>
           <div class="product-img-container" title="ดูรายละเอียด">
-            <img src="https://i.pinimg.com/736x/f0/45/0f/f0450f35559836653f6d75875b88c028.jpg" alt="Aura Dewy Glow Essence" class="product-img">
+            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80" alt="Aura Dewy Glow Essence" class="product-img">
           </div>
            <div class="product-meta">
-            <span class="rating">⭐⭐⭐⭐ (4.8)</span>
-            <span>|</span>
-            <span class="feature-item"><span class="feature-icon">✨</span> เตรียมผิวฉ่ำ</span>
+            <span class="rating">⭐⭐⭐⭐ (4.8)</span><span>|</span><span class="feature-item"><span class="feature-icon">✨</span> เตรียมผิวฉ่ำ</span>
           </div>
           <h3>Aura Dewy Glow Essence</h3>
           <p>น้ำตบเตรียมผิวฉ่ำฟู เติมน้ำให้ผิวเร่งด่วน บูสต์ผิวหน้าก่อนแต่งหน้าให้เมคอัพเนียนกริบ</p>
-           <ul class="feature-list">
-            <li>8D Hyaluronic Acid</li>
-            <li>สารสกัดจากแพลงก์ตอน</li>
-            <li>ผิวแพ้ง่ายใช้ได้</li>
-          </ul>
+           <ul class="feature-list"><li>8D Hyaluronic Acid</li><li>แพลงก์ตอนสกัด</li><li>ผิวแพ้ง่ายใช้ได้</li></ul>
         </div>
         
-        <!-- Image Carousel Gimmick -->
         <div class="image-carousel-wrapper">
            <button class="carousel-btn prev" onclick="carouselScroll(this, -1)">&#10094;</button>
           <div class="carousel-container">
-            <div class="carousel-item"><img src="https://i.pinimg.com/736x/f0/45/0f/f0450f35559836653f6d75875b88c028.jpg" alt="Product detail 1"></div>
-            <div class="carousel-item"><img src="https://i.pinimg.com/736x/b1/2e/28/b12e28a13a26674b60f03b264e64a6ae.jpg" alt="Product detail 2"></div>
-            <div class="carousel-item"><img src="https://i.pinimg.com/736x/63/83/3b/63833b80861ac33d3d0ac03538222e6d.jpg" alt="Product detail 3"></div>
-            <div class="carousel-item"><img src="https://i.pinimg.com/736x/70/ea/74/70ea7459ef62669e07d83907d1a821a7.jpg" alt="Product detail 4"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80" alt="detail 1"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1556228720-192a61a9809c?auto=format&fit=crop&w=400&q=80" alt="detail 2"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1512496015851-a1c8b7f87a32?auto=format&fit=crop&w=400&q=80" alt="detail 3"></div>
+            <div class="carousel-item"><img src="https://images.unsplash.com/photo-1616683884143-690a7894a4c5?auto=format&fit=crop&w=400&q=80" alt="detail 4"></div>
           </div>
           <button class="carousel-btn next" onclick="carouselScroll(this, 1)">&#10095;</button>
         </div>
@@ -306,11 +243,9 @@
           <div class="price">฿790</div>
           <div class="action-group">
             <div class="qty-selector">
-              <button class="qty-btn minus" onclick="changeQty(this, -1)">−</button>
-              <span class="qty-val">1</span>
-              <button class="qty-btn plus" onclick="changeQty(this, 1)">+</button>
+              <button class="qty-btn minus" onclick="changeQty(this, -1)">−</button><span class="qty-val">1</span><button class="qty-btn plus" onclick="changeQty(this, 1)">+</button>
             </div>
-            <button class="btn">หยิบใส่ตะกร้า</button>
+            <button class="btn add-cart-btn">หยิบใส่ตะกร้า</button>
           </div>
         </footer>
       </article>
@@ -318,42 +253,32 @@
     </section>
   </main>
 
-  <!-- สคริปต์สำหรับฟังก์ชันเลื่อนรูปและการนับจำนวนสินค้า -->
   <script>
-    // ฟังก์ชันสำหรับเลื่อน Carousel ซ้าย-ขวา
     function carouselScroll(btn, direction) {
       const container = btn.parentElement.querySelector('.carousel-container');
-      const scrollAmount = 135; // ความกว้าง item + gap
+      const scrollAmount = 135; 
       container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
     }
-
-    // ฟังก์ชันสำหรับเปลี่ยนจำนวนสินค้า (+/-)
     function changeQty(btn, delta) {
       const valSpan = btn.parentElement.querySelector('.qty-val');
       let currentQty = parseInt(valSpan.textContent);
-      currentQty = Math.max(1, currentQty + delta); // ห้ามต่ำกว่า 1
+      currentQty = Math.max(1, currentQty + delta);
       valSpan.textContent = currentQty;
     }
-
-    // ตัวอย่างการอัปเดตเลขตะกร้า
-    // คุณสามารถเชื่อมต่อปุ่ม "หยิบใส่ตะกร้า" เข้ากับฟังก์ชันนี้ได้
     let cartCount = 0;
-    document.querySelectorAll('.action-group .btn').forEach(btn => {
+    document.querySelectorAll('.add-cart-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const qty = parseInt(btn.parentElement.querySelector('.qty-val').textContent);
         cartCount += qty;
         document.querySelector('.cart-badge').textContent = cartCount;
-        // ใส่ animation ให้ badge นิดหน่อย
         const badge = document.querySelector('.cart-badge');
-        badge.style.transform = 'scale(1.3)';
+        badge.style.transform = 'scale(1.4)';
         setTimeout(() => { badge.style.transform = 'scale(1)'; }, 200);
-        // แจ้งเตือนเล็กน้อย
-        alert('เพิ่มสินค้าลงตะกร้าแล้วค่ะ 💕');
       });
     });
   </script>
 
-  <!-- สคริปต์เชื่อมต่อแชทบอท (บรรทัดสำคัญ ห้ามลบ) -->
+  <!-- สคริปต์เชื่อมต่อแชทบอท -->
   <script src="chat-widget.js"></script>
 </body>
 </html>
