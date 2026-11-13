@@ -3,72 +3,229 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>หน้าเว็บตั้งต้น</title>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Aura Beauty | ปลุกออร่าในตัวคุณ</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --main:#0F3D33; --accent:#F2B01E; --ink:#14211D;
-    --line:#C3D1C8; --bg:#EEF3EE; --card:#fff; --muted:#3F514A;
-    color-scheme: light;
-    padding-top: env(safe-area-inset-top, 0px);
-    box-sizing: border-box;
+  :root {
+    --pink: #FF5E8E;
+    --orange: #FF9248;
+    --dark: #2A1A1E;
+    --bg-light: #FFF7F9;
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.8);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --ink:#e8f0ea; --line:#2b3a34; --bg:#101814; --card:#17211c; --muted:#9bb0a5;
-      color-scheme: dark;
-    }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background: var(--bg-light);
+    color: var(--dark);
+    font-family: 'Prompt', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    padding-bottom: 100px;
   }
-  *{box-sizing:border-box}
-  body{margin:0; padding:0 18px 70px; background:var(--bg); color:var(--ink);
-       font-family:'Prompt',system-ui,sans-serif; line-height:1.7}
-  .wrap{max-width:860px; margin:0 auto}
-  header{padding:46px 0 10px}
-  h1{margin:0 0 8px; font-size:30px; font-weight:600; color:var(--main)}
-  .sub{margin:0; color:var(--muted); font-size:16px}
-  .card{background:var(--card); border:1px solid var(--line); border-radius:13px;
-        padding:20px 22px; margin-top:18px}
-  h2{margin:0 0 10px; font-size:19px; font-weight:600}
-  ol{margin:6px 0 0; padding-left:22px}
-  li{margin:7px 0}
-  code{font-family:ui-monospace,Consolas,monospace; font-size:14px;
-       background:var(--bg); border:1px solid var(--line); padding:2px 7px; border-radius:6px}
-  footer{margin-top:28px; font-size:14px; color:var(--muted); text-align:center}
+
+  /* Gimmick: Floating Blobs Background */
+  .blob {
+    position: absolute;
+    filter: blur(80px);
+    z-index: -1;
+    opacity: 0.5;
+    animation: float 10s ease-in-out infinite;
+    border-radius: 50%;
+  }
+  .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: var(--pink); }
+  .blob-2 { top: 40%; right: -15%; width: 400px; height: 400px; background: var(--orange); animation-delay: -5s; }
+  .blob-3 { bottom: -10%; left: 20%; width: 600px; height: 600px; background: #FFD1DF; animation-delay: -2s; }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -50px) scale(1.1); }
+  }
+
+  /* Glassmorphism Class */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px rgba(255, 94, 142, 0.08);
+  }
+
+  /* Navbar */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, var(--pink), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Hero Section */
+  .hero {
+    text-align: center;
+    padding: 80px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.2;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, var(--pink), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    font-size: 1.2rem;
+    color: #8A6D75;
+    margin-bottom: 40px;
+  }
+
+  /* Product Showcase */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 0 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .product-card {
+    border-radius: 24px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(255, 94, 142, 0.15);
+  }
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 5px;
+    background: linear-gradient(90deg, var(--pink), var(--orange));
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .product-card:hover::before {
+    transform: scaleX(1);
+  }
+  .product-img-placeholder {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFE5EC, #FFF7F9);
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    box-shadow: inset 0 4px 10px rgba(255, 94, 142, 0.1);
+  }
+  .product-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--dark); }
+  .product-card p { font-size: 0.95rem; color: #8A6D75; margin-bottom: 15px; }
+  .price {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--orange);
+    margin-bottom: 20px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 10px 28px;
+    background: linear-gradient(45deg, var(--pink), var(--orange));
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 94, 142, 0.3);
+  }
+
+  /* Gimmick: Typing Animation for Subtitle */
+  .typing-text::after {
+    content: '|';
+    animation: blink 1s infinite;
+    color: var(--pink);
+  }
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>หน้าเว็บตั้งต้น</h1>
-    <p class="sub">ไฟล์นี้มีไว้ให้ทดสอบว่าระบบทำงาน  เมื่อพร้อมแล้วให้เอาหน้าเว็บจริงมาแทน</p>
+
+  <!-- Background Blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- Navbar -->
+  <header class="glass">
+    <div class="logo">Aura Beauty</div>
+    <div style="font-weight: 500; color: var(--pink);">Shop Now ✨</div>
   </header>
 
-  <div class="card">
-    <h2>ทดสอบอย่างไร</h2>
-    <ol>
-      <li>มองหาปุ่มวงกลมที่มุมขวาล่าง  ถ้าไม่เห็น แปลว่ายังไม่ได้แปะบรรทัด script</li>
-      <li>กดเปิด แล้วดูข้อความที่หัวกล่อง  ต้องขึ้นว่าพร้อมใช้งาน</li>
-      <li>ลองถามว่า  ลาป่วยกี่วันต้องมีใบรับรองแพทย์</li>
-      <li>ลองถามว่า  หอพักค่าเช่าเท่าไร  ต้องตอบว่าไม่พบข้อมูล</li>
-    </ol>
-  </div>
+  <!-- Hero Section -->
+  <main>
+    <section class="hero">
+      <h1>ปลุกออร่าในตัวคุณ<br>ให้เปล่งประกาย</h1>
+      <p class="typing-text">สกินแคร์และเมคอัพที่เข้าใจผิวหน้าคนไทย พร้อม AI ให้คำปรึกษาตลอด 24 ชม.</p>
+    </section>
 
-  <div class="card">
-    <h2>เอาหน้าเว็บจริงมาแทนอย่างไร</h2>
-    <ol>
-      <li>เอาไฟล์หน้าเว็บของคุณมาตั้งชื่อว่า <code>index.html</code> ทับไฟล์นี้</li>
-      <li>เปิดไฟล์นั้น แล้วเพิ่มบรรทัดนี้ก่อนปิด <code>&lt;/body&gt;</code></li>
-    </ol>
-    <p><code>&lt;script src="chat-widget.js"&gt;&lt;/script&gt;</code></p>
-    <p style="margin:0; color:var(--muted); font-size:15px">
-      ไม่ต้องแก้อย่างอื่นในหน้าเว็บเลย  ปุ่มแชตจะสร้างตัวเองขึ้นมา
-    </p>
-  </div>
+    <!-- Product Showcase -->
+    <section class="products">
+      
+      <!-- Product 1 -->
+      <div class="product-card glass">
+        <div class="product-img-placeholder">🍊</div>
+        <h3>Aura Glow Vitamin C Serum</h3>
+        <p>เซรั่มวิตามินซี 15% ลดรอยดำ รอยแดง ปรับสีผิวให้สว่างกระจ่างใส</p>
+        <div class="price">฿890</div>
+        <a href="#" class="btn">หยิบใส่ตะกร้า</a>
+      </div>
 
-  <footer>ไฟล์ตั้งต้นสำหรับรายวิชาปัญญาประดิษฐ์และการเรียนรู้ของเครื่อง สัปดาห์ที่ 8</footer>
-</div>
+      <!-- Product 2 -->
+      <div class="product-card glass">
+        <div class="product-img-placeholder">💧</div>
+        <h3>Aura Deep Moisture Cream</h3>
+        <p>ครีมเซราไมด์ ล็อคความชุ่มชื้น 48 ชม. บอกลาผิวแห้งลอกขุย แต่งหน้าติดทน</p>
+        <div class="price">฿1,250</div>
+        <a href="#" class="btn">หยิบใส่ตะกร้า</a>
+      </div>
 
-<!-- บรรทัดเดียวนี้คือทั้งหมดที่ต้องเพิ่มในหน้าเว็บ -->
-<script src="chat-widget.js"></script>
+      <!-- Product 3 -->
+      <div class="product-card glass">
+        <div class="product-img-placeholder">✨</div>
+        <h3>Aura Dewy Glow Essence</h3>
+        <p>น้ำตบเตรียมผิวฉ่ำฟู เติมน้ำเร่งด่วน บูสต์ผิวก่อนแต่งหน้าให้เมคอัพเนียนกริบ</p>
+        <div class="price">฿790</div>
+        <a href="#" class="btn">หยิบใส่ตะกร้า</a>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- สคริปต์เชื่อมต่อแชทบอท (บรรทัดสำคัญที่สุด ห้ามลบ) -->
+  <script src="chat-widget.js"></script>
 </body>
 </html>
+ 
