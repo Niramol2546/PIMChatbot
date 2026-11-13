@@ -337,8 +337,8 @@ async function askBot(question){
 
   /* ---------- สีให้เข้ากับเว็บ PIM  แก้ได้ที่นี่ ---------- */
   const C = {
-    main:  "#0F3D33",   // เขียวเข้มของสถาบัน
-    accent:"#F2B01E",   // เหลือง
+    main:  "#FF5E8E",   // สีชมพูหลักของแบรนด์
+    accent:"#FF9248",   // สีส้ม (ปุ่มส่งข้อความ)
     ink:   "#14211D",
     soft:  "#D5E3DB",
     line:  "#C3D1C8",
@@ -435,22 +435,23 @@ async function askBot(question){
 <div id="pimbot-panel" role="dialog" aria-label="กล่องสอบถาม">
   <div id="pimbot-head">
     <button id="pimbot-close" aria-label="ปิด">×</button>
-    <b>สอบถามข้อมูล</b>
-    <small id="pimbot-status">กำลังเตรียมระบบ...</small>
+    <b>Aura Beauty Advisor ✨</b>
+    <small id="pimbot-status">กำลังเตรียมความสวย...</small>
   </div>
 
   <div id="pimbot-warn">
-    <b>นี่คือผู้ช่วยอัตโนมัติ ไม่ใช่เจ้าหน้าที่</b>
-    คำตอบอาจคลาดเคลื่อน ทุกคำตอบจะบอกที่มาให้ตรวจสอบย้อนกลับได้
-    ต้องการคุยกับเจ้าหน้าที่จริง โทร 0-2000-0002
+    <b>ยินดีให้คำปรึกษาตลอด 24 ชม. 💋</b><br>
+    ถามเรื่องเฉดสี แนะนำสกินแคร์ หรือเช็คโปรโมชั่นได้เลยค่ะ<br>
+    <i>(ข้อมูลอ้างอิงจากแคตตาล็อกสินค้าของแบรนด์ Aura)</i><br>
+    ติดต่อสอบถามพนักงาน โทร 0-2000-0002
   </div>
 
   <div id="pimbot-log"></div>
 
   <div id="pimbot-chips">
-    <span>ลาป่วยกี่วันต้องมีใบรับรองแพทย์</span>
-    <span>ลาพักการศึกษาได้กี่ภาค</span>
-    <span>ถอนรายวิชาแล้วติด W ไหม</span>
+    <span>ผิวแห้งแต่งหน้าไม่ติด ทำไงดี?</span>
+    <span>เซรั่มวิตามินซีช่วยเรื่องอะไร</span>
+    <span>เจลล้างหน้าสำหรับคนเป็นสิว</span>
   </div>
 
   <div id="pimbot-row">
@@ -468,7 +469,7 @@ async function askBot(question){
   onReady = () => {
     $("pimbot-q").disabled = false;
     $("pimbot-send").disabled = false;
-    say("สวัสดีค่ะ สอบถามข้อมูลของสถาบันได้เลย", "bot");
+    say("สวัสดีค่าา 💖 Aura ยินดีให้คำปรึกษาค่ะ วันนี้อยากให้ช่วยดูแลเรื่องผิวหรือแนะนำไอเทมเด็ดตัวไหนดีคะ?", "bot");
   };
 
   function say(text, who, src){
