@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>หน้าเว็บตั้งต้น</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --main:#0F3D33; --accent:#F2B01E; --ink:#14211D;
+    --line:#C3D1C8; --bg:#EEF3EE; --card:#fff; --muted:#3F514A;
+    color-scheme: light;
+    padding-top: env(safe-area-inset-top, 0px);
+    box-sizing: border-box;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#e8f0ea; --line:#2b3a34; --bg:#101814; --card:#17211c; --muted:#9bb0a5;
+      color-scheme: dark;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0; padding:0 18px 70px; background:var(--bg); color:var(--ink);
+       font-family:'Prompt',system-ui,sans-serif; line-height:1.7}
+  .wrap{max-width:860px; margin:0 auto}
+  header{padding:46px 0 10px}
+  h1{margin:0 0 8px; font-size:30px; font-weight:600; color:var(--main)}
+  .sub{margin:0; color:var(--muted); font-size:16px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:13px;
+        padding:20px 22px; margin-top:18px}
+  h2{margin:0 0 10px; font-size:19px; font-weight:600}
+  ol{margin:6px 0 0; padding-left:22px}
+  li{margin:7px 0}
+  code{font-family:ui-monospace,Consolas,monospace; font-size:14px;
+       background:var(--bg); border:1px solid var(--line); padding:2px 7px; border-radius:6px}
+  footer{margin-top:28px; font-size:14px; color:var(--muted); text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>หน้าเว็บตั้งต้น</h1>
+    <p class="sub">ไฟล์นี้มีไว้ให้ทดสอบว่าระบบทำงาน  เมื่อพร้อมแล้วให้เอาหน้าเว็บจริงมาแทน</p>
+  </header>
+
+  <div class="card">
+    <h2>ทดสอบอย่างไร</h2>
+    <ol>
+      <li>มองหาปุ่มวงกลมที่มุมขวาล่าง  ถ้าไม่เห็น แปลว่ายังไม่ได้แปะบรรทัด script</li>
+      <li>กดเปิด แล้วดูข้อความที่หัวกล่อง  ต้องขึ้นว่าพร้อมใช้งาน</li>
+      <li>ลองถามว่า  ลาป่วยกี่วันต้องมีใบรับรองแพทย์</li>
+      <li>ลองถามว่า  หอพักค่าเช่าเท่าไร  ต้องตอบว่าไม่พบข้อมูล</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>เอาหน้าเว็บจริงมาแทนอย่างไร</h2>
+    <ol>
+      <li>เอาไฟล์หน้าเว็บของคุณมาตั้งชื่อว่า <code>index.html</code> ทับไฟล์นี้</li>
+      <li>เปิดไฟล์นั้น แล้วเพิ่มบรรทัดนี้ก่อนปิด <code>&lt;/body&gt;</code></li>
+    </ol>
+    <p><code>&lt;script src="chat-widget.js"&gt;&lt;/script&gt;</code></p>
+    <p style="margin:0; color:var(--muted); font-size:15px">
+      ไม่ต้องแก้อย่างอื่นในหน้าเว็บเลย  ปุ่มแชตจะสร้างตัวเองขึ้นมา
+    </p>
+  </div>
+
+  <footer>ไฟล์ตั้งต้นสำหรับรายวิชาปัญญาประดิษฐ์และการเรียนรู้ของเครื่อง สัปดาห์ที่ 8</footer>
+</div>
+
+<!-- บรรทัดเดียวนี้คือทั้งหมดที่ต้องเพิ่มในหน้าเว็บ -->
+<script src="chat-widget.js"></script>
+</body>
+</html>
