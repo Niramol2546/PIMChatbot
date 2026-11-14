@@ -21,7 +21,7 @@ window.CONFIG = {
   /* ===== การค้นหา ===== */
 
   // เริ่มด้วย local ก่อนเสมอ  แล้วค่อยเปลี่ยนเป็น vector หลังสร้าง vectors.json
-  SEARCH_MODE: "local",
+  SEARCH_MODE: "vector",
 
   // รุ่นที่ใช้แปลงเวกเตอร์  ต้องตรงกับตอนสร้าง vectors.json
   EMBED_MODEL: "nvidia/nemotron-3.5-embed-1b:free",
