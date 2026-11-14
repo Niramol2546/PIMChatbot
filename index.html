@@ -5,586 +5,302 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aura Beauty | ปลุกออร่าในตัวคุณ</title>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<!-- Font Awesome สำหรับไอคอน -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  :root {
-    --pink: #FF5E8E;
-    --orange: #FF9248;
-    --dark: #2A1A1E;
-    --bg-light: #FFF7F9;
-    --glass-bg: rgba(255, 255, 255, 0.95);
-    --muted: #8A6D75;
-    --red: #FF3B30;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
-  
-  body {
-    background: var(--bg-light);
-    color: var(--dark);
-    font-family: 'Prompt', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* --- 1. Top Bar --- */
-  .top-bar {
-    background: #F8F8F8; color: var(--muted); font-size: 12px;
-    display: flex; justify-content: space-between; padding: 6px 5%;
-  }
-  .top-bar-left span { margin-right: 15px; }
-  .top-bar-right a { color: var(--muted); text-decoration: none; margin-left: 15px; }
-  .top-bar-right a:hover { color: var(--pink); }
-
-  /* --- 2. Header & Search --- */
-  header {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--glass-bg); backdrop-filter: blur(15px);
-    border-bottom: 1px solid #FFE0E9;
-    padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
-  }
-  .logo { font-size: 26px; font-weight: 700; background: linear-gradient(45deg, var(--pink), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; min-width: 150px; }
-  
-  .search-container {
-    flex: 1; max-width: 600px; margin: 0 30px; position: relative;
-  }
-  .search-container input {
-    width: 100%; padding: 12px 20px 12px 45px; border: 1px solid #FFD1DF;
-    border-radius: 30px; font-family: inherit; font-size: 14px; background: #FFF;
-    outline: none; transition: all 0.3s;
-  }
-  .search-container input:focus { border-color: var(--pink); box-shadow: 0 0 10px rgba(255, 94, 142, 0.1); }
-  .search-container i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--muted); }
-
-  .nav-right { display: flex; align-items: center; gap: 15px; min-width: 150px; justify-content: flex-end;}
-  
-  .icon-btn {
-    background: #FFE5EC; border: none; width: 42px; height: 42px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; cursor: pointer;
-    font-size: 16px; color: var(--pink); text-decoration: none; position: relative; transition: transform 0.2s;
-  }
-  .icon-btn:hover { transform: scale(1.1); }
-  .cart-badge { position: absolute; top: -2px; right: -2px; background: var(--pink); color: white; font-size: 11px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
-  .login-text { font-size: 13px; font-weight: 500; color: var(--dark); text-decoration: none; background: #FFF7F9; padding: 8px 15px; border-radius: 20px; border: 1px solid #FFE0E9; transition: all 0.2s; display: block;}
-  .login-text:hover { background: var(--pink); color: white; }
-  
-  /* Mobile Menu Button */
-  .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; color: var(--pink); cursor: pointer; }
-
-  /* --- 3. Navigation Mega Menu --- */
-  .main-nav {
-    display: flex; justify-content: center; gap: 30px; padding: 12px 5%;
-    border-bottom: 1px solid #F0F0F0; font-size: 14px; font-weight: 500;
-    overflow-x: auto; white-space: nowrap; background: white;
-  }
-  .main-nav a { color: var(--dark); text-decoration: none; text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
-  .main-nav a:hover { color: var(--pink); }
-
-  /* --- 4. Hero Banner --- */
-  .hero-banner { max-width: 1200px; margin: 20px auto; border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 21/7; background: #FFE5EC; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-  .hero-img { width: 100%; height: 100%; object-fit: cover; }
-  .banner-text { position: absolute; top: 50%; left: 5%; transform: translateY(-50%); color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-  .banner-text h2 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 10px; }
-  .banner-text p { font-size: 1.2rem; margin-bottom: 20px; }
-  .shop-btn { padding: 10px 30px; background: white; color: var(--pink); border-radius: 30px; text-decoration: none; font-weight: 600; display: inline-block; transition: transform 0.2s;}
-  .shop-btn:hover { transform: scale(1.05); }
-
-  /* --- 5. Category Circles --- */
-  .category-circles { max-width: 1200px; margin: 40px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; padding: 0 5%; }
-  .cat-item { text-align: center; cursor: pointer; text-decoration: none; color: var(--dark); transition: transform 0.2s; display: block; }
-  .cat-item:hover { transform: translateY(-8px); }
-  .cat-img-wrapper { width: 130px; height: 130px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 4px solid white; box-shadow: 0 8px 20px rgba(255,94,142,0.15); background: white; display: flex; align-items: center; justify-content: center; }
-  .cat-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-  .cat-item:hover .cat-img-wrapper img { transform: scale(1.1); }
-  .cat-title { font-size: 15px; font-weight: 600; }
-
-  /* --- 6. Promo Marquee --- */
-  .promo-marquee { background: linear-gradient(90deg, #FFE5EC, #FFF7F9); color: var(--pink); padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px dashed #FFD1DF; border-bottom: 1px dashed #FFD1DF; font-weight: 500; font-size: 15px; display: flex; }
-  .marquee-content { display: inline-block; animation: marquee 20s linear infinite; padding-left: 100%; }
-  @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
-
-  /* --- 7. Sections & Grid --- */
-  .section-container { max-width: 1200px; margin: 50px auto 20px; padding: 0 5%; }
-  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #FFE0E9; padding-bottom: 10px;}
-  .section-title { font-size: 24px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 10px; }
-  .section-title i { color: var(--pink); font-size: 24px;}
-  .view-all { color: var(--pink); text-decoration: none; font-weight: 500; font-size: 14px;}
-  
-  .flash-sale-header { border-bottom: none; background: #FF3B30; color: white; padding: 15px 20px; border-radius: 12px 12px 0 0; margin-bottom: 0;}
-  .flash-sale-header .section-title { color: white; }
-  .flash-sale-header .section-title i { color: #FFCC00; }
-  .countdown { display: flex; align-items: center; gap: 8px; font-weight: 600; }
-  .time-box { background: white; color: var(--dark); padding: 4px 10px; border-radius: 6px; font-size: 16px;}
-  .flash-sale-body { background: white; padding: 30px 20px; border-radius: 0 0 12px 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px;}
-
-  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-  .product-card { background: white; border-radius: 16px; padding: 20px; text-align: center; border: 1px solid #F0F0F0; transition: all 0.3s; position: relative; cursor: pointer; display: flex; flex-direction: column; }
-  .product-card:hover { box-shadow: 0 15px 30px rgba(255,94,142,0.1); transform: translateY(-5px); border-color: var(--pink);}
-  
-  .badge-hot, .badge-discount, .badge-new { position: absolute; top: 15px; font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 600; z-index: 2; color: white; }
-  .badge-hot { left: 15px; background: var(--dark); }
-  .badge-discount { right: 15px; background: var(--red); }
-  .badge-new { left: 15px; background: var(--pink); }
-
-  .p-img-box { width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; margin-bottom: 15px; background: #F8F8F8;}
-  .p-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-  .product-card:hover .p-img-box img { transform: scale(1.08); }
-  
-  .p-brand { font-size: 12px; color: var(--pink); font-weight: 600; text-transform: uppercase; margin-bottom: 5px; }
-  .p-name { font-size: 14px; color: var(--dark); margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; font-weight: 500;}
-  .p-price-row { display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-top: auto; }
-  .p-price-new { font-size: 18px; font-weight: 700; color: var(--red); }
-  .p-price-old { font-size: 13px; color: var(--muted); text-decoration: line-through; }
-  .p-price-normal { font-size: 18px; font-weight: 700; color: var(--orange); }
-
-  /* ------------------- UI/UX ใหม่ที่เพิ่มเข้ามา ------------------- */
-
-  /* ตะกร้าสินค้าแบบ Slide-out (Cart Sidebar) */
-  .cart-sidebar {
-    position: fixed; top: 0; right: -400px; width: 400px; max-width: 100vw; height: 100vh;
-    background: white; z-index: 1000; box-shadow: -5px 0 30px rgba(0,0,0,0.1);
-    transition: right 0.3s ease; display: flex; flex-direction: column;
-  }
-  .cart-sidebar.open { right: 0; }
-  .cart-header { padding: 20px; border-bottom: 1px solid #F0F0F0; display: flex; justify-content: space-between; align-items: center; }
-  .cart-header h2 { font-size: 20px; color: var(--dark); }
-  .close-cart { background: none; border: none; font-size: 24px; color: var(--muted); cursor: pointer; }
-  .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
-  
-  .cart-item { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #F0F0F0; }
-  .cart-item-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
-  .cart-item-info { flex: 1; }
-  .cart-item-info h4 { font-size: 14px; margin-bottom: 5px; color: var(--dark); }
-  .cart-item-price { color: var(--pink); font-weight: 600; margin-bottom: 10px; }
-  .cart-qty-ctrl { display: flex; align-items: center; border: 1px solid #FFD1DF; border-radius: 15px; width: fit-content; }
-  .cart-qty-ctrl button { background: none; border: none; padding: 2px 10px; color: var(--pink); cursor: pointer; font-size: 16px;}
-  .cart-qty-ctrl span { padding: 0 10px; font-size: 14px; font-weight: 500;}
-  .remove-item { color: var(--muted); font-size: 12px; cursor: pointer; text-decoration: underline; margin-top: 5px; display: inline-block;}
-  
-  .cart-footer { padding: 20px; border-top: 1px solid #F0F0F0; background: #FAFAFA; }
-  .cart-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; margin-bottom: 15px; color: var(--dark); }
-  .checkout-btn { width: 100%; padding: 15px 0; background: linear-gradient(45deg, var(--pink), var(--orange)); color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s;}
-  .checkout-btn:hover { transform: scale(1.02); }
-
-  /* Overlay สำหรับ Cart & Modal */
-  .overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
-    z-index: 900; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  }
-  .overlay.active { opacity: 1; pointer-events: all; }
-
-  /* Product Modal (หน้าต่างเด้งรายละเอียดสินค้า) */
-  .product-modal {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
-    width: 900px; max-width: 95vw; max-height: 90vh; background: white; border-radius: 24px;
-    z-index: 1001; display: flex; opacity: 0; pointer-events: none; transition: all 0.3s; overflow: hidden;
-  }
-  .product-modal.open { opacity: 1; pointer-events: all; transform: translate(-50%, -50%) scale(1); }
-  
-  .modal-img-col { flex: 1; background: #F8F8F8; padding: 40px; display: flex; align-items: center; justify-content: center; }
-  .modal-img-col img { width: 100%; max-width: 350px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.1);}
-  
-  .modal-info-col { flex: 1.2; padding: 40px; overflow-y: auto; position: relative; }
-  .close-modal { position: absolute; top: 20px; right: 20px; background: #FFE5EC; color: var(--pink); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; transition: transform 0.2s;}
-  .close-modal:hover { transform: scale(1.1); }
-  
-  .modal-brand { color: var(--pink); font-weight: 600; font-size: 14px; margin-bottom: 10px; }
-  .modal-title { font-size: 24px; color: var(--dark); margin-bottom: 15px; line-height: 1.3; }
-  .modal-rating { color: #f39c12; font-size: 14px; margin-bottom: 20px; }
-  .modal-price { font-size: 28px; font-weight: 700; color: var(--orange); margin-bottom: 20px; }
-  
-  .modal-desc { color: var(--muted); font-size: 15px; margin-bottom: 20px; line-height: 1.6; }
-  .modal-features { margin-bottom: 30px; }
-  .modal-features li { font-size: 14px; color: var(--dark); margin-bottom: 8px; list-style-type: '✨ '; margin-left: 20px;}
-  
-  .modal-action { display: flex; gap: 15px; align-items: center; }
-  .modal-qty { display: flex; align-items: center; border: 1px solid #FFD1DF; border-radius: 25px; height: 50px; padding: 0 15px;}
-  .modal-qty button { background: none; border: none; font-size: 20px; color: var(--pink); cursor: pointer; width: 30px;}
-  .modal-qty span { font-weight: 600; font-size: 18px; width: 40px; text-align: center;}
-  
-  .modal-add-btn { flex: 1; height: 50px; background: linear-gradient(45deg, var(--pink), var(--orange)); color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s;}
-  .modal-add-btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(255,94,142,0.3);}
-
-  /* Mobile Responsive */
-  @media (max-width: 900px) {
-    .search-container { display: none; } /* ซ่อนช่องค้นหาบนมือถือ */
-    .login-text { display: none; } /* ซ่อนปุ่ม login ข้อความ */
-    .mobile-menu-btn { display: block; } /* โชว์ปุ่มแฮมเบอร์เกอร์ */
-    .main-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
-    
-    .product-modal { flex-direction: column; height: 90vh; }
-    .modal-img-col { padding: 20px; height: 40%; }
-    .modal-img-col img { height: 100%; width: auto; max-height: 250px;}
-    .modal-info-col { padding: 20px; height: 60%; }
-  }
-
-  /* --- 9. Footer --- */
-  footer { background: white; border-top: 1px solid #FFE0E9; padding: 60px 5% 30px; margin-top: 60px; }
-  .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-  .footer-col h4 { font-size: 16px; color: var(--dark); margin-bottom: 20px; }
-  .footer-col ul { list-style: none; }
-  .footer-col ul li { margin-bottom: 12px; }
-  .footer-col ul a { color: var(--muted); text-decoration: none; transition: color 0.2s; font-size: 14px;}
-  .footer-col ul a:hover { color: var(--pink); }
-  .social-icons { display: flex; gap: 15px; margin-top: 15px; }
-  .social-icons a { width: 36px; height: 36px; background: #F8F8F8; color: var(--dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 16px; transition: all 0.2s; }
-  .social-icons a:hover { background: var(--pink); color: white; }
-  .footer-bottom { text-align: center; padding-top: 30px; margin-top: 40px; border-top: 1px solid #F0F0F0; color: #aaa; font-size: 13px; }
+:root{--pink:#FF5E8E;--orange:#FF9248;--dark:#2A1A1E;--bg:#FFF7F9;--muted:#8A6D75;--red:#FF3B30;--line:#FFE0E9}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--dark);font-family:'Prompt',sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.top-bar{background:#F8F8F8;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;padding:6px 5%}
+.top-bar span{margin-right:15px}.top-bar a{margin-left:15px}
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(15px);border-bottom:1px solid var(--line);padding:12px 5%;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.logo{font-size:26px;font-weight:700;background:linear-gradient(45deg,var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.search{flex:1;max-width:600px;position:relative}
+.search input{width:100%;padding:11px 20px 11px 45px;border:1px solid #FFD1DF;border-radius:30px;font:inherit;font-size:14px;outline:none}
+.search input:focus{border-color:var(--pink)}
+.search i{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.login{font-size:13px;font-weight:500;padding:8px 15px;border-radius:20px;border:1px solid var(--line);background:var(--bg)}
+.login:hover{background:var(--pink);color:#fff}
+.icon-btn{background:#FFE5EC;border:0;width:42px;height:42px;border-radius:50%;color:var(--pink);cursor:pointer;font-size:16px;position:relative}
+.badge-c{position:absolute;top:-2px;right:-2px;background:var(--pink);color:#fff;font-size:11px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;transition:transform .2s}
+.main-nav{position:sticky;top:67px;z-index:90;display:flex;justify-content:center;gap:8px;padding:6px 5%;border-bottom:1px solid #F0F0F0;background:#fff;overflow-x:auto;white-space:nowrap;font-size:14px;font-weight:500}
+.main-nav a{padding:8px 16px;border-radius:20px;text-transform:uppercase;transition:.2s}
+.main-nav a:hover,.main-nav a.active{background:var(--pink);color:#fff}
+section[id]{scroll-margin-top:130px}
+.hero{max-width:1200px;margin:20px auto;border-radius:20px;overflow:hidden;position:relative;aspect-ratio:21/8;background:#FFE5EC;box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.hero img{width:100%;height:100%;object-fit:cover}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(42,26,30,.55),transparent 65%)}
+.banner{position:absolute;z-index:2;top:50%;left:5%;transform:translateY(-50%);color:#fff}
+.banner h2{font-size:clamp(1.8rem,4vw,3.5rem);line-height:1.1;margin-bottom:10px}
+.banner p{font-size:1.1rem;margin-bottom:20px}
+.shop-btn{padding:10px 30px;background:#fff;color:var(--pink);border-radius:30px;font-weight:600;display:inline-block;transition:transform .2s}
+.shop-btn:hover{transform:scale(1.05)}
+.perks{max-width:1200px;margin:0 auto;padding:0 5%;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.perk{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:flex;gap:14px;align-items:center;font-size:13px;color:var(--muted)}
+.perk i{font-size:22px;color:var(--pink)}.perk b{display:block;color:var(--dark);font-size:14px}
+.cats{max-width:1200px;margin:40px auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:24px;padding:0 5%}
+.cat{text-align:center;transition:transform .2s}.cat:hover{transform:translateY(-8px)}
+.cat .w{width:120px;height:120px;margin:0 auto 12px;border-radius:50%;overflow:hidden;border:4px solid #fff;box-shadow:0 8px 20px rgba(255,94,142,.15);background:#fff}
+.cat img{width:100%;height:100%;object-fit:cover}.cat b{font-size:15px}
+.marquee{background:linear-gradient(90deg,#FFE5EC,#FFF7F9);color:var(--pink);padding:12px 0;overflow:hidden;white-space:nowrap;border-block:1px dashed #FFD1DF;font-weight:500}
+.marquee div{display:inline-block;animation:mq 25s linear infinite;padding-left:100%}
+@keyframes mq{to{transform:translateX(-100%)}}
+@media(prefers-reduced-motion:reduce){.marquee div{animation:none;padding:0}html{scroll-behavior:auto}}
+.sec{max-width:1200px;margin:50px auto 20px;padding:0 5%}
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;border-bottom:2px solid var(--line);padding-bottom:10px;gap:12px}
+.sec-h h3{font-size:24px;display:flex;align-items:center;gap:10px}.sec-h h3 i{color:var(--pink)}
+.sec-h small{display:block;font-size:13px;font-weight:400;color:var(--muted)}
+.flash{background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.05);overflow:hidden}
+.flash-h{background:var(--red);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.flash-h h3{font-size:22px}.flash-h h3 i{color:#FFCC00}
+.cd{display:flex;align-items:center;gap:8px;font-weight:600}
+.cd b{background:#fff;color:var(--dark);padding:3px 10px;border-radius:6px}
+.flash .grid{padding:24px 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.card{background:#fff;border-radius:16px;padding:16px;text-align:center;border:1px solid #F0F0F0;transition:.3s;position:relative;cursor:pointer;display:flex;flex-direction:column}
+.card:hover{box-shadow:0 15px 30px rgba(255,94,142,.12);transform:translateY(-5px);border-color:var(--pink)}
+.tag{position:absolute;top:12px;font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600;z-index:2;color:#fff}
+.t-new{left:12px;background:var(--pink)}.t-hot{left:12px;background:var(--dark)}.t-off{right:12px;background:var(--red)}
+.pimg{aspect-ratio:1;border-radius:12px;overflow:hidden;margin-bottom:12px;background:#FFE5EC}
+.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.card:hover .pimg img{transform:scale(1.08)}
+.brand{font-size:12px;color:var(--pink);font-weight:600;text-transform:uppercase}
+.pname{font-size:14px;font-weight:500;margin:4px 0 8px;line-height:1.4;min-height:40px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.price{display:flex;justify-content:center;align-items:baseline;gap:8px;margin-top:auto}
+.new{font-size:18px;font-weight:700;color:var(--red)}.old{font-size:13px;color:var(--muted);text-decoration:line-through}.norm{font-size:18px;font-weight:700;color:var(--orange)}
+.add{margin-top:12px;border:1px solid var(--pink);background:#fff;color:var(--pink);border-radius:20px;padding:6px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:.2s}
+.add:hover{background:var(--pink);color:#fff}
+.empty{display:none;text-align:center;color:var(--muted);padding:40px 0}
+.promo-banner{max-width:1200px;margin:50px auto 0;padding:0 5%}
+.promo-banner div{border-radius:20px;background:linear-gradient(120deg,var(--pink),var(--orange));color:#fff;padding:32px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.promo-banner h3{font-size:24px}.promo-banner span{background:#fff;color:var(--pink);padding:8px 22px;border-radius:25px;font-weight:700;letter-spacing:1px}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:900;opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.on{opacity:1;pointer-events:all}
+.cart{position:fixed;top:0;right:-420px;width:400px;max-width:100vw;height:100%;background:#fff;z-index:1000;box-shadow:-5px 0 30px rgba(0,0,0,.1);transition:right .3s;display:flex;flex-direction:column}
+.cart.open{right:0}
+.cart-h{padding:20px;border-bottom:1px solid #F0F0F0;display:flex;justify-content:space-between;align-items:center}
+.cart-h button{background:none;border:0;font-size:26px;color:var(--muted);cursor:pointer}
+.cart-b{flex:1;padding:20px;overflow-y:auto}
+.ci{display:flex;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #F0F0F0}
+.ci img{width:76px;height:76px;border-radius:8px;object-fit:cover}
+.ci h4{font-size:14px}.ci .cp{color:var(--pink);font-weight:600;margin:4px 0 8px}
+.qty{display:flex;align-items:center;border:1px solid #FFD1DF;border-radius:15px;width:fit-content}
+.qty button{background:none;border:0;padding:2px 10px;color:var(--pink);cursor:pointer;font-size:16px}
+.qty span{padding:0 8px;font-size:14px}
+.rm{color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;margin-top:4px;display:inline-block}
+.cart-f{padding:20px;border-top:1px solid #F0F0F0;background:#FAFAFA}
+.tot{display:flex;justify-content:space-between;font-size:18px;font-weight:700;margin-bottom:12px}
+.btn{width:100%;padding:14px;background:linear-gradient(45deg,var(--pink),var(--orange));color:#fff;border:0;border-radius:25px;font:inherit;font-size:16px;font-weight:600;cursor:pointer}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:900px;max-width:95vw;max-height:90vh;background:#fff;border-radius:24px;z-index:1001;display:flex;opacity:0;pointer-events:none;transition:.3s;overflow:hidden}
+.modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1)}
+.m-img{flex:1;background:#FFF0F4;padding:36px;display:flex;align-items:center;justify-content:center}
+.m-img img{width:100%;max-width:340px;aspect-ratio:1;border-radius:12px;object-fit:cover;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.m-info{flex:1.2;padding:36px;overflow-y:auto;position:relative}
+.m-x{position:absolute;top:18px;right:18px;background:#FFE5EC;color:var(--pink);border:0;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer}
+.m-info h2{font-size:23px;margin:6px 0 10px;line-height:1.3;padding-right:30px}
+.m-price{font-size:28px;font-weight:700;color:var(--orange);margin-bottom:14px}.m-price s{font-size:15px;color:var(--muted);font-weight:400;margin-left:8px}
+.m-info p{color:var(--muted);font-size:15px;margin-bottom:16px}
+.m-info ul{margin:8px 0 24px 20px}.m-info li{font-size:14px;margin-bottom:6px;list-style:'✨ '}
+.m-act{display:flex;gap:14px;align-items:center}
+.m-q{display:flex;align-items:center;border:1px solid #FFD1DF;border-radius:25px;height:50px;padding:0 12px}
+.m-q button{background:none;border:0;font-size:20px;color:var(--pink);cursor:pointer;width:28px}
+.m-q span{font-weight:600;width:34px;text-align:center}
+.m-act .btn{flex:1;height:50px;padding:0}
+.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:var(--dark);color:#fff;padding:10px 22px;border-radius:25px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:1100}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.search,.login{display:none}.main-nav{justify-content:flex-start}.modal{flex-direction:column;height:90vh}.m-img{padding:16px;height:36%}.m-img img{height:100%;width:auto}.m-info{padding:20px}.hero{aspect-ratio:16/9}.top-bar-r{display:none}}
+footer{background:#fff;border-top:1px solid var(--line);padding:60px 5% 30px;margin-top:60px}
+.f-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px}
+.f-grid h4{margin-bottom:16px}.f-grid li{list-style:none;margin-bottom:10px;font-size:14px;color:var(--muted)}.f-grid li a:hover{color:var(--pink)}
+.soc{display:flex;gap:12px;margin-top:14px}.soc a{width:36px;height:36px;background:#F8F8F8;border-radius:50%;display:flex;align-items:center;justify-content:center}.soc a:hover{background:var(--pink);color:#fff}
+.f-bot{text-align:center;padding-top:28px;margin-top:40px;border-top:1px solid #F0F0F0;color:#aaa;font-size:13px}
 </style>
 </head>
 <body>
+<div class="overlay" id="ov"></div>
 
-  <!-- Overlay (เงาดำจางๆ เวลาเปิด Modal/Cart) -->
-  <div class="overlay" id="main-overlay"></div>
+<aside class="cart" id="cart">
+  <div class="cart-h"><h2 style="font-size:20px"><i class="fas fa-shopping-bag"></i> ตะกร้าสินค้า</h2><button onclick="toggleCart()" aria-label="ปิด">×</button></div>
+  <div class="cart-b" id="cart-items"></div>
+  <div class="cart-f"><div class="tot"><span>ยอดรวมทั้งสิ้น</span><span id="cart-total" style="color:var(--orange)">฿0</span></div><button class="btn" onclick="toast('ระบบชำระเงินเป็นเพียงตัวอย่าง 💖')">ดำเนินการสั่งซื้อ (Checkout)</button></div>
+</aside>
 
-  <!-- ตะกร้าสินค้า Slide-out -->
-  <div class="cart-sidebar" id="cart-sidebar">
-    <div class="cart-header">
-      <h2><i class="fas fa-shopping-bag"></i> ตะกร้าสินค้า</h2>
-      <button class="close-cart" onclick="toggleCart()">×</button>
-    </div>
-    <div class="cart-body" id="cart-items-container">
-      <!-- ตัวอย่างสินค้าในตะกร้า 1 ชิ้น -->
-      <div class="cart-item">
-        <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=150&q=80" alt="Serum" class="cart-item-img">
-        <div class="cart-item-info">
-          <h4>Aura Glow Vitamin C Serum 15% 30ml.</h4>
-          <div class="cart-item-price">฿890</div>
-          <div class="cart-qty-ctrl">
-            <button>-</button><span>1</span><button>+</button>
-          </div>
-          <span class="remove-item">ลบสินค้า</span>
-        </div>
-      </div>
-    </div>
-    <div class="cart-footer">
-      <div class="cart-total">
-        <span>ยอดรวมทั้งสิ้น</span>
-        <span style="color: var(--orange);">฿890</span>
-      </div>
-      <button class="checkout-btn">ดำเนินการสั่งซื้อ (Checkout)</button>
-    </div>
+<div class="modal" id="modal">
+  <div class="m-img"><img id="m-img" alt=""></div>
+  <div class="m-info">
+    <button class="m-x" onclick="closeAll()" aria-label="ปิด">×</button>
+    <div class="brand">AURA BEAUTY</div>
+    <h2 id="m-title"></h2>
+    <div style="color:#f39c12;font-size:14px;margin-bottom:12px">⭐⭐⭐⭐⭐ (4.9) | ขายแล้ว 1.2k ชิ้น</div>
+    <div class="m-price" id="m-price"></div>
+    <p id="m-desc"></p>
+    <b style="font-size:14px">คุณสมบัติเด่น:</b>
+    <ul id="m-feat"></ul>
+    <div class="m-act"><div class="m-q"><button onclick="mq(-1)">-</button><span id="m-qty">1</span><button onclick="mq(1)">+</button></div><button class="btn" onclick="addFromModal()">หยิบใส่ตะกร้า</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<div class="top-bar"><div><span><i class="fas fa-truck"></i> จัดส่งฟรีเมื่อช้อปครบ 499.-</span><span><i class="fas fa-store"></i> ค้นหาสาขา</span></div><div class="top-bar-r"><a href="#">ติดต่อเรา</a><a href="#">TH / EN</a></div></div>
+
+<header>
+  <a href="#top" class="logo">Aura Beauty</a>
+  <div class="search"><i class="fas fa-search"></i><input id="q" type="search" placeholder="ค้นหาชื่อสินค้า (เช่น เซรั่มวิตามินซี)"></div>
+  <div class="nav-right"><a href="#" class="login">ลงชื่อเข้าใช้ / สมัคร</a><button class="icon-btn" aria-label="ตะกร้าสินค้า" onclick="toggleCart()"><i class="fas fa-shopping-bag"></i><span class="badge-c" id="badge">0</span></button></div>
+</header>
+
+<nav class="main-nav" id="nav">
+  <a href="#section-flashsale">🔥 โปรโมชั่น</a><a href="#section-makeup">Makeup</a><a href="#section-skincare">Skincare</a><a href="#section-bodycare">Body Care</a><a href="#section-hair">Hair</a><a href="#section-new">New Arrival</a>
+</nav>
+
+<main id="top">
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1400&q=80" alt="Beauty Campaign">
+    <div class="banner"><h2>Feel Your Aura<br>Every Moment</h2><p>สกินแคร์ที่เข้าใจผิวคุณ พร้อมโปรพิเศษวันนี้</p><a href="#section-skincare" class="shop-btn">SHOP NOW</a></div>
   </div>
 
-  <!-- Product Modal (หน้าต่างเด้ง) -->
-  <div class="product-modal" id="product-modal">
-    <div class="modal-img-col">
-      <img src="" id="modal-img" alt="Product Image">
-    </div>
-    <div class="modal-info-col">
-      <button class="close-modal" onclick="closeModal()">×</button>
-      <div class="modal-brand">AURA BEAUTY</div>
-      <h2 class="modal-title" id="modal-title">Product Name</h2>
-      <div class="modal-rating">⭐⭐⭐⭐⭐ (5.0) | ขายแล้ว 1.2k ชิ้น</div>
-      <div class="modal-price" id="modal-price">฿0</div>
-      <p class="modal-desc" id="modal-desc">Description goes here.</p>
-      
-      <div style="font-weight: 600; margin-bottom: 10px; font-size: 14px;">คุณสมบัติเด่น:</div>
-      <ul class="modal-features" id="modal-features">
-        <li>ข้อมูลที่ 1</li>
-        <li>ข้อมูลที่ 2</li>
-      </ul>
-      
-      <div class="modal-action">
-        <div class="modal-qty">
-          <button onclick="changeModalQty(-1)">-</button>
-          <span id="modal-qty-val">1</span>
-          <button onclick="changeModalQty(1)">+</button>
-        </div>
-        <button class="modal-add-btn" onclick="addToCartFromModal()">หยิบใส่ตะกร้า</button>
-      </div>
-    </div>
+  <div class="perks">
+    <div class="perk"><i class="fas fa-truck-fast"></i><div><b>ส่งฟรี ครบ 499.-</b>ส่งไวทั่วประเทศ</div></div>
+    <div class="perk"><i class="fas fa-shield-heart"></i><div><b>ของแท้ 100%</b>รับประกันทุกชิ้น</div></div>
+    <div class="perk"><i class="fas fa-rotate-left"></i><div><b>คืนสินค้าใน 7 วัน</b>หากสินค้ามีปัญหา</div></div>
+    <div class="perk"><i class="fas fa-comments"></i><div><b>AI ให้คำปรึกษา 24 ชม.</b>แชตกับ Aura ได้เลย</div></div>
   </div>
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="top-bar-left">
-      <span><i class="fas fa-truck"></i> จัดส่งฟรีเมื่อช้อปครบ 499.-</span>
-      <span><i class="fas fa-store"></i> ค้นหาสาขา</span>
-    </div>
-    <div class="top-bar-right">
-      <a href="#">ติดต่อเรา</a>
-      <a href="#">TH / EN</a>
-    </div>
+  <div class="cats" id="cats"></div>
+
+  <div class="marquee"><div>✨ 🎁 &nbsp; รับส่วนลด 100.- สำหรับการสั่งซื้อครั้งแรก ขั้นต่ำ 900.- &nbsp; 📦 &nbsp; Free Shipping on Orders ฿499+ &nbsp; 💋 &nbsp; ช้อปสกินแคร์แบรนด์ดังลดสูงสุด 50% &nbsp; ✨</div></div>
+
+  <div id="sections"></div>
+  <div class="empty" id="empty">ไม่พบสินค้าที่ค้นหา ลองใช้คำอื่นดูนะคะ</div>
+</main>
+
+<footer>
+  <div class="f-grid">
+    <div><a href="#top" class="logo" style="font-size:22px">Aura Beauty</a><p style="color:var(--muted);font-size:13px;margin-top:10px">เดสติเนชั่นความงามที่รวมไอเทมเด็ด พร้อม AI ให้คำปรึกษาตลอด 24 ชม.</p>
+      <div class="soc"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-tiktok"></i></a><a href="#"><i class="fab fa-line"></i></a></div></div>
+    <div><h4>ช้อปปิ้งออนไลน์</h4><ul>
+      <li><a href="#section-flashsale">โปรโมชั่นพิเศษ</a></li><li><a href="#section-makeup">เมคอัพเครื่องสำอาง</a></li><li><a href="#section-skincare">สกินแคร์ดูแลผิวหน้า</a></li><li><a href="#section-bodycare">ดูแลผิวกาย</a></li><li><a href="#section-hair">ดูแลเส้นผม</a></li><li><a href="#section-new">สินค้าใหม่</a></li></ul></div>
+    <div><h4>บริการลูกค้า</h4><ul><li><a href="#">คำถามที่พบบ่อย (FAQ)</a></li><li><a href="#">ตรวจสอบสถานะการจัดส่ง</a></li><li><a href="#">นโยบายการเปลี่ยนคืนสินค้า</a></li><li><a href="#">ติดต่อเรา</a></li></ul></div>
   </div>
+  <div class="f-bot">&copy; 2026 Aura Beauty. All rights reserved. | จัดทำเพื่อการศึกษา PIM</div>
+</footer>
 
-  <!-- Header -->
-  <header>
-    <!-- Hamburger for Mobile -->
-    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-    
-    <a href="#" class="logo">Aura Beauty</a>
-    
-    <div class="search-container">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="ค้นหาชื่อแบรนด์ หรือสินค้า (เช่น เซรั่มวิตามินซี)">
-    </div>
+<script>
+// แก้ไข URL ให้ใช้ภาพตรงๆ จาก Unsplash แทนการใช้ ID (เนื่องจาก ID อาจหมดอายุ)
+const U = url => url;
 
-    <div class="nav-right">
-      <a href="#" class="login-text">ลงชื่อเข้าใช้ / สมัคร</a>
-      <!-- ปุ่มเปิดตะกร้า -->
-      <button class="icon-btn" aria-label="ตะกร้าสินค้า" onclick="toggleCart()">
-        <i class="fas fa-shopping-bag"></i>
-        <span class="cart-badge" id="main-cart-badge">1</span>
-      </button>
-    </div>
-  </header>
+// ข้อมูลสินค้า (ใช้รูปจริงจาก Unsplash แทน)
+const P=[
+{c:'skincare',t:'fh',n:'Aura Glow Vitamin C Serum 15% 30ml.',p:890,o:1290,i:'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=600&q=80',e:'🧴',d:'เซรั่มวิตามินซีเข้มข้น 15% ลดรอยดำ รอยแดง ปรับสีผิวให้กระจ่างใสอย่างเป็นธรรมชาติ เหมาะกับทุกสภาพผิว',f:['Vitamin C 15%','Niacinamide ช่วยให้ผิวกระจ่างใส','ปราศจากน้ำหอมและแอลกอฮอล์']},
+{c:'makeup',t:'f',n:'Velvet Matte Lip Tint #03 Peachy Pink',p:295,o:590,i:'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80',e:'💄',d:'ลิปทินต์เนื้อมูส นุ่มละมุน เกลี่ยง่าย สีสันคมชัด ติดทนนาน ไม่ทำให้ริมฝีปากแห้งตึง',f:['สีโทนพีชอมชมพู','เนื้อแมตต์กำมะหยี่ ไม่ตกร่อง','ผสม Vitamin E บำรุงปาก']},
+{c:'bodycare',t:'f',n:'Sweet Blossom Eau De Parfum 50ml.',p:1490,o:1990,i:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80',e:'🌸',d:'น้ำหอมกลิ่นฟลอรัลหอมหวานละมุน สดชื่นด้วยดอกไม้ขาวและซิตรัส ติดทนนาน 8-10 ชม.',f:['Top: White Rose & Citrus','Base: Vanilla & Musk','ติดทนยาวนานข้ามวัน']},
+{c:'skincare',t:'f',n:'Aura Dewy Glow Essence 100ml.',p:670,o:790,i:'https://images.unsplash.com/photo-1556228720-192a61a9809c?auto=format&fit=crop&w=600&q=80',e:'💧',d:'น้ำตบเตรียมผิว เติมน้ำให้ผิวอย่างเร่งด่วน ฟื้นผิวแห้งกร้านให้กลับมาฉ่ำฟู',f:['8D Hyaluronic Acid','สารสกัดจากแพลงก์ตอนทะเล','ช่วยให้แต่งหน้าติดทนขึ้น']},
+{c:'makeup',t:'n',n:'Rose Petal Blush Palette 3 สี',p:450,i:'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80',e:'🎨',d:'บลัชออน 3 เฉดโทนกุหลาบ เม็ดสีละเอียด ปัดแล้วแก้มอมชมพูเป็นธรรมชาติ',f:['เนื้อซิลกี้ เบลนด์ง่าย','ใช้เป็นอายแชโดว์ได้','ตลับกระจกพกพาสะดวก']},
+{c:'makeup',t:'',n:'Skin Veil Cushion SPF50 PA+++ 15g.',p:690,i:'https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80',e:'🪞',d:'คุชชั่นเนื้อบางเบา คุมมัน กันแดดในตัว ผิวสวยฉ่ำโกลว์ทั้งวัน',f:['SPF50 PA+++','ปกปิดเรียบเนียน','มี 3 เฉดสีให้เลือก']},
+{c:'makeup',t:'h',n:'Everyday Look Eyeshadow Palette',p:890,o:1290,i:'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80',e:'👁️',d:'พาเลตต์ตา 9 หลุม โทนสีน้ำตาล-ทอง แต่งง่ายได้ทุกวัน เม็ดสีแน่นติดทน',f:['9 เฉดสี แมตต์และชิมเมอร์','เม็ดสีเกลี่ยง่าย ไม่เป็นก้อน','ติดทนยาวนาน 12 ชม.']},
+{c:'skincare',t:'',n:'Aura Deep Moisture Ceramide Cream 50g.',p:1250,i:'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=600&q=80',e:'🫙',d:'ครีมเซราไมด์เข้มข้น ฟื้นเกราะป้องกันผิว ล็อกความชุ่มชื้นยาวนาน 48 ชม.',f:['Ceramides Complex 5 ชนิด','ฟื้นฟูผิวแพ้ง่าย ลอกขุย','ซึมไว ไม่เหนอะหนะ']},
+{c:'skincare',t:'',n:'Gentle Gel Cleanser (pH 5.5)',p:490,i:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80',e:'🧼',d:'เจลล้างหน้าสูตรอ่อนโยน ค่า pH 5.5 คงสมดุลผิว ล้างสะอาดแต่ไม่แห้งตึง',f:['pH 5.5 อ่อนโยนต่อผิว','ทำความสะอาดล้ำลึก','เหมาะกับผิวเป็นสิว']},
+{c:'skincare',t:'n',n:'Daily UV Defense Sunscreen SPF50+ 40ml.',p:850,i:'https://images.unsplash.com/photo-1611078712760-496662402131?auto=format&fit=crop&w=600&q=80',e:'☀️',d:'กันแดดเนื้อบางเบา ไม่เหนียว ไม่วอก ป้องกันทั้งรังสี UVA และ UVB',f:['SPF50+ PA++++','ปกป้องผิวจากมลภาวะ','เหมาะกับผิวแพ้ง่าย']},
+{c:'bodycare',t:'',n:'Velvet Body Lotion Sakura 250ml.',p:350,i:'https://images.unsplash.com/photo-1615397322901-44ff64052061?auto=format&fit=crop&w=600&q=80',e:'🌷',d:'โลชั่นบำรุงผิวกายกลิ่นซากุระ ผิวนุ่มชุ่มชื้นยาวนาน ซึมไว ไม่เหนอะหนะ',f:['Shea Butter & Vitamin E','กลิ่นซากุระอ่อนๆ','ชุ่มชื้นนาน 24 ชม.']},
+{c:'bodycare',t:'h',n:'Aura Milk & Honey Body Scrub 200g.',p:550,o:690,i:'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80',e:'🥥',d:'สครับขัดผิวสูตรนมและน้ำผึ้ง ผลัดเซลล์ผิวคล้ำเสียอย่างอ่อนโยน ช่วยให้ผิวเนียนนุ่ม',f:['เกลือสครับอณูละเอียด','ผสมน้ำผึ้งแท้บำรุงล้ำลึก','ล้างออกง่าย ผิวไม่แห้งตึง']},
+{c:'bodycare',t:'n',n:'UV Shield Body Lotion SPF50 PA++++',p:690,i:'https://images.unsplash.com/photo-1570194065650-d99fb4b8ccb0?auto=format&fit=crop&w=600&q=80',e:'🧴',d:'โลชั่นกันแดดผิวกาย ปกป้องผิวจากแสงแดด เนื้อบางเบา ซึมไว ปรับผิวให้สว่างขึ้น 1 ระดับ',f:['SPF50 PA++++','Tone-up Effect ทันที','ไม่ทิ้งคราบขาว']},
+{c:'hair',t:'',n:'Aura Keratin Repair Shampoo 300ml.',p:490,i:'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=600&q=80',e:'🧴',d:'แชมพูสูตรฟื้นฟูผมเสียจากการทำสี ดัด ยืด ช่วยให้ผมมีน้ำหนัก ไม่ชี้ฟู',f:['อุดมด้วย Keratin','ฟื้นฟูผมเสียแตกปลาย','ปราศจากซิลิโคน']},
+{c:'hair',t:'f',n:'Aura Scalp Detox Mask 200ml.',p:650,o:850,i:'https://images.unsplash.com/photo-1580870059858-a53d6118d044?auto=format&fit=crop&w=600&q=80',e:'💆',d:'มาสก์ดีท็อกซ์หนังศีรษะ ลดรังแค ลดความมันบนหนังศีรษะ กระตุ้นรากผมให้แข็งแรง',f:['ทำความสะอาดล้ำลึก','ลดอาการคันศีรษะ','เย็นสดชื่น เบาสบาย']},
+{c:'hair',t:'n',n:'Aura Argan Nourishing Hair Serum 100ml.',p:590,i:'https://images.unsplash.com/photo-1616683884143-690a7894a4c5?auto=format&fit=crop&w=600&q=80',e:'✨',d:'เซรั่มบำรุงผมอาร์แกนออยล์ ปกป้องผมจากความร้อน ลดผมแตกปลาย ให้ผมเงางาม',f:['Argan Oil เข้มข้น','ป้องกันความร้อน 220°C','ซึมซาบไว ไม่ทำให้ผมลีบแบน']}
+];
 
-  <!-- Mega Menu -->
-  <nav class="main-nav">
-    <a href="#section-flashsale">🔥 โปรโมชั่น</a>
-    <a href="#section-makeup">MAKEUP</a>
-    <a href="#section-skincare">SKINCARE</a>
-    <a href="#section-bodycare">BODY CARE</a>
-    <a href="#section-hair">HAIR</a>
-    <a href="#section-new">NEW ARRIVAL</a>
-  </nav>
+const S=[
+ {id:'section-flashsale',ic:'fa-bolt',t:'FLASH SALE',s:'ลดแรงเฉพาะวันนี้',f:p=>p.t.includes('f'),flash:1},
+ {id:'section-makeup',ic:'fa-wand-magic-sparkles',t:'MAKEUP (เมคอัพ)',s:'ลุคสวยครบ ตั้งแต่ลิป คุชชั่น ไปจนถึงมาสคาร่า',f:p=>p.c=='makeup'},
+ {id:'section-skincare',ic:'fa-leaf',t:'SKINCARE (สกินแคร์)',s:'เซรั่ม ครีม กันแดด ดูแลผิวหน้าครบทุกขั้นตอน',f:p=>p.c=='skincare'},
+ {id:'section-bodycare',ic:'fa-spa',t:'BODY CARE (ดูแลผิวกาย)',s:'โลชั่น สครับ น้ำหอม ผิวนุ่มหอมตลอดวัน',f:p=>p.c=='bodycare'},
+ {id:'section-hair',ic:'fa-scissors',t:'HAIR (ดูแลเส้นผม)',s:'แชมพู มาสก์ เซรั่ม เพื่อผมเงางามสุขภาพดี',f:p=>p.c=='hair'},
+ {id:'section-new',ic:'fa-star',t:'NEW ARRIVAL (สินค้าใหม่)',s:'ไอเทมใหม่ล่าสุดที่เพิ่งมาถึง',f:p=>p.t.includes('n')}
+];
 
-  <main>
-    <!-- Hero Banner -->
-    <div class="hero-banner">
-      <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80" alt="Beauty Campaign" class="hero-img">
-      <div class="banner-text">
-        <h2>Feel Your Aura<br>Every Moment</h2>
-        <p>สกินแคร์ที่เข้าใจผิวคุณ พร้อมโปรพิเศษวันนี้</p>
-        <a href="#section-skincare" class="shop-btn">SHOP NOW</a>
-      </div>
-    </div>
+// ข้อมูลสำหรับไอคอนวงกลมหมวดหมู่ (ใช้รูปจริงจาก Unsplash)
+const C=[
+  ['section-new','NEW ARRIVAL','https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=300&q=80','🆕'],
+  ['section-makeup','เมคอัพ','https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=300&q=80','💄'],
+  ['section-skincare','สกินแคร์','https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=300&q=80','🧴'],
+  ['section-bodycare','ดูแลผิวกาย','https://images.unsplash.com/photo-1615397322901-44ff64052061?auto=format&fit=crop&w=300&q=80','🛁'],
+  ['section-hair','ดูแลเส้นผม','https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=300&q=80','💇']
+];
 
-    <!-- Category Circles -->
-    <div class="category-circles">
-      <a href="#section-new" class="cat-item">
-        <div class="cat-img-wrapper" style="border-color: #FFD1DF;"><img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=300&q=80" alt="New"></div>
-        <div class="cat-title">NEW ARRIVAL</div>
-      </a>
-      <a href="#section-makeup" class="cat-item">
-        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=300&q=80" alt="Makeup"></div>
-        <div class="cat-title">เมคอัพ</div>
-      </a>
-      <a href="#section-skincare" class="cat-item">
-        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1570194065650-d99fb4b8ccb0?auto=format&fit=crop&w=300&q=80" alt="Skincare"></div>
-        <div class="cat-title">สกินแคร์</div>
-      </a>
-      <a href="#section-bodycare" class="cat-item">
-        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=300&q=80" alt="Care"></div>
-        <div class="cat-title">ของใช้ส่วนตัว</div>
-      </a>
-      <a href="#section-bodycare" class="cat-item">
-        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=300&q=80" alt="Body"></div>
-        <div class="cat-title">ดูแลผิวกาย</div>
-      </a>
-      <a href="#section-hair" class="cat-item">
-        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=300&q=80" alt="Hair"></div>
-        <div class="cat-title">ดูแลเส้นผม</div>
-      </a>
-    </div>
+const fmt=n=>'฿'+n.toLocaleString();
+const ph=e=>'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE5EC"/><stop offset="1" stop-color="#FFD9BF"/></linearGradient></defs><rect width="100" height="100" fill="url(#g)"/><text x="50" y="50" font-size="40" text-anchor="middle" dominant-baseline="central">${e}</text></svg>`);
 
-    <!-- Promo Marquee -->
-    <div class="promo-marquee">
-      <div class="marquee-content">
-        ✨ 🎁 &nbsp;&nbsp; พิเศษ! รับส่วนลด 100.- สำหรับการสั่งซื้อครั้งแรก ขั้นต่ำ 900.- &nbsp;&nbsp; 📦 &nbsp;&nbsp; Free Shipping on Orders ฿499+ &nbsp;&nbsp; 💋 &nbsp;&nbsp; ช้อปสกินแคร์แบรนด์ดังลดสูงสุด 50% &nbsp;&nbsp; ✨
-      </div>
-    </div>
+// หากรูปภาพโหลดไม่ขึ้น ให้แสดงภาพสีพื้นพร้อม Emoji แทน
+document.addEventListener('error',ev=>{const im=ev.target;if(im.tagName=='IMG'&&!im.dataset.fb){im.dataset.fb=1;im.src=ph(im.dataset.e||'💖')}},true);
 
-    <!-- 1. Flash Sale Section -->
-    <section id="section-flashsale" class="section-container">
-      <div class="section-header flash-sale-header">
-        <div class="section-title"><i class="fas fa-bolt"></i> FLASH SALE</div>
-        <div class="countdown">
-          <span>สิ้นสุดใน</span>
-          <span class="time-box" id="cd-hours">03</span> <span>:</span>
-          <span class="time-box" id="cd-mins">00</span> <span>:</span>
-          <span class="time-box" id="cd-secs">57</span>
-        </div>
-      </div>
-      <div class="flash-sale-body">
-        <div class="products-grid">
-          <!-- สังเกตฟังก์ชัน openModal() ที่เพิ่มเข้ามา -->
-          <article class="product-card" onclick="openModal('Aura Glow Vitamin C Serum 15% 30ml.', '฿890', 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=800&q=80', 'เซรั่มวิตามินซีเข้มข้น 15% ลดรอยดำ รอยแดง ปรับสีผิวให้สว่างกระจ่างใสอย่างเป็นธรรมชาติ เหมาะสำหรับทุกสภาพผิว', ['Vitamin C 15%', 'Niacinamide ช่วยให้ผิวกระจ่างใส', 'ปราศจากน้ำหอมและแอลกอฮอล์'])">
-            <span class="badge-hot">HOT!</span>
-            <span class="badge-discount">-32%</span>
-            <div class="p-img-box"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80" alt="Serum"></div>
-            <div class="p-brand">AURA BEAUTY</div>
-            <div class="p-name">Aura Glow Vitamin C Serum 15% 30ml.</div>
-            <div class="p-price-row"><span class="p-price-new">฿890</span><span class="p-price-old">฿1,290</span></div>
-          </article>
-          
-          <article class="product-card" onclick="openModal('Velvet Matte Lip Tint #03 Peachy Pink', '฿295', 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=800&q=80', 'ลิปทินต์เนื้อมูส นุ่มละมุน เกลี่ยง่าย สีสันคมชัด ติดทนนาน ไม่ทำให้ริมฝีปากแห้งตึง', ['สีโทนพีชอมชมพู', 'เนื้อแมตต์กำมะหยี่ ไม่ตกร่อง', 'ผสม Vitamin E บำรุงปาก'])">
-            <span class="badge-discount">-50%</span>
-            <div class="p-img-box"><img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=400&q=80" alt="Lipstick"></div>
-            <div class="p-brand">AURA BEAUTY</div>
-            <div class="p-name">Velvet Matte Lip Tint #03 Peachy Pink</div>
-            <div class="p-price-row"><span class="p-price-new">฿295</span><span class="p-price-old">฿590</span></div>
-          </article>
+document.getElementById('cats').innerHTML=C.map(c=>`<a class="cat" href="#${c[0]}"><div class="w"><img src="${U(c[2])}" data-e="${c[3]}" alt="${c[1]}"></div><b>${c[1]}</b></a>`).join('');
 
-          <article class="product-card" onclick="openModal('Sweet Blossom Eau De Parfum 50ml.', '฿1,490', 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80', 'น้ำหอมกลิ่นฟลอรัล หอมหวานละมุน สดชื่นด้วยกลิ่นดอกไม้ขาวและซิตรัส ติดทนนาน 8-10 ชม.', ['Top Note: White Rose & Citrus', 'Base Note: Vanilla & Musk', 'ติดทนยาวนานข้ามวัน'])">
-            <span class="badge-discount">-25%</span>
-            <div class="p-img-box"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=400&q=80" alt="Perfume"></div>
-            <div class="p-brand">AURA BEAUTY</div>
-            <div class="p-name">Sweet Blossom Eau De Parfum 50ml.</div>
-            <div class="p-price-row"><span class="p-price-new">฿1,490</span><span class="p-price-old">฿1,990</span></div>
-          </article>
+const card=(p,i)=>`<article class="card" data-n="${p.n.toLowerCase()}" onclick="openModal(${i})">
+ ${p.t.includes('n')?'<span class="tag t-new">NEW</span>':p.t.includes('h')?'<span class="tag t-hot">HOT!</span>':''}${p.o?`<span class="tag t-off">-${Math.round((1-p.p/p.o)*100)}%</span>`:''}
+ <div class="pimg"><img src="${U(p.i)}" data-e="${p.e}" alt="${p.n}" loading="lazy"></div>
+ <div class="brand">AURA BEAUTY</div><div class="pname">${p.n}</div>
+ <div class="price">${p.o?`<span class="new">${fmt(p.p)}</span><span class="old">${fmt(p.o)}</span>`:`<span class="norm">${fmt(p.p)}</span>`}</div>
+ <button class="add" onclick="event.stopPropagation();add(${i},1)"><i class="fas fa-plus"></i> ใส่ตะกร้า</button></article>`;
 
-          <article class="product-card" onclick="openModal('Aura Dewy Glow Essence 100ml.', '฿670', 'https://images.unsplash.com/photo-1556228720-192a61a9809c?auto=format&fit=crop&w=800&q=80', 'น้ำตบเตรียมผิว เติมน้ำให้ผิวอย่างเร่งด่วน ฟื้นบำรุงผิวที่แห้งกร้านให้กลับมาฉ่ำฟู สุขภาพดี', ['8D Hyaluronic Acid เติมน้ำล้ำลึก', 'สารสกัดจากแพลงก์ตอนทะเล', 'ช่วยให้แต่งหน้าติดทนขึ้น'])">
-            <span class="badge-discount">-15%</span>
-            <div class="p-img-box"><img src="https://images.unsplash.com/photo-1556228720-192a61a9809c?auto=format&fit=crop&w=400&q=80" alt="Essence"></div>
-            <div class="p-brand">AURA BEAUTY</div>
-            <div class="p-name">Aura Dewy Glow Essence 100ml.</div>
-            <div class="p-price-row"><span class="p-price-new">฿670</span><span class="p-price-old">฿790</span></div>
-          </article>
-        </div>
-      </div>
-    </section>
+document.getElementById('sections').innerHTML=S.map((s,k)=>{
+ const items=P.map((p,i)=>s.f(p)?card(p,i):'').join('');
+ const body=s.flash?`<div class="flash"><div class="flash-h"><h3><i class="fas fa-bolt"></i> FLASH SALE</h3><div class="cd"><span>สิ้นสุดใน</span><b id="h">03</b>:<b id="m">00</b>:<b id="s">57</b></div></div><div class="grid">${items}</div></div>`
+ :`<div class="sec-h"><h3><i class="fas ${s.ic}"></i><span>${s.t}<small>${s.s}</small></span></h3></div><div class="grid">${items}</div>`;
+ const promo=k==2?`<div class="promo-banner"><div><h3>สมาชิกใหม่ รับส่วนลด 100.- ทันที<br><small style="font-weight:400;font-size:14px">เมื่อสั่งซื้อครั้งแรกขั้นต่ำ 900.-</small></h3><span>AURA100</span></div></div>`:'';
+ return `${promo}<section id="${s.id}" class="sec">${body}</section>`}).join('');
 
-    <!-- 2. SKINCARE Section (ย่อส่วนลงเพื่อความกะทัดรัดของโค้ด นำกลับมาใส่เพิ่มได้) -->
-    <section id="section-skincare" class="section-container">
-      <div class="section-header">
-        <div class="section-title"><i class="fas fa-leaf"></i> SKINCARE (สกินแคร์)</div>
-        <a href="#" class="view-all">ดูทั้งหมด ></a>
-      </div>
-      <div class="products-grid">
-        <article class="product-card" onclick="openModal('Aura Deep Moisture Ceramide Cream 50g.', '฿1,250', 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=800&q=80', 'ครีมเซราไมด์เข้มข้น ฟื้นบำรุงเกราะป้องกันผิวที่ถูกทำร้าย ล็อคความชุ่มชื้นยาวนาน 48 ชม.', ['Ceramides Complex 5 ชนิด', 'ฟื้นฟูผิวแพ้ง่าย ลอกขุย', 'เนื้อครีมซึมไว ไม่เหนอะหนะ'])">
-          <div class="p-img-box"><img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=400&q=80" alt="Cream"></div>
-          <div class="p-brand">AURA BEAUTY</div>
-          <div class="p-name">Aura Deep Moisture Ceramide Cream 50g.</div>
-          <div class="p-price-row"><span class="p-price-normal">฿1,250</span></div>
-        </article>
-        <article class="product-card" onclick="openModal('Gentle Gel Cleanser (pH 5.5)', '฿490', 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=800&q=80', 'เจลล้างหน้าสูตรอ่อนโยน ค่า pH 5.5 คงสมดุลผิว ล้างสะอาดแต่ไม่ทำให้ผิวแห้งตึงหลังล้าง', ['pH 5.5 อ่อนโยนต่อผิว', 'ทำความสะอาดล้ำลึก', 'เหมาะสำหรับผิวเป็นสิว'])">
-          <div class="p-img-box"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=400&q=80" alt="Cleanser"></div>
-          <div class="p-brand">AURA BEAUTY</div>
-          <div class="p-name">Gentle Gel Cleanser (pH 5.5)</div>
-          <div class="p-price-row"><span class="p-price-normal">฿490</span></div>
-        </article>
-      </div>
-    </section>
+// ฟังก์ชันค้นหาสินค้า
+document.getElementById('q').addEventListener('input',e=>{
+ const v=e.target.value.trim().toLowerCase();let hit=0;
+ document.querySelectorAll('.card').forEach(c=>{const ok=!v||c.dataset.n.includes(v);c.style.display=ok?'':'none';if(ok)hit++});
+ document.getElementById('empty').style.display=hit?'none':'block'});
 
-  </main>
+// นาฬิกานับถอยหลัง
+let T=3*3600+57;
+setInterval(()=>{T=T>0?T-1:86399;const z=n=>String(n).padStart(2,'0');
+ document.getElementById('h').textContent=z(Math.floor(T/3600));
+ document.getElementById('m').textContent=z(Math.floor(T%3600/60));
+ document.getElementById('s').textContent=z(T%60);
+},1000);
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-col">
-        <h3 class="logo" style="font-size: 22px; margin-bottom: 15px; display: block;">Aura Beauty</h3>
-        <p style="color: var(--muted); font-size: 13px; line-height: 1.6;">
-          เดสติเนชั่นความงามที่รวมไอเทมเด็ด พร้อม AI ให้คำปรึกษาตลอด 24 ชม.
-        </p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-tiktok"></i></a>
-          <a href="#"><i class="fab fa-line"></i></a>
-        </div>
-      </div>
-      
-      <div class="footer-col">
-        <h4>ช้อปปิ้งออนไลน์</h4>
-        <ul>
-          <li><a href="#section-skincare">สกินแคร์ดูแลผิวหน้า</a></li>
-          <li><a href="#section-makeup">เมคอัพเครื่องสำอาง</a></li>
-          <li><a href="#section-flashsale">โปรโมชั่นพิเศษ</a></li>
-        </ul>
-      </div>
+// เมนูแท็บ: เลื่อนแล้วสลับสี
+const links=[...document.querySelectorAll('#nav a')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.hash=='#'+e.target.id))}),{rootMargin:'-35% 0px -55% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
 
-      <div class="footer-col">
-        <h4>บริการลูกค้า</h4>
-        <ul>
-          <li><a href="#">คำถามที่พบบ่อย (FAQ)</a></li>
-          <li><a href="#">ตรวจสอบสถานะการจัดส่ง</a></li>
-          <li><a href="#">นโยบายการเปลี่ยนคืนสินค้า</a></li>
-          <li><a href="#">ติดต่อเรา</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      &copy; 2026 Aura Beauty. All rights reserved. | จัดทำเพื่อการศึกษา PIM
-    </div>
-  </footer>
+// ระบบตะกร้าสินค้า
+const cart={};let cur=0;
+function toast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('on');setTimeout(()=>x.classList.remove('on'),2200)}
+function toggleCart(){const o=document.getElementById('cart').classList.toggle('open');document.getElementById('ov').classList.toggle('on',o)}
+function closeAll(){document.getElementById('modal').classList.remove('open');document.getElementById('cart').classList.remove('open');document.getElementById('ov').classList.remove('on')}
+document.getElementById('ov').addEventListener('click',closeAll);
+document.addEventListener('keydown',e=>{if(e.key=='Escape')closeAll()});
+function add(i,q){cart[i]=(cart[i]||0)+q;render();toast(`เพิ่ม ${P[i].n} ลงตะกร้าแล้ว 💖`)}
+function chg(i,d){cart[i]+=d;if(cart[i]<1)delete cart[i];render()}
+function render(){
+ const ids=Object.keys(cart);let tot=0,cnt=0;
+ document.getElementById('cart-items').innerHTML=ids.length?ids.map(i=>{const p=P[i],q=cart[i];tot+=p.p*q;cnt+=q;
+  return `<div class="ci"><img src="${U(p.i)}" data-e="${p.e}" alt=""><div><h4>${p.n}</h4><div class="cp">${fmt(p.p)}</div><div class="qty"><button onclick="chg(${i},-1)">-</button><span>${q}</span><button onclick="chg(${i},1)">+</button></div><span class="rm" onclick="chg(${i},-99)">ลบสินค้า</span></div></div>`}).join('')
+ :'<p style="text-align:center;color:var(--muted);margin-top:40px">ตะกร้ายังว่างอยู่ เลือกสินค้าถูกใจได้เลยค่ะ 🛍️</p>';
+ document.getElementById('cart-total').textContent=fmt(tot);
+ const b=document.getElementById('badge');b.textContent=cnt;b.style.transform='scale(1.5)';setTimeout(()=>b.style.transform='',200)}
+ 
+// ระบบป๊อปอัปสินค้า
+function openModal(i){cur=i;const p=P[i];
+ m_img=document.getElementById('m-img');m_img.dataset.fb='';m_img.dataset.e=p.e;m_img.src=U(p.i);
+ document.getElementById('m-title').textContent=p.n;
+ document.getElementById('m-price').innerHTML=fmt(p.p)+(p.o?`<s>${fmt(p.o)}</s>`:'');
+ document.getElementById('m-desc').textContent=p.d;
+ document.getElementById('m-feat').innerHTML=p.f.map(f=>`<li>${f}</li>`).join('');
+ document.getElementById('m-qty').textContent=1;
+ document.getElementById('modal').classList.add('open');document.getElementById('ov').classList.add('on')}
+function mq(d){const e=document.getElementById('m-qty');e.textContent=Math.max(1,+e.textContent+d)}
+function addFromModal(){add(cur,+document.getElementById('m-qty').textContent);closeAll()}
+render();
+</script>
 
-  <!-- Scripts สำหรับ UI/UX ใหม่ (Cart & Modal) -->
-  <script>
-    // นับเวลาถอยหลัง (Flash Sale)
-    let hours = 3, mins = 0, secs = 57;
-    setInterval(() => {
-      secs--;
-      if(secs < 0) { secs = 59; mins--; }
-      if(mins < 0) { mins = 59; hours--; }
-      if(hours < 0) { hours = 23; } 
-      document.getElementById('cd-hours').innerText = hours.toString().padStart(2, '0');
-      document.getElementById('cd-mins').innerText = mins.toString().padStart(2, '0');
-      document.getElementById('cd-secs').innerText = secs.toString().padStart(2, '0');
-    }, 1000);
-
-    // ระบบตะกร้าสินค้า (Cart Sidebar)
-    function toggleCart() {
-      const cart = document.getElementById('cart-sidebar');
-      const overlay = document.getElementById('main-overlay');
-      if(cart.classList.contains('open')) {
-        cart.classList.remove('open');
-        overlay.classList.remove('active');
-      } else {
-        cart.classList.add('open');
-        overlay.classList.add('active');
-      }
-    }
-
-    // ระบบหน้าต่างเด้งรายละเอียดสินค้า (Product Modal)
-    function openModal(title, price, imgSrc, desc, features) {
-      document.getElementById('modal-title').innerText = title;
-      document.getElementById('modal-price').innerText = price;
-      document.getElementById('modal-img').src = imgSrc;
-      document.getElementById('modal-desc').innerText = desc;
-      
-      const featureList = document.getElementById('modal-features');
-      featureList.innerHTML = '';
-      features.forEach(f => {
-        let li = document.createElement('li');
-        li.innerText = f;
-        featureList.appendChild(li);
-      });
-      
-      document.getElementById('modal-qty-val').innerText = '1';
-      document.getElementById('product-modal').classList.add('open');
-      document.getElementById('main-overlay').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('product-modal').classList.remove('open');
-      document.getElementById('main-overlay').classList.remove('active');
-    }
-
-    // ปิดเมื่อคลิกที่เงาดำ
-    document.getElementById('main-overlay').addEventListener('click', () => {
-      closeModal();
-      document.getElementById('cart-sidebar').classList.remove('open');
-    });
-
-    function changeModalQty(delta) {
-      const valSpan = document.getElementById('modal-qty-val');
-      let currentQty = parseInt(valSpan.innerText);
-      currentQty = Math.max(1, currentQty + delta);
-      valSpan.innerText = currentQty;
-    }
-
-    function addToCartFromModal() {
-      const qty = parseInt(document.getElementById('modal-qty-val').innerText);
-      const title = document.getElementById('modal-title').innerText;
-      
-      // ดึงเลขตะกร้าเดิมมาบวกเพิ่ม
-      const badge = document.getElementById('main-cart-badge');
-      let currentCartCount = parseInt(badge.innerText);
-      badge.innerText = currentCartCount + qty;
-      
-      // อนิเมชันปุ่มตะกร้า
-      badge.style.transform = 'scale(1.5)';
-      setTimeout(() => { badge.style.transform = 'scale(1)'; }, 200);
-
-      alert(`หยิบ ${title} จำนวน ${qty} ชิ้น ลงตะกร้าเรียบร้อยแล้วค่ะ 💖`);
-      closeModal();
-    }
-  </script>
-
-  <!-- สคริปต์แชทบอท Aura Beauty (ห้ามลบ) -->
-  <script src="chat-widget.js"></script>
+<!-- สคริปต์แชทบอท Aura Beauty (ห้ามลบ) -->
+<script src="chat-widget.js"></script>
 </body>
 </html>
