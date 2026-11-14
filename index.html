@@ -18,17 +18,17 @@
     --red: #FF3B30;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
   
   body {
-    background: #FFFFFF;
+    background: var(--bg-light);
     color: var(--dark);
     font-family: 'Prompt', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
   }
 
-  /* --- 1. Top Bar (แบบเว็บใหญ่) --- */
+  /* --- 1. Top Bar --- */
   .top-bar {
     background: #F8F8F8; color: var(--muted); font-size: 12px;
     display: flex; justify-content: space-between; padding: 6px 5%;
@@ -58,6 +58,7 @@
   .search-container i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--muted); }
 
   .nav-right { display: flex; align-items: center; gap: 15px; min-width: 150px; justify-content: flex-end;}
+  
   .icon-btn {
     background: #FFE5EC; border: none; width: 42px; height: 42px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center; cursor: pointer;
@@ -65,22 +66,23 @@
   }
   .icon-btn:hover { transform: scale(1.1); }
   .cart-badge { position: absolute; top: -2px; right: -2px; background: var(--pink); color: white; font-size: 11px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
-  .login-text { font-size: 13px; font-weight: 500; color: var(--dark); text-decoration: none; background: #FFF7F9; padding: 8px 15px; border-radius: 20px; border: 1px solid #FFE0E9; transition: all 0.2s;}
+  .login-text { font-size: 13px; font-weight: 500; color: var(--dark); text-decoration: none; background: #FFF7F9; padding: 8px 15px; border-radius: 20px; border: 1px solid #FFE0E9; transition: all 0.2s; display: block;}
   .login-text:hover { background: var(--pink); color: white; }
+  
+  /* Mobile Menu Button */
+  .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; color: var(--pink); cursor: pointer; }
 
   /* --- 3. Navigation Mega Menu --- */
   .main-nav {
     display: flex; justify-content: center; gap: 30px; padding: 12px 5%;
     border-bottom: 1px solid #F0F0F0; font-size: 14px; font-weight: 500;
-    overflow-x: auto; white-space: nowrap;
+    overflow-x: auto; white-space: nowrap; background: white;
   }
-  .main-nav a { color: var(--dark); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .main-nav a { color: var(--dark); text-decoration: none; text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
   .main-nav a:hover { color: var(--pink); }
 
-  /* --- 4. Hero Banner Carousel --- */
-  .hero-banner {
-    max-width: 1200px; margin: 20px auto; border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 21/7; background: #FFE5EC; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  }
+  /* --- 4. Hero Banner --- */
+  .hero-banner { max-width: 1200px; margin: 20px auto; border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 21/7; background: #FFE5EC; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
   .hero-img { width: 100%; height: 100%; object-fit: cover; }
   .banner-text { position: absolute; top: 50%; left: 5%; transform: translateY(-50%); color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
   .banner-text h2 { font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 10px; }
@@ -88,47 +90,44 @@
   .shop-btn { padding: 10px 30px; background: white; color: var(--pink); border-radius: 30px; text-decoration: none; font-weight: 600; display: inline-block; transition: transform 0.2s;}
   .shop-btn:hover { transform: scale(1.05); }
 
-  /* --- 5. Quick Links Icons --- */
-  .quick-links {
-    display: flex; justify-content: center; gap: 50px; padding: 40px 5%; flex-wrap: wrap;
-  }
-  .ql-item { text-align: center; cursor: pointer; transition: transform 0.2s; text-decoration: none; color: var(--dark);}
-  .ql-item:hover { transform: translateY(-5px); }
-  .ql-icon {
-    width: 70px; height: 70px; background: #FFF7F9; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 10px; color: var(--pink); border: 2px solid #FFE0E9;
-  }
-  .ql-text { font-size: 13px; font-weight: 500; }
+  /* --- 5. Category Circles --- */
+  .category-circles { max-width: 1200px; margin: 40px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; padding: 0 5%; }
+  .cat-item { text-align: center; cursor: pointer; text-decoration: none; color: var(--dark); transition: transform 0.2s; display: block; }
+  .cat-item:hover { transform: translateY(-8px); }
+  .cat-img-wrapper { width: 130px; height: 130px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 4px solid white; box-shadow: 0 8px 20px rgba(255,94,142,0.15); background: white; display: flex; align-items: center; justify-content: center; }
+  .cat-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  .cat-item:hover .cat-img-wrapper img { transform: scale(1.1); }
+  .cat-title { font-size: 15px; font-weight: 600; }
 
   /* --- 6. Promo Marquee --- */
-  .promo-marquee {
-    background: linear-gradient(90deg, #FFE5EC, #FFF7F9); color: var(--pink); padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px dashed #FFD1DF; border-bottom: 1px dashed #FFD1DF; font-weight: 500; font-size: 15px; display: flex;
-  }
+  .promo-marquee { background: linear-gradient(90deg, #FFE5EC, #FFF7F9); color: var(--pink); padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px dashed #FFD1DF; border-bottom: 1px dashed #FFD1DF; font-weight: 500; font-size: 15px; display: flex; }
   .marquee-content { display: inline-block; animation: marquee 20s linear infinite; padding-left: 100%; }
   @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-  /* --- 7. Flash Sale Section --- */
-  .flash-sale-section { padding: 50px 5%; background: #FAFAFA; }
-  .section-header { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto 30px; flex-wrap: wrap; gap: 15px;}
+  /* --- 7. Sections & Grid --- */
+  .section-container { max-width: 1200px; margin: 50px auto 20px; padding: 0 5%; }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #FFE0E9; padding-bottom: 10px;}
   .section-title { font-size: 24px; font-weight: 700; color: var(--dark); display: flex; align-items: center; gap: 10px; }
-  .section-title i { color: #FFCC00; font-size: 28px;}
+  .section-title i { color: var(--pink); font-size: 24px;}
+  .view-all { color: var(--pink); text-decoration: none; font-weight: 500; font-size: 14px;}
   
-  /* Countdown Timer */
-  .countdown { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--muted); }
-  .time-box { background: var(--dark); color: white; padding: 6px 12px; border-radius: 8px; font-size: 18px; letter-spacing: 1px;}
-  .time-sep { color: var(--dark); font-size: 20px; font-weight: 700;}
+  .flash-sale-header { border-bottom: none; background: #FF3B30; color: white; padding: 15px 20px; border-radius: 12px 12px 0 0; margin-bottom: 0;}
+  .flash-sale-header .section-title { color: white; }
+  .flash-sale-header .section-title i { color: #FFCC00; }
+  .countdown { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .time-box { background: white; color: var(--dark); padding: 4px 10px; border-radius: 6px; font-size: 16px;}
+  .flash-sale-body { background: white; padding: 30px 20px; border-radius: 0 0 12px 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 50px;}
 
-  /* --- 8. Product Grid --- */
-  .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-  .product-card {
-    background: white; border-radius: 16px; padding: 20px; text-align: center; border: 1px solid #F0F0F0; transition: all 0.3s; position: relative; cursor: pointer; display: flex; flex-direction: column;
-  }
-  .product-card:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.08); transform: translateY(-5px); border-color: #FFE0E9;}
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  .product-card { background: white; border-radius: 16px; padding: 20px; text-align: center; border: 1px solid #F0F0F0; transition: all 0.3s; position: relative; cursor: pointer; display: flex; flex-direction: column; }
+  .product-card:hover { box-shadow: 0 15px 30px rgba(255,94,142,0.1); transform: translateY(-5px); border-color: var(--pink);}
   
-  /* Badges */
-  .badge-hot { position: absolute; top: 15px; left: 15px; background: var(--dark); color: white; font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 600; z-index: 2;}
-  .badge-discount { position: absolute; top: 15px; right: 15px; background: var(--red); color: white; font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 600; z-index: 2;}
+  .badge-hot, .badge-discount, .badge-new { position: absolute; top: 15px; font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 600; z-index: 2; color: white; }
+  .badge-hot { left: 15px; background: var(--dark); }
+  .badge-discount { right: 15px; background: var(--red); }
+  .badge-new { left: 15px; background: var(--pink); }
 
-  .p-img-box { width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; margin-bottom: 15px; }
+  .p-img-box { width: 100%; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; margin-bottom: 15px; background: #F8F8F8;}
   .p-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
   .product-card:hover .p-img-box img { transform: scale(1.08); }
   
@@ -137,9 +136,91 @@
   .p-price-row { display: flex; justify-content: center; align-items: baseline; gap: 8px; margin-top: auto; }
   .p-price-new { font-size: 18px; font-weight: 700; color: var(--red); }
   .p-price-old { font-size: 13px; color: var(--muted); text-decoration: line-through; }
+  .p-price-normal { font-size: 18px; font-weight: 700; color: var(--orange); }
+
+  /* ------------------- UI/UX ใหม่ที่เพิ่มเข้ามา ------------------- */
+
+  /* ตะกร้าสินค้าแบบ Slide-out (Cart Sidebar) */
+  .cart-sidebar {
+    position: fixed; top: 0; right: -400px; width: 400px; max-width: 100vw; height: 100vh;
+    background: white; z-index: 1000; box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+    transition: right 0.3s ease; display: flex; flex-direction: column;
+  }
+  .cart-sidebar.open { right: 0; }
+  .cart-header { padding: 20px; border-bottom: 1px solid #F0F0F0; display: flex; justify-content: space-between; align-items: center; }
+  .cart-header h2 { font-size: 20px; color: var(--dark); }
+  .close-cart { background: none; border: none; font-size: 24px; color: var(--muted); cursor: pointer; }
+  .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
+  
+  .cart-item { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px dashed #F0F0F0; }
+  .cart-item-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
+  .cart-item-info { flex: 1; }
+  .cart-item-info h4 { font-size: 14px; margin-bottom: 5px; color: var(--dark); }
+  .cart-item-price { color: var(--pink); font-weight: 600; margin-bottom: 10px; }
+  .cart-qty-ctrl { display: flex; align-items: center; border: 1px solid #FFD1DF; border-radius: 15px; width: fit-content; }
+  .cart-qty-ctrl button { background: none; border: none; padding: 2px 10px; color: var(--pink); cursor: pointer; font-size: 16px;}
+  .cart-qty-ctrl span { padding: 0 10px; font-size: 14px; font-weight: 500;}
+  .remove-item { color: var(--muted); font-size: 12px; cursor: pointer; text-decoration: underline; margin-top: 5px; display: inline-block;}
+  
+  .cart-footer { padding: 20px; border-top: 1px solid #F0F0F0; background: #FAFAFA; }
+  .cart-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; margin-bottom: 15px; color: var(--dark); }
+  .checkout-btn { width: 100%; padding: 15px 0; background: linear-gradient(45deg, var(--pink), var(--orange)); color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s;}
+  .checkout-btn:hover { transform: scale(1.02); }
+
+  /* Overlay สำหรับ Cart & Modal */
+  .overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5);
+    z-index: 900; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .overlay.active { opacity: 1; pointer-events: all; }
+
+  /* Product Modal (หน้าต่างเด้งรายละเอียดสินค้า) */
+  .product-modal {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
+    width: 900px; max-width: 95vw; max-height: 90vh; background: white; border-radius: 24px;
+    z-index: 1001; display: flex; opacity: 0; pointer-events: none; transition: all 0.3s; overflow: hidden;
+  }
+  .product-modal.open { opacity: 1; pointer-events: all; transform: translate(-50%, -50%) scale(1); }
+  
+  .modal-img-col { flex: 1; background: #F8F8F8; padding: 40px; display: flex; align-items: center; justify-content: center; }
+  .modal-img-col img { width: 100%; max-width: 350px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.1);}
+  
+  .modal-info-col { flex: 1.2; padding: 40px; overflow-y: auto; position: relative; }
+  .close-modal { position: absolute; top: 20px; right: 20px; background: #FFE5EC; color: var(--pink); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; cursor: pointer; transition: transform 0.2s;}
+  .close-modal:hover { transform: scale(1.1); }
+  
+  .modal-brand { color: var(--pink); font-weight: 600; font-size: 14px; margin-bottom: 10px; }
+  .modal-title { font-size: 24px; color: var(--dark); margin-bottom: 15px; line-height: 1.3; }
+  .modal-rating { color: #f39c12; font-size: 14px; margin-bottom: 20px; }
+  .modal-price { font-size: 28px; font-weight: 700; color: var(--orange); margin-bottom: 20px; }
+  
+  .modal-desc { color: var(--muted); font-size: 15px; margin-bottom: 20px; line-height: 1.6; }
+  .modal-features { margin-bottom: 30px; }
+  .modal-features li { font-size: 14px; color: var(--dark); margin-bottom: 8px; list-style-type: '✨ '; margin-left: 20px;}
+  
+  .modal-action { display: flex; gap: 15px; align-items: center; }
+  .modal-qty { display: flex; align-items: center; border: 1px solid #FFD1DF; border-radius: 25px; height: 50px; padding: 0 15px;}
+  .modal-qty button { background: none; border: none; font-size: 20px; color: var(--pink); cursor: pointer; width: 30px;}
+  .modal-qty span { font-weight: 600; font-size: 18px; width: 40px; text-align: center;}
+  
+  .modal-add-btn { flex: 1; height: 50px; background: linear-gradient(45deg, var(--pink), var(--orange)); color: white; border: none; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform 0.2s;}
+  .modal-add-btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(255,94,142,0.3);}
+
+  /* Mobile Responsive */
+  @media (max-width: 900px) {
+    .search-container { display: none; } /* ซ่อนช่องค้นหาบนมือถือ */
+    .login-text { display: none; } /* ซ่อนปุ่ม login ข้อความ */
+    .mobile-menu-btn { display: block; } /* โชว์ปุ่มแฮมเบอร์เกอร์ */
+    .main-nav { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; }
+    
+    .product-modal { flex-direction: column; height: 90vh; }
+    .modal-img-col { padding: 20px; height: 40%; }
+    .modal-img-col img { height: 100%; width: auto; max-height: 250px;}
+    .modal-info-col { padding: 20px; height: 60%; }
+  }
 
   /* --- 9. Footer --- */
-  footer { background: white; border-top: 1px solid #FFE0E9; padding: 60px 5% 30px; margin-top: 40px; }
+  footer { background: white; border-top: 1px solid #FFE0E9; padding: 60px 5% 30px; margin-top: 60px; }
   .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
   .footer-col h4 { font-size: 16px; color: var(--dark); margin-bottom: 20px; }
   .footer-col ul { list-style: none; }
@@ -153,6 +234,68 @@
 </style>
 </head>
 <body>
+
+  <!-- Overlay (เงาดำจางๆ เวลาเปิด Modal/Cart) -->
+  <div class="overlay" id="main-overlay"></div>
+
+  <!-- ตะกร้าสินค้า Slide-out -->
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h2><i class="fas fa-shopping-bag"></i> ตะกร้าสินค้า</h2>
+      <button class="close-cart" onclick="toggleCart()">×</button>
+    </div>
+    <div class="cart-body" id="cart-items-container">
+      <!-- ตัวอย่างสินค้าในตะกร้า 1 ชิ้น -->
+      <div class="cart-item">
+        <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=150&q=80" alt="Serum" class="cart-item-img">
+        <div class="cart-item-info">
+          <h4>Aura Glow Vitamin C Serum 15% 30ml.</h4>
+          <div class="cart-item-price">฿890</div>
+          <div class="cart-qty-ctrl">
+            <button>-</button><span>1</span><button>+</button>
+          </div>
+          <span class="remove-item">ลบสินค้า</span>
+        </div>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>ยอดรวมทั้งสิ้น</span>
+        <span style="color: var(--orange);">฿890</span>
+      </div>
+      <button class="checkout-btn">ดำเนินการสั่งซื้อ (Checkout)</button>
+    </div>
+  </div>
+
+  <!-- Product Modal (หน้าต่างเด้ง) -->
+  <div class="product-modal" id="product-modal">
+    <div class="modal-img-col">
+      <img src="" id="modal-img" alt="Product Image">
+    </div>
+    <div class="modal-info-col">
+      <button class="close-modal" onclick="closeModal()">×</button>
+      <div class="modal-brand">AURA BEAUTY</div>
+      <h2 class="modal-title" id="modal-title">Product Name</h2>
+      <div class="modal-rating">⭐⭐⭐⭐⭐ (5.0) | ขายแล้ว 1.2k ชิ้น</div>
+      <div class="modal-price" id="modal-price">฿0</div>
+      <p class="modal-desc" id="modal-desc">Description goes here.</p>
+      
+      <div style="font-weight: 600; margin-bottom: 10px; font-size: 14px;">คุณสมบัติเด่น:</div>
+      <ul class="modal-features" id="modal-features">
+        <li>ข้อมูลที่ 1</li>
+        <li>ข้อมูลที่ 2</li>
+      </ul>
+      
+      <div class="modal-action">
+        <div class="modal-qty">
+          <button onclick="changeModalQty(-1)">-</button>
+          <span id="modal-qty-val">1</span>
+          <button onclick="changeModalQty(1)">+</button>
+        </div>
+        <button class="modal-add-btn" onclick="addToCartFromModal()">หยิบใส่ตะกร้า</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Top Bar -->
   <div class="top-bar">
@@ -168,6 +311,9 @@
 
   <!-- Header -->
   <header>
+    <!-- Hamburger for Mobile -->
+    <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    
     <a href="#" class="logo">Aura Beauty</a>
     
     <div class="search-container">
@@ -176,53 +322,61 @@
     </div>
 
     <div class="nav-right">
-      <a href="#" class="login-text">ลงชื่อเข้าใช้ / สมัครสมาชิก</a>
-      <button class="icon-btn" aria-label="ตะกร้าสินค้า">
+      <a href="#" class="login-text">ลงชื่อเข้าใช้ / สมัคร</a>
+      <!-- ปุ่มเปิดตะกร้า -->
+      <button class="icon-btn" aria-label="ตะกร้าสินค้า" onclick="toggleCart()">
         <i class="fas fa-shopping-bag"></i>
-        <span class="cart-badge">2</span>
+        <span class="cart-badge" id="main-cart-badge">1</span>
       </button>
     </div>
   </header>
 
   <!-- Mega Menu -->
   <nav class="main-nav">
-    <a href="#">🔥 โปรโมชั่น</a>
-    <a href="#">MAKEUP</a>
-    <a href="#">SKINCARE</a>
-    <a href="#">FRAGRANCE</a>
-    <a href="#">BODY CARE</a>
-    <a href="#">HAIR</a>
-    <a href="#">NEW ARRIVAL</a>
+    <a href="#section-flashsale">🔥 โปรโมชั่น</a>
+    <a href="#section-makeup">MAKEUP</a>
+    <a href="#section-skincare">SKINCARE</a>
+    <a href="#section-bodycare">BODY CARE</a>
+    <a href="#section-hair">HAIR</a>
+    <a href="#section-new">NEW ARRIVAL</a>
   </nav>
 
-  <!-- Hero Banner -->
   <main>
+    <!-- Hero Banner -->
     <div class="hero-banner">
       <img src="https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80" alt="Beauty Campaign" class="hero-img">
       <div class="banner-text">
         <h2>Feel Your Aura<br>Every Moment</h2>
         <p>สกินแคร์ที่เข้าใจผิวคุณ พร้อมโปรพิเศษวันนี้</p>
-        <a href="#" class="shop-btn">SHOP NOW</a>
+        <a href="#section-skincare" class="shop-btn">SHOP NOW</a>
       </div>
     </div>
 
-    <!-- Quick Links (Icons) -->
-    <div class="quick-links">
-      <a href="#" class="ql-item">
-        <div class="ql-icon"><i class="fas fa-tags"></i></div>
-        <div class="ql-text">คูปองส่วนลด</div>
+    <!-- Category Circles -->
+    <div class="category-circles">
+      <a href="#section-new" class="cat-item">
+        <div class="cat-img-wrapper" style="border-color: #FFD1DF;"><img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=300&q=80" alt="New"></div>
+        <div class="cat-title">NEW ARRIVAL</div>
       </a>
-      <a href="#" class="ql-item">
-        <div class="ql-icon"><i class="fas fa-crown"></i></div>
-        <div class="ql-text">K-BEAUTY</div>
+      <a href="#section-makeup" class="cat-item">
+        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=300&q=80" alt="Makeup"></div>
+        <div class="cat-title">เมคอัพ</div>
       </a>
-      <a href="#" class="ql-item">
-        <div class="ql-icon"><i class="fas fa-bell"></i></div>
-        <div class="ql-text">มาใหม่ล่าสุด</div>
+      <a href="#section-skincare" class="cat-item">
+        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1570194065650-d99fb4b8ccb0?auto=format&fit=crop&w=300&q=80" alt="Skincare"></div>
+        <div class="cat-title">สกินแคร์</div>
       </a>
-      <a href="#" class="ql-item">
-        <div class="ql-icon"><i class="fas fa-award"></i></div>
-        <div class="ql-text">สินค้าขายดี</div>
+      <a href="#section-bodycare" class="cat-item">
+        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=300&q=80" alt="Care"></div>
+        <div class="cat-title">ของใช้ส่วนตัว</div>
+      </a>
+      <a href="#section-bodycare" class="cat-item">
+        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=300&q=80" alt="Body"></div>
+        <div class="cat-title">ดูแลผิวกาย</div>
+      </a>
+      <a href="#section-hair" class="cat-item">
+        <div class="cat-img-wrapper"><img src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=300&q=80" alt="Hair"></div>
+        <div class="cat-title">ดูแลเส้นผม</div>
       </a>
     </div>
 
@@ -233,76 +387,78 @@
       </div>
     </div>
 
-    <!-- Flash Sale Section -->
-    <section class="flash-sale-section">
-      <div class="section-header">
+    <!-- 1. Flash Sale Section -->
+    <section id="section-flashsale" class="section-container">
+      <div class="section-header flash-sale-header">
         <div class="section-title"><i class="fas fa-bolt"></i> FLASH SALE</div>
         <div class="countdown">
           <span>สิ้นสุดใน</span>
-          <span class="time-box" id="cd-hours">03</span> <span class="time-sep">:</span>
-          <span class="time-box" id="cd-mins">00</span> <span class="time-sep">:</span>
+          <span class="time-box" id="cd-hours">03</span> <span>:</span>
+          <span class="time-box" id="cd-mins">00</span> <span>:</span>
           <span class="time-box" id="cd-secs">57</span>
         </div>
       </div>
+      <div class="flash-sale-body">
+        <div class="products-grid">
+          <!-- สังเกตฟังก์ชัน openModal() ที่เพิ่มเข้ามา -->
+          <article class="product-card" onclick="openModal('Aura Glow Vitamin C Serum 15% 30ml.', '฿890', 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=800&q=80', 'เซรั่มวิตามินซีเข้มข้น 15% ลดรอยดำ รอยแดง ปรับสีผิวให้สว่างกระจ่างใสอย่างเป็นธรรมชาติ เหมาะสำหรับทุกสภาพผิว', ['Vitamin C 15%', 'Niacinamide ช่วยให้ผิวกระจ่างใส', 'ปราศจากน้ำหอมและแอลกอฮอล์'])">
+            <span class="badge-hot">HOT!</span>
+            <span class="badge-discount">-32%</span>
+            <div class="p-img-box"><img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80" alt="Serum"></div>
+            <div class="p-brand">AURA BEAUTY</div>
+            <div class="p-name">Aura Glow Vitamin C Serum 15% 30ml.</div>
+            <div class="p-price-row"><span class="p-price-new">฿890</span><span class="p-price-old">฿1,290</span></div>
+          </article>
+          
+          <article class="product-card" onclick="openModal('Velvet Matte Lip Tint #03 Peachy Pink', '฿295', 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=800&q=80', 'ลิปทินต์เนื้อมูส นุ่มละมุน เกลี่ยง่าย สีสันคมชัด ติดทนนาน ไม่ทำให้ริมฝีปากแห้งตึง', ['สีโทนพีชอมชมพู', 'เนื้อแมตต์กำมะหยี่ ไม่ตกร่อง', 'ผสม Vitamin E บำรุงปาก'])">
+            <span class="badge-discount">-50%</span>
+            <div class="p-img-box"><img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=400&q=80" alt="Lipstick"></div>
+            <div class="p-brand">AURA BEAUTY</div>
+            <div class="p-name">Velvet Matte Lip Tint #03 Peachy Pink</div>
+            <div class="p-price-row"><span class="p-price-new">฿295</span><span class="p-price-old">฿590</span></div>
+          </article>
 
-      <div class="products">
-        <!-- Product 1 -->
-        <article class="product-card" onclick="alert('ไปหน้ารายละเอียดสินค้า')">
-          <span class="badge-hot">HOT!</span>
-          <span class="badge-discount">-32%</span>
-          <div class="p-img-box">
-            <img src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=400&q=80" alt="Serum">
-          </div>
-          <div class="p-brand">AURA BEAUTY</div>
-          <div class="p-name">Aura Glow Vitamin C Serum 15% 30ml.</div>
-          <div class="p-price-row">
-            <span class="p-price-new">฿890</span>
-            <span class="p-price-old">฿1,290</span>
-          </div>
-        </article>
+          <article class="product-card" onclick="openModal('Sweet Blossom Eau De Parfum 50ml.', '฿1,490', 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80', 'น้ำหอมกลิ่นฟลอรัล หอมหวานละมุน สดชื่นด้วยกลิ่นดอกไม้ขาวและซิตรัส ติดทนนาน 8-10 ชม.', ['Top Note: White Rose & Citrus', 'Base Note: Vanilla & Musk', 'ติดทนยาวนานข้ามวัน'])">
+            <span class="badge-discount">-25%</span>
+            <div class="p-img-box"><img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=400&q=80" alt="Perfume"></div>
+            <div class="p-brand">AURA BEAUTY</div>
+            <div class="p-name">Sweet Blossom Eau De Parfum 50ml.</div>
+            <div class="p-price-row"><span class="p-price-new">฿1,490</span><span class="p-price-old">฿1,990</span></div>
+          </article>
 
-        <!-- Product 2 -->
-        <article class="product-card" onclick="alert('ไปหน้ารายละเอียดสินค้า')">
-          <span class="badge-discount">-25%</span>
-          <div class="p-img-box">
-            <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=400&q=80" alt="Perfume">
-          </div>
-          <div class="p-brand">AURA BEAUTY</div>
-          <div class="p-name">Sweet Blossom Eau De Parfum 50ml.</div>
-          <div class="p-price-row">
-            <span class="p-price-new">฿1,490</span>
-            <span class="p-price-old">฿1,990</span>
-          </div>
-        </article>
+          <article class="product-card" onclick="openModal('Aura Dewy Glow Essence 100ml.', '฿670', 'https://images.unsplash.com/photo-1556228720-192a61a9809c?auto=format&fit=crop&w=800&q=80', 'น้ำตบเตรียมผิว เติมน้ำให้ผิวอย่างเร่งด่วน ฟื้นบำรุงผิวที่แห้งกร้านให้กลับมาฉ่ำฟู สุขภาพดี', ['8D Hyaluronic Acid เติมน้ำล้ำลึก', 'สารสกัดจากแพลงก์ตอนทะเล', 'ช่วยให้แต่งหน้าติดทนขึ้น'])">
+            <span class="badge-discount">-15%</span>
+            <div class="p-img-box"><img src="https://images.unsplash.com/photo-1556228720-192a61a9809c?auto=format&fit=crop&w=400&q=80" alt="Essence"></div>
+            <div class="p-brand">AURA BEAUTY</div>
+            <div class="p-name">Aura Dewy Glow Essence 100ml.</div>
+            <div class="p-price-row"><span class="p-price-new">฿670</span><span class="p-price-old">฿790</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        <!-- Product 3 -->
-        <article class="product-card" onclick="alert('ไปหน้ารายละเอียดสินค้า')">
-          <span class="badge-hot">HOT!</span>
-          <div class="p-img-box">
-            <img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=400&q=80" alt="Cream">
-          </div>
+    <!-- 2. SKINCARE Section (ย่อส่วนลงเพื่อความกะทัดรัดของโค้ด นำกลับมาใส่เพิ่มได้) -->
+    <section id="section-skincare" class="section-container">
+      <div class="section-header">
+        <div class="section-title"><i class="fas fa-leaf"></i> SKINCARE (สกินแคร์)</div>
+        <a href="#" class="view-all">ดูทั้งหมด ></a>
+      </div>
+      <div class="products-grid">
+        <article class="product-card" onclick="openModal('Aura Deep Moisture Ceramide Cream 50g.', '฿1,250', 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=800&q=80', 'ครีมเซราไมด์เข้มข้น ฟื้นบำรุงเกราะป้องกันผิวที่ถูกทำร้าย ล็อคความชุ่มชื้นยาวนาน 48 ชม.', ['Ceramides Complex 5 ชนิด', 'ฟื้นฟูผิวแพ้ง่าย ลอกขุย', 'เนื้อครีมซึมไว ไม่เหนอะหนะ'])">
+          <div class="p-img-box"><img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=400&q=80" alt="Cream"></div>
           <div class="p-brand">AURA BEAUTY</div>
           <div class="p-name">Aura Deep Moisture Ceramide Cream 50g.</div>
-          <div class="p-price-row">
-            <span class="p-price-new">฿1,250</span>
-          </div>
+          <div class="p-price-row"><span class="p-price-normal">฿1,250</span></div>
         </article>
-
-        <!-- Product 4 -->
-        <article class="product-card" onclick="alert('ไปหน้ารายละเอียดสินค้า')">
-          <span class="badge-discount">-50%</span>
-          <div class="p-img-box">
-            <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=400&q=80" alt="Lipstick">
-          </div>
+        <article class="product-card" onclick="openModal('Gentle Gel Cleanser (pH 5.5)', '฿490', 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=800&q=80', 'เจลล้างหน้าสูตรอ่อนโยน ค่า pH 5.5 คงสมดุลผิว ล้างสะอาดแต่ไม่ทำให้ผิวแห้งตึงหลังล้าง', ['pH 5.5 อ่อนโยนต่อผิว', 'ทำความสะอาดล้ำลึก', 'เหมาะสำหรับผิวเป็นสิว'])">
+          <div class="p-img-box"><img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=400&q=80" alt="Cleanser"></div>
           <div class="p-brand">AURA BEAUTY</div>
-          <div class="p-name">Velvet Matte Lip Tint #03 Peachy Pink</div>
-          <div class="p-price-row">
-            <span class="p-price-new">฿295</span>
-            <span class="p-price-old">฿590</span>
-          </div>
+          <div class="p-name">Gentle Gel Cleanser (pH 5.5)</div>
+          <div class="p-price-row"><span class="p-price-normal">฿490</span></div>
         </article>
       </div>
     </section>
+
   </main>
 
   <!-- Footer -->
@@ -324,10 +480,9 @@
       <div class="footer-col">
         <h4>ช้อปปิ้งออนไลน์</h4>
         <ul>
-          <li><a href="#">สกินแคร์ดูแลผิวหน้า</a></li>
-          <li><a href="#">เมคอัพเครื่องสำอาง</a></li>
-          <li><a href="#">โปรโมชั่นพิเศษ</a></li>
-          <li><a href="#">แบรนด์ทั้งหมด</a></li>
+          <li><a href="#section-skincare">สกินแคร์ดูแลผิวหน้า</a></li>
+          <li><a href="#section-makeup">เมคอัพเครื่องสำอาง</a></li>
+          <li><a href="#section-flashsale">โปรโมชั่นพิเศษ</a></li>
         </ul>
       </div>
 
@@ -340,34 +495,93 @@
           <li><a href="#">ติดต่อเรา</a></li>
         </ul>
       </div>
-
-      <div class="footer-col">
-        <h4>เกี่ยวกับเรา</h4>
-        <ul>
-          <li><a href="#">รู้จัก Aura Beauty</a></li>
-          <li><a href="#">ข้อตกลงและเงื่อนไข</a></li>
-          <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
-        </ul>
-      </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2026 Aura Beauty. All rights reserved. | จัดทำเพื่อการศึกษา
+      &copy; 2026 Aura Beauty. All rights reserved. | จัดทำเพื่อการศึกษา PIM
     </div>
   </footer>
 
-  <!-- Script นับเวลาถอยหลัง (Flash Sale) -->
+  <!-- Scripts สำหรับ UI/UX ใหม่ (Cart & Modal) -->
   <script>
+    // นับเวลาถอยหลัง (Flash Sale)
     let hours = 3, mins = 0, secs = 57;
     setInterval(() => {
       secs--;
       if(secs < 0) { secs = 59; mins--; }
       if(mins < 0) { mins = 59; hours--; }
-      if(hours < 0) { hours = 23; } // วนลูปใหม่
-      
+      if(hours < 0) { hours = 23; } 
       document.getElementById('cd-hours').innerText = hours.toString().padStart(2, '0');
       document.getElementById('cd-mins').innerText = mins.toString().padStart(2, '0');
       document.getElementById('cd-secs').innerText = secs.toString().padStart(2, '0');
     }, 1000);
+
+    // ระบบตะกร้าสินค้า (Cart Sidebar)
+    function toggleCart() {
+      const cart = document.getElementById('cart-sidebar');
+      const overlay = document.getElementById('main-overlay');
+      if(cart.classList.contains('open')) {
+        cart.classList.remove('open');
+        overlay.classList.remove('active');
+      } else {
+        cart.classList.add('open');
+        overlay.classList.add('active');
+      }
+    }
+
+    // ระบบหน้าต่างเด้งรายละเอียดสินค้า (Product Modal)
+    function openModal(title, price, imgSrc, desc, features) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-price').innerText = price;
+      document.getElementById('modal-img').src = imgSrc;
+      document.getElementById('modal-desc').innerText = desc;
+      
+      const featureList = document.getElementById('modal-features');
+      featureList.innerHTML = '';
+      features.forEach(f => {
+        let li = document.createElement('li');
+        li.innerText = f;
+        featureList.appendChild(li);
+      });
+      
+      document.getElementById('modal-qty-val').innerText = '1';
+      document.getElementById('product-modal').classList.add('open');
+      document.getElementById('main-overlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('product-modal').classList.remove('open');
+      document.getElementById('main-overlay').classList.remove('active');
+    }
+
+    // ปิดเมื่อคลิกที่เงาดำ
+    document.getElementById('main-overlay').addEventListener('click', () => {
+      closeModal();
+      document.getElementById('cart-sidebar').classList.remove('open');
+    });
+
+    function changeModalQty(delta) {
+      const valSpan = document.getElementById('modal-qty-val');
+      let currentQty = parseInt(valSpan.innerText);
+      currentQty = Math.max(1, currentQty + delta);
+      valSpan.innerText = currentQty;
+    }
+
+    function addToCartFromModal() {
+      const qty = parseInt(document.getElementById('modal-qty-val').innerText);
+      const title = document.getElementById('modal-title').innerText;
+      
+      // ดึงเลขตะกร้าเดิมมาบวกเพิ่ม
+      const badge = document.getElementById('main-cart-badge');
+      let currentCartCount = parseInt(badge.innerText);
+      badge.innerText = currentCartCount + qty;
+      
+      // อนิเมชันปุ่มตะกร้า
+      badge.style.transform = 'scale(1.5)';
+      setTimeout(() => { badge.style.transform = 'scale(1)'; }, 200);
+
+      alert(`หยิบ ${title} จำนวน ${qty} ชิ้น ลงตะกร้าเรียบร้อยแล้วค่ะ 💖`);
+      closeModal();
+    }
   </script>
 
   <!-- สคริปต์แชทบอท Aura Beauty (ห้ามลบ) -->
