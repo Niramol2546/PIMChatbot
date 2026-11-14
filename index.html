@@ -187,7 +187,7 @@ footer{background:#fff;border-top:1px solid var(--line);padding:60px 5% 30px;mar
 </footer>
 
 <script>
-// แก้ไข URL ให้ใช้ภาพตรงๆ จาก Unsplash แทนการใช้ ID (เนื่องจาก ID อาจหมดอายุ)
+// แก้ไข URL ให้ใช้ภาพตรงๆ 
 const U = url => url;
 
 // ข้อมูลสินค้า (ใช้รูปจริงจาก Unsplash แทน)
@@ -195,19 +195,19 @@ const P=[
 {c:'skincare',t:'fh',n:'Aura Glow Vitamin C Serum 15% 30ml.',p:890,o:1290,i:'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=600&q=80',e:'🧴',d:'เซรั่มวิตามินซีเข้มข้น 15% ลดรอยดำ รอยแดง ปรับสีผิวให้กระจ่างใสอย่างเป็นธรรมชาติ เหมาะกับทุกสภาพผิว',f:['Vitamin C 15%','Niacinamide ช่วยให้ผิวกระจ่างใส','ปราศจากน้ำหอมและแอลกอฮอล์']},
 {c:'makeup',t:'f',n:'Velvet Matte Lip Tint #03 Peachy Pink',p:295,o:590,i:'https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80',e:'💄',d:'ลิปทินต์เนื้อมูส นุ่มละมุน เกลี่ยง่าย สีสันคมชัด ติดทนนาน ไม่ทำให้ริมฝีปากแห้งตึง',f:['สีโทนพีชอมชมพู','เนื้อแมตต์กำมะหยี่ ไม่ตกร่อง','ผสม Vitamin E บำรุงปาก']},
 {c:'bodycare',t:'f',n:'Sweet Blossom Eau De Parfum 50ml.',p:1490,o:1990,i:'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80',e:'🌸',d:'น้ำหอมกลิ่นฟลอรัลหอมหวานละมุน สดชื่นด้วยดอกไม้ขาวและซิตรัส ติดทนนาน 8-10 ชม.',f:['Top: White Rose & Citrus','Base: Vanilla & Musk','ติดทนยาวนานข้ามวัน']},
-{c:'skincare',t:'f',n:'Aura Dewy Glow Essence 100ml.',p:670,o:790,i:'https://images.unsplash.com/photo-1556228720-192a61a9809c?auto=format&fit=crop&w=600&q=80',e:'💧',d:'น้ำตบเตรียมผิว เติมน้ำให้ผิวอย่างเร่งด่วน ฟื้นผิวแห้งกร้านให้กลับมาฉ่ำฟู',f:['8D Hyaluronic Acid','สารสกัดจากแพลงก์ตอนทะเล','ช่วยให้แต่งหน้าติดทนขึ้น']},
+{c:'skincare',t:'f',n:'Aura Dewy Glow Essence 100ml.',p:670,o:790,i:'https://www.parenslab.com/cdn/shop/files/Glow_Essence_W.png?v=1772380688&width=1920',e:'💧',d:'น้ำตบเตรียมผิว เติมน้ำให้ผิวอย่างเร่งด่วน ฟื้นผิวแห้งกร้านให้กลับมาฉ่ำฟู',f:['8D Hyaluronic Acid','สารสกัดจากแพลงก์ตอนทะเล','ช่วยให้แต่งหน้าติดทนขึ้น']},
 {c:'makeup',t:'n',n:'Rose Petal Blush Palette 3 สี',p:450,i:'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80',e:'🎨',d:'บลัชออน 3 เฉดโทนกุหลาบ เม็ดสีละเอียด ปัดแล้วแก้มอมชมพูเป็นธรรมชาติ',f:['เนื้อซิลกี้ เบลนด์ง่าย','ใช้เป็นอายแชโดว์ได้','ตลับกระจกพกพาสะดวก']},
 {c:'makeup',t:'',n:'Skin Veil Cushion SPF50 PA+++ 15g.',p:690,i:'https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80',e:'🪞',d:'คุชชั่นเนื้อบางเบา คุมมัน กันแดดในตัว ผิวสวยฉ่ำโกลว์ทั้งวัน',f:['SPF50 PA+++','ปกปิดเรียบเนียน','มี 3 เฉดสีให้เลือก']},
 {c:'makeup',t:'h',n:'Everyday Look Eyeshadow Palette',p:890,o:1290,i:'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80',e:'👁️',d:'พาเลตต์ตา 9 หลุม โทนสีน้ำตาล-ทอง แต่งง่ายได้ทุกวัน เม็ดสีแน่นติดทน',f:['9 เฉดสี แมตต์และชิมเมอร์','เม็ดสีเกลี่ยง่าย ไม่เป็นก้อน','ติดทนยาวนาน 12 ชม.']},
 {c:'skincare',t:'',n:'Aura Deep Moisture Ceramide Cream 50g.',p:1250,i:'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=600&q=80',e:'🫙',d:'ครีมเซราไมด์เข้มข้น ฟื้นเกราะป้องกันผิว ล็อกความชุ่มชื้นยาวนาน 48 ชม.',f:['Ceramides Complex 5 ชนิด','ฟื้นฟูผิวแพ้ง่าย ลอกขุย','ซึมไว ไม่เหนอะหนะ']},
 {c:'skincare',t:'',n:'Gentle Gel Cleanser (pH 5.5)',p:490,i:'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80',e:'🧼',d:'เจลล้างหน้าสูตรอ่อนโยน ค่า pH 5.5 คงสมดุลผิว ล้างสะอาดแต่ไม่แห้งตึง',f:['pH 5.5 อ่อนโยนต่อผิว','ทำความสะอาดล้ำลึก','เหมาะกับผิวเป็นสิว']},
-{c:'skincare',t:'n',n:'Daily UV Defense Sunscreen SPF50+ 40ml.',p:850,i:'https://images.unsplash.com/photo-1611078712760-496662402131?auto=format&fit=crop&w=600&q=80',e:'☀️',d:'กันแดดเนื้อบางเบา ไม่เหนียว ไม่วอก ป้องกันทั้งรังสี UVA และ UVB',f:['SPF50+ PA++++','ปกป้องผิวจากมลภาวะ','เหมาะกับผิวแพ้ง่าย']},
-{c:'bodycare',t:'',n:'Velvet Body Lotion Sakura 250ml.',p:350,i:'https://images.unsplash.com/photo-1615397322901-44ff64052061?auto=format&fit=crop&w=600&q=80',e:'🌷',d:'โลชั่นบำรุงผิวกายกลิ่นซากุระ ผิวนุ่มชุ่มชื้นยาวนาน ซึมไว ไม่เหนอะหนะ',f:['Shea Butter & Vitamin E','กลิ่นซากุระอ่อนๆ','ชุ่มชื้นนาน 24 ชม.']},
+{c:'skincare',t:'n',n:'Daily UV Defense Sunscreen SPF50+ 40ml.',p:850,i:'https://s2.konvy.com/static/team/2024/1126/2024112610195761557.jpg',e:'☀️',d:'กันแดดเนื้อบางเบา ไม่เหนียว ไม่วอก ป้องกันทั้งรังสี UVA และ UVB',f:['SPF50+ PA++++','ปกป้องผิวจากมลภาวะ','เหมาะกับผิวแพ้ง่าย']},
+{c:'bodycare',t:'',n:'Velvet Body Lotion Sakura 250ml.',p:350,i:'https://down-th.img.susercontent.com/file/th-11134207-7rasj-m8d5mknjsw0917',e:'🌷',d:'โลชั่นบำรุงผิวกายกลิ่นซากุระ ผิวนุ่มชุ่มชื้นยาวนาน ซึมไว ไม่เหนอะหนะ',f:['Shea Butter & Vitamin E','กลิ่นซากุระอ่อนๆ','ชุ่มชื้นนาน 24 ชม.']},
 {c:'bodycare',t:'h',n:'Aura Milk & Honey Body Scrub 200g.',p:550,o:690,i:'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80',e:'🥥',d:'สครับขัดผิวสูตรนมและน้ำผึ้ง ผลัดเซลล์ผิวคล้ำเสียอย่างอ่อนโยน ช่วยให้ผิวเนียนนุ่ม',f:['เกลือสครับอณูละเอียด','ผสมน้ำผึ้งแท้บำรุงล้ำลึก','ล้างออกง่าย ผิวไม่แห้งตึง']},
-{c:'bodycare',t:'n',n:'UV Shield Body Lotion SPF50 PA++++',p:690,i:'https://images.unsplash.com/photo-1570194065650-d99fb4b8ccb0?auto=format&fit=crop&w=600&q=80',e:'🧴',d:'โลชั่นกันแดดผิวกาย ปกป้องผิวจากแสงแดด เนื้อบางเบา ซึมไว ปรับผิวให้สว่างขึ้น 1 ระดับ',f:['SPF50 PA++++','Tone-up Effect ทันที','ไม่ทิ้งคราบขาว']},
+{c:'bodycare',t:'n',n:'UV Shield Body Lotion SPF50 PA++++',p:690,i:'https://s2.konvy.com/static/team/2024/0412/17129137198573.jpg',e:'🧴',d:'โลชั่นกันแดดผิวกาย ปกป้องผิวจากแสงแดด เนื้อบางเบา ซึมไว ปรับผิวให้สว่างขึ้น 1 ระดับ',f:['SPF50 PA++++','Tone-up Effect ทันที','ไม่ทิ้งคราบขาว']},
 {c:'hair',t:'',n:'Aura Keratin Repair Shampoo 300ml.',p:490,i:'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=600&q=80',e:'🧴',d:'แชมพูสูตรฟื้นฟูผมเสียจากการทำสี ดัด ยืด ช่วยให้ผมมีน้ำหนัก ไม่ชี้ฟู',f:['อุดมด้วย Keratin','ฟื้นฟูผมเสียแตกปลาย','ปราศจากซิลิโคน']},
-{c:'hair',t:'f',n:'Aura Scalp Detox Mask 200ml.',p:650,o:850,i:'https://images.unsplash.com/photo-1580870059858-a53d6118d044?auto=format&fit=crop&w=600&q=80',e:'💆',d:'มาสก์ดีท็อกซ์หนังศีรษะ ลดรังแค ลดความมันบนหนังศีรษะ กระตุ้นรากผมให้แข็งแรง',f:['ทำความสะอาดล้ำลึก','ลดอาการคันศีรษะ','เย็นสดชื่น เบาสบาย']},
-{c:'hair',t:'n',n:'Aura Argan Nourishing Hair Serum 100ml.',p:590,i:'https://images.unsplash.com/photo-1616683884143-690a7894a4c5?auto=format&fit=crop&w=600&q=80',e:'✨',d:'เซรั่มบำรุงผมอาร์แกนออยล์ ปกป้องผมจากความร้อน ลดผมแตกปลาย ให้ผมเงางาม',f:['Argan Oil เข้มข้น','ป้องกันความร้อน 220°C','ซึมซาบไว ไม่ทำให้ผมลีบแบน']}
+{c:'hair',t:'f',n:'Aura Scalp Detox Mask 200ml.',p:650,o:850,i:'https://static.wixstatic.com/media/7fcca0_b3d799fd60f4457cba23262ff4c9ab55~mv2.jpg/v1/fill/w_1199,h_763,al_c,q_85,enc_avif,quality_auto/7fcca0_b3d799fd60f4457cba23262ff4c9ab55~mv2.jpg',e:'💆',d:'มาสก์ดีท็อกซ์หนังศีรษะ ลดรังแค ลดความมันบนหนังศีรษะ กระตุ้นรากผมให้แข็งแรง',f:['ทำความสะอาดล้ำลึก','ลดอาการคันศีรษะ','เย็นสดชื่น เบาสบาย']},
+{c:'hair',t:'n',n:'Aura Argan Nourishing Hair Serum 100ml.',p:590,i:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1CGQl7CyhJJ-MwcKi59qjBkGcsEqlViaZlSBU5-bUOA&s',e:'✨',d:'เซรั่มบำรุงผมอาร์แกนออยล์ ปกป้องผมจากความร้อน ลดผมแตกปลาย ให้ผมเงางาม',f:['Argan Oil เข้มข้น','ป้องกันความร้อน 220°C','ซึมซาบไว ไม่ทำให้ผมลีบแบน']}
 ];
 
 const S=[
@@ -224,7 +224,7 @@ const C=[
   ['section-new','NEW ARRIVAL','https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=300&q=80','🆕'],
   ['section-makeup','เมคอัพ','https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=300&q=80','💄'],
   ['section-skincare','สกินแคร์','https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=300&q=80','🧴'],
-  ['section-bodycare','ดูแลผิวกาย','https://images.unsplash.com/photo-1615397322901-44ff64052061?auto=format&fit=crop&w=300&q=80','🛁'],
+  ['section-bodycare','ดูแลผิวกาย','https://s.isanook.com/wo/0/ud/22/111753/vaselinebodylotionhealthy.jpg?ip/resize/w728/q80/jpg','🛁'],
   ['section-hair','ดูแลเส้นผม','https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=300&q=80','💇']
 ];
 
