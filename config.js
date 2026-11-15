@@ -24,7 +24,7 @@ window.CONFIG = {
   SEARCH_MODE: "vector",
 
   // รุ่นที่ใช้แปลงเวกเตอร์  ต้องตรงกับตอนสร้าง vectors.json
-  EMBED_MODEL: "nomic-ai/nomic-embed-text-v1.5",
+  EMBED_MODEL: "openai/text-embedding-3-small",
 
   VECTORS_FILE: "vectors.json",
 
