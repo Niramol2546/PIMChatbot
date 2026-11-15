@@ -24,7 +24,7 @@ window.CONFIG = {
   SEARCH_MODE: "vector",
 
   // รุ่นที่ใช้แปลงเวกเตอร์  ต้องตรงกับตอนสร้าง vectors.json
-  EMBED_MODEL: "nvidia/nemotron-3.5-embed-1b:free",
+  EMBED_MODEL: "nomic-ai/nomic-embed-text-v1.5",
 
   VECTORS_FILE: "vectors.json",
 
@@ -33,7 +33,7 @@ window.CONFIG = {
 
   // แก้ตรงนี้  ชื่อรุ่นจริงจากหน้า Models ของ OpenRouter
   // หาชื่อจริงได้ที่  https://openrouter.ai/api/v1/models
-  MODEL: "nvidia/nemotron-3.5-super-vl:free",
+  MODEL: "google/gemini-1.5-flash",
 
 
   /* ===== เอกสาร ===== */
